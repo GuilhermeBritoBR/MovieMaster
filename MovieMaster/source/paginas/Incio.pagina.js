@@ -17,7 +17,7 @@ export default function Inicio() {
 
       </View>
 
-        <Footer/>
+    <Footer/>
     </View>
   );
 }

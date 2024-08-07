@@ -5,10 +5,6 @@ import { LinearGradient } from "expo-linear-gradient";
 //OBSERVAÇÕES:
 //O LINEAR é posicionado por x 'horizontal' e y 'altura' do começo, start, e fim end
 
-//icones para o header sendo importados
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import Feather from '@expo/vector-icons/Feather';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export default function Footer(){
     return(

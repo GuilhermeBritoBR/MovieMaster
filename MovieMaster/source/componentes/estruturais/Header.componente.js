@@ -9,7 +9,8 @@ import { LinearGradient } from "expo-linear-gradient";
 //icones para o header sendo importados
 import Feather from '@expo/vector-icons/Feather';
 
-export default function Header() {
+
+export default function Header({ativarMenuTrueFalse}) {
   return (
       <LinearGradient 
       colors={['#343233', '#7100CA' ]} 
@@ -20,7 +21,7 @@ export default function Header() {
         {/* Essas duas view's vão segurar o botão sanduiche de abrir menu e o icone de pesquisar em seus lugares */}
         <View style={[EstiloDoHeader.ViewParaPosicionarOsElementosDoHeader,{ alignItems: 'flex-start', marginLeft: 20,}]}>
             {/* O FEATHER é o icone dos elementos sendo que o TOUCHABLE encobre os tais com uma função que abre um modal ou ativa uma rota */}
-            <TouchableOpacity>
+            <TouchableOpacity onPress={ativarMenuTrueFalse}>
             <Feather name="menu" size={36} color="white" />
             </TouchableOpacity>
         </View>
@@ -43,9 +44,8 @@ const EstiloDoHeader = StyleSheet.create({
         flex: 1,
         backgroundColor: '#7100CA',
         flexDirection: 'row',
-        border: 'solid',
-        borderBottomColor: '#ffffff',
-        borderBottomWidth: 1,
+        
+    
     },
     ViewParaPosicionarOsElementosDoHeader:{
         flex:1,

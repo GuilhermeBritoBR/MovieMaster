@@ -1,5 +1,4 @@
-## Olá 👋 <br>
-## Seja bem vindo ao repositorio do Movie Master 🎥
+## Olá 👋 <br> Seja bem vindo ao repositorio do Movie Master 🎥
 
 O Movie Master é aplicativo de análise de filmes com objetivo de facilitar a busca e a avaliação de filmes pelos usuários. 
 A principal função é otimizar a expressão de opiniões sobre filmes e melhorar a experiência de busca, oferecendo uma plataforma interativa e segura. 

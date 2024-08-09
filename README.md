@@ -11,7 +11,7 @@ Motivos para que você use nosso aplicativo 👇
 - Lista de filmes favoritos
 
   (COMO USAR
-  QUAIS AS FUNCIONALIDADES) Colocar depois
+  QUAIS AS FUNCIONALIDADES) **Colocar depois**
   
 
 

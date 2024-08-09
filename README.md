@@ -39,7 +39,7 @@ Motivos para que você use nosso aplicativo 👇
         <img src="https://user-images.githubusercontent.com/74038190/212257460-738ff738-247f-4445-a718-cdd0ca76e2db.gif" alt="icon" width="65" height="65" />
     </td>
   </tr>
-</table>
+</table> <br>
   
 
 

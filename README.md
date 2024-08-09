@@ -4,7 +4,7 @@ Seja bem vindo ao repositorio do Movie Master 🎥
 O Movie Master é aplicativo de análise de filmes com objetivo de facilitar a busca e a avaliação de filmes pelos usuários. 
 A principal função é otimizar a expressão de opiniões sobre filmes e melhorar a experiência de busca, oferecendo uma plataforma interativa e segura. 
 
-Motivos para que você use nosso aplicativo 👇
+**Motivos para que você use nosso aplicativo** 👇
 - Vai facilitar na hora de você buscar um filme
 - Ira ver as avaliações referentes aquele filme
 - Personalização através listas
@@ -43,7 +43,7 @@ Motivos para que você use nosso aplicativo 👇
   
 
 
-Como será que surgiu esse projeto??🤔<br>
+**Como será que surgiu esse projeto??**🤔<br>
 Surgiu apartir de 3 estudantes de Desenvolvimento de Sistemas, no quarto e ultimo semestre, como entrega final do curso. 
 Eles decidiram colocar todos os seus conhecimentos em pratica se desafiando a fazer um aplicativo que fosse realmente bom, com tudo que é preciso e sem erros! 
 Essa ideia vem de uma grande verdade, todos gostam de filmes! Então se tivesse um app que otimizasse opniões, mostrasse os mais diversos filmes e criasse listas, seria perfeito!    

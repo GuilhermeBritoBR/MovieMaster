@@ -1,7 +1,7 @@
 ## Olá 👋 <br> Seja bem vindo ao repositorio do Movie Master 🎥
 
 
-![Descrição da Imagem]()
+![Descrição da Imagem](https://github.com/GuilhermeBritoBR/MovieMaster/blob/main/Component%2012.png?raw=true)
 
 
 

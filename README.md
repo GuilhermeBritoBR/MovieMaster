@@ -1,11 +1,11 @@
 ## Olá 👋 <br> Seja bem vindo ao repositorio do Movie Master 🎥 <br>
 
-## Nossa logo
-<img src="https://github.com/GuilhermeBritoBR/MovieMaster/blob/main/Component%2012.png?raw=true" alt="Descrição da Imagem" width="300">
-
 
 O Movie Master é aplicativo de análise de filmes com objetivo de facilitar a busca e a avaliação de filmes pelos usuários. 
 A principal função é otimizar a expressão de opiniões sobre filmes e melhorar a experiência de busca, oferecendo uma plataforma interativa e segura. 
+
+
+<img src="https://github.com/GuilhermeBritoBR/MovieMaster/blob/main/Component%2012.png?raw=true" alt="Descrição da Imagem" width="300">
 
 **Motivos para que você use nosso aplicativo** 👇
 - Vai facilitar na hora de você buscar um filme

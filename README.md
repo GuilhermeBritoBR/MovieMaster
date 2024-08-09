@@ -48,7 +48,7 @@ Eles decidiram colocar todos os seus conhecimentos em pratica se desafiando a fa
 Essa ideia vem de uma grande verdade, todos gostam de filmes! Então se tivesse um app que otimizasse opniões, mostrasse os mais diversos filmes e criasse listas, seria perfeito!    
 Por isso, decidimos criar esse aplicativo.🤩
 
-São esses os integrantes do projeto 🧑‍💻
+**São esses os integrantes do projeto** 🧑‍💻
 
 Pedro Henrique 🙋‍♂️<br>
 Project Owner, responsável pela documentação e desenvolvedor front-end

@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 //cada constante carrega uma estilização, para evitar confusão
 const ViewCentralCorpoDoAPP = StyleSheet.create(({
     estilo:{
-        flex: 12,
+        flex: 14,
          backgroundColor: '#1a1a1a',
     },
 }));

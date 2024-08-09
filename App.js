@@ -1,61 +1,75 @@
 import * as React from 'react';
+//para a construção da navegação o container
 import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+//componentes do react
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+//linear para o degrade
 import { LinearGradient } from "expo-linear-gradient";
+//para importar icones 
 import Feather from '@expo/vector-icons/Feather';
-import Header from './source/componentes/estruturais/Header.componente'; // import your header component
+//paginas
 import Inicio from './source/paginas/Incio.pagina';
-import Login from './source/paginas/login.pagina';
+import Login from './source/paginas/Login.pagina';
+import Usuario from './source/paginas/Usuario.pagina';
 
+//importando as unidades responsivas do css
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
+//fontes de texto
+import H3 from './source/componentes/textos/h3.componente';
 
-      ///* <Header ativarMenuTrueFalse={() => navigation.openDrawer()} /> 
-  
-
-
+//O Drawer trabalha a barra lateral
+import { createDrawerNavigator  } from '@react-navigation/drawer';
 const Drawer = createDrawerNavigator();
 
 export default function App() {
+  
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Login"
+      
+      <Drawer.Navigator initialRouteName="inicio"
       screenOptions={{
-        drawerInactiveTintColor: '#ffffff',
-        drawerActiveTintColor: '#ffffff',
-        headerShown: false, 
-        drawerActiveBackgroundColor: '#1C1C1C',
-        drawerInactiveBackgroundColor: '#000000',
+        headerShown: false, //remove o header padrão
+        drawerActiveBackgroundColor: '#242424', // poe cor preta no background dos botoes
         drawerStyle:{
-          backgroundColor: '#1C1C1C',
+          backgroundColor: '#242424', // é o background de toda a barra lateral
         },
         drawerLabelStyle: {
           fontSize: 18, // Tamanho da fonte dos itens
           fontWeight: 'regular', // Peso da fonte dos itens
           color: '#ffffff', // Cor da fonte dos itens
-        },  
+        }, 
       }}
       >
-        <Drawer.Screen 
         
-<<<<<<< HEAD:App.js
-      }}>
-        <Drawer.Screen name="Login" component={Login} />
-=======
-        name="Inicio" component={Inicio} />
->>>>>>> 45c6885d6b14316d4476ca3fe956040ed42a3f81:MovieMaster/App.js
+
+        <Drawer.Screen 
+         options={{
+          drawerIcon: () => (
+            <Image 
+              source={require('./source/arquivos/icones/home.png')} 
+              style={EstilosDoDrawer.iconeImageEsuaConfiguracao} 
+            />)}} name="Inicio" component={Inicio}  />
         
       </Drawer.Navigator>
     </NavigationContainer>
   );
 }
 
-const EstilizaçãoBotoesDoMenu = StyleSheet.create(({
-  botãoAselecionar:{
-      borderBottomColor: '#ffffff',
-      borderBottomWidth: 1,
-      border: 'solid',
-      backgroundColor: '#ffffff',
-  }
+//css da rota drawer
+const EstilosDoDrawer = StyleSheet.create(({
+  ViewiconeDoDrawer:{
+    width: 24,
+    height: 24,
+  },
+  iconeImageEsuaConfiguracao:{
+    width: 32,
+    height: 32,
+  },
+  ViewPrincipal:{
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: wp('100%'),
+    height: wp('20%'), 
+},
 }))
-

@@ -17,7 +17,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
-export default function Inicio() {
+export default function Usuario() {
     const Drawer = createDrawerNavigator();
     const navigation = useNavigation();
     //visibilidade do modal, aqui estamos controlando a tal por uma use state

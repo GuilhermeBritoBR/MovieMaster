@@ -1,6 +1,6 @@
-## Olá 👋 <br> Seja bem vindo ao repositorio do Movie Master 🎥
+## Olá 👋 <br> Seja bem vindo ao repositorio do Movie Master 🎥 <br>
 
-
+## Nossa logo
 ![Descrição da Imagem](https://github.com/GuilhermeBritoBR/MovieMaster/blob/main/Component%2012.png?raw=true)
 
 

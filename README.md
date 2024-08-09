@@ -17,7 +17,6 @@ Motivos para que você use nosso aplicativo 👇
 
   <div align="center"> <h2><img src="https://cdn-icons-png.flaticon.com/512/2572/2572708.png" width="25" height="25" alt="Imagem icon sobre" />   Linguagens e Ferramentas </h2></div>
 
-  <table align="center">
   
   <tr>
     
@@ -27,18 +26,15 @@ Motivos para que você use nosso aplicativo 👇
     <td align="center" width="96">
         <img src="https://techstack-generator.vercel.app/react-icon.svg" alt="icon" width="65" height="65" />
     </td>
-    <td align="center" width="96">
+
     </td>
   </tr>
   <tr>
-    <td align="center" width="96">
     </td>
     <td align="center" width="96">
         <img src="https://techstack-generator.vercel.app/js-icon.svg" alt="icon" width="65" height="65" />
     </td>
-    <td align="center" width="96">
     </td>
-    <td align="center" width="96">
         <img src="https://techstack-generator.vercel.app/mysql-icon.svg" alt="icon" width="65" height="65" />
     </td>
     <td align="center" width="96">

@@ -12,6 +12,10 @@ Motivos para que você use nosso aplicativo 👇
 
   (COMO USAR
   QUAIS AS FUNCIONALIDADES) **Colocar depois**
+
+
+
+  <div align="center"> <h2><img src="https://cdn-icons-png.flaticon.com/512/2572/2572708.png" width="25" height="25" alt="Imagem icon sobre" />   Linguagens e Ferramentas </h2></div>
   
 
 

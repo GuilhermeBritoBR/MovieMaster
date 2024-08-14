@@ -18,7 +18,7 @@ A principal função é otimizar a expressão de opiniões sobre filmes e melhor
 
 
 
-<div> <h2><img src="https://cdn-icons-png.flaticon.com/512/2572/2572708.png" width="25" height="25" alt="Imagem icon sobre" />   Linguagens e Ferramentas </h2></div>
+ <div> <h2><img src="https://cdn-icons-png.flaticon.com/512/2572/2572708.png" width="25" height="25" alt="Imagem icon sobre" />   Linguagens e Ferramentas </h2></div>
 
   
   <tr>

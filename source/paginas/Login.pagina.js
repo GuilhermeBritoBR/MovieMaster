@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { View, TextInput, ImageBackground, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -83,10 +84,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20, 
-    backgroundColor: '1a1a1a',
+    backgroundColor: 'black',
     borderBottom: 100,
     border: 'solid',
-    borderColor: '1a1a1a',
+    borderColor: '#1a1a1a',
     paddingBottom: 100,
   },
   input: {

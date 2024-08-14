@@ -9,7 +9,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Feather from '@expo/vector-icons/Feather';
 //paginas
 import Inicio from './source/paginas/Incio.pagina';
-import Login from './source/paginas/Login.pagina';
+import Login from './source/paginas/login.pagina';
 import Usuario from './source/paginas/Usuario.pagina';
 
 //importando as unidades responsivas do css
@@ -51,6 +51,14 @@ export default function App() {
               style={EstilosDoDrawer.iconeImageEsuaConfiguracao} 
             />)}} name="Inicio" component={Inicio}  />
         
+        <Drawer.Screen 
+         options={{
+          drawerIcon: () => (
+            <Image 
+              source={require('./source/arquivos/icones/home.png')} 
+              style={EstilosDoDrawer.iconeImageEsuaConfiguracao} 
+            />)}} name="Login" component={Login}  />
+
       </Drawer.Navigator>
     </NavigationContainer>
   );

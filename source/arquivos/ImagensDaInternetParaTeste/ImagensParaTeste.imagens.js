@@ -1,0 +1,1 @@
+export const aEsperaDeUmMilagre= 'https://http2.mlstatic.com/D_NQ_NP_807711-MLB72981772528_112023-O.webp';

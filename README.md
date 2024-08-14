@@ -1,7 +1,7 @@
 ## Olá 👋 <br> Seja bem vindo ao repositorio do Movie Master 🎥 <br>
 
 
-O Movie Master é aplicativo de análise de filmes com objetivo de facilitar a busca e a avaliação de filmes pelos usuários. 
+O Movie Master é aplicativo de análise de filmes com objetivo de facilitar a busca e a avaliação de filmes pelos usuários. <br>
 A principal função é otimizar a expressão de opiniões sobre filmes e melhorar a experiência de busca, oferecendo uma plataforma interativa e segura. 
 
 
@@ -18,28 +18,20 @@ A principal função é otimizar a expressão de opiniões sobre filmes e melhor
 
 
 
- <div> <h2><img src="https://cdn-icons-png.flaticon.com/512/2572/2572708.png" width="25" height="25" alt="Imagem icon sobre" />   Linguagens e Ferramentas </h2></div>
+<h2 align="center">
+  <img src="https://cdn-icons-png.flaticon.com/512/2572/2572708.png" width="25" height="25" alt="Imagem icon sobre" />
+  Linguagens e Ferramentas
+</h2>
 
-  
-  <tr>
-    <td align="center" width="96">
-        <img src="https://techstack-generator.vercel.app/react-icon.svg" alt="icon" width="65" height="65" />
-    </td>
-  </tr>
-  <tr>
-    </td>
-    <td align="center" width="96">
-        <img src="https://techstack-generator.vercel.app/js-icon.svg" alt="icon" width="65" height="65" />
-    </td>
-    </td>
-        <img src="https://techstack-generator.vercel.app/mysql-icon.svg" alt="icon" width="65" height="65" />
-    </td>
-    <td align="center" width="96">
-        <img src="https://user-images.githubusercontent.com/74038190/212257460-738ff738-247f-4445-a718-cdd0ca76e2db.gif" alt="icon" width="65" height="65" />
-    </td>
-  </tr>
-</table>
-  <br>
+<p align="center">
+  <img src="https://techstack-generator.vercel.app/react-icon.svg" alt="React" width="65" height="65" />
+  <img src="https://techstack-generator.vercel.app/js-icon.svg" alt="JavaScript" width="65" height="65" />
+  <img src="https://techstack-generator.vercel.app/mysql-icon.svg" alt="MySQL" width="65" height="65" />
+  <img src="https://user-images.githubusercontent.com/74038190/212257460-738ff738-247f-4445-a718-cdd0ca76e2db.gif" alt="Outro Icon" width="65" height="65" />
+</p>
+
+
+<br>
   
 
 

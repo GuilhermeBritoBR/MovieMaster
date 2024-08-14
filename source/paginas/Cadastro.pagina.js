@@ -1,9 +1,41 @@
-
-import React from 'react';
-import { View, TextInput, ImageBackground, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react'; //HOOKS
+import { View, TextInput, ImageBackground, StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+//axios
+import axios, { Axios }  from 'axios';
 
 export default function Cadastro() {
+  //coletando dados do formulário
+  const [nome, setandoNome] = useState("");
+  const [senha, setandoSenha] = useState("");
+  const [email, setandoEmail] = useState("");
+  //função para verificar a procedencia dos dados
+  function VerificarSeTemDados(){
+    if(nome.length >= 3 && senha.length >= 8  ){
+      //no minino 3 letras em um nome e 8 caracteres na senha
+      console.log(`Segue o valor dos dados das constantes Nome: ${nome}, Senha ${senha}, Email: ${email}`);
+      RealizarCadastro();
+    }else{
+      alert("Por gentileza, preencha os campos corretamente!");
+    }
+  }
+  //sistema de cadastro de dados
+  //vamos conectar com a api externa para o funcionamento primario
+  //usaremos o axios como intermediario, como o fetch do js
+  async function RealizarCadastro(){
+    //jsonficando os dados para a transferencia via axios e posterirmente ate api
+    try{
+
+    await axios.post('http://192.168.35.157:3000/registerPage/cadastro',{
+      nome, senha, email,
+    });
+    alert("Cadastro realizado! Bem vindo ao MovieMaster!")
+    }catch(err){
+      alert("Erro ao se cadastrar!");
+      console.log(`Segue o erro ao se cadastrar: ${err}`)
+    }
+    
+  }
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -16,40 +48,52 @@ export default function Cadastro() {
           end={{x: 0, y: 1}}
           style={styles.gradient}
         >
-          <Text style={styles.title}>Junte-se ao Movie Master!</Text>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>Junte-se ao Movie Master!</Text>
+          </View>
         </LinearGradient>
       </ImageBackground>
 
-      <View style={styles.areadoinput}>
+      <View
+        style={styles.areadoinput}
+        
+      >
         <TextInput 
           style={styles.input}
           placeholder='Email'
           keyboardType='email-address'
           placeholderTextColor='white'
+          value={email}
+          onChangeText={(textodigitado)=> setandoEmail(textodigitado)}
         />
         <TextInput 
           style={styles.input}
           placeholder='Nome de Usuário'
-          keyboardType='text'
+          keyboardType='default'
           placeholderTextColor='white'
+          value={nome}
+          onChangeText={(textodigitado)=> setandoNome(textodigitado)}
         />
         <TextInput 
           style={styles.input}
           placeholder='Senha'
           secureTextEntry
           placeholderTextColor='white'
+          value={senha}
+          onChangeText={(textodigitado)=> setandoSenha(textodigitado)}
         />
-        <TouchableOpacity style={styles.button} onPress={() => console.log("Sign in Pressionado!")}>
-        <LinearGradient 
-      colors={['#9754CB', '#6237A0' ]} 
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0.68, y: 0.68 }} 
-      style={styles.btnDegradw}>
-          <Text style={styles.buttonText}>Registrar</Text>
+        <TouchableOpacity style={styles.button} onPress={() => VerificarSeTemDados()}>
+          <LinearGradient 
+            colors={['#9754CB', '#6237A0' ]} 
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0.68, y: 0.68 }} 
+            style={styles.btnDegradw}
+          >
+            <Text style={styles.buttonText}>Registrar</Text>
           </LinearGradient>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttontxt} onPress={() => console.log("Sign in Pressionado!")}>
-        <Text style={styles.buttonText}>Login</Text>
+        <TouchableOpacity style={styles.btnredirecionamento} onPress={() => console.log("Login Pressionado!")}>
+          <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -74,11 +118,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  titleContainer: {
+    height: 100, // Altura fixa para manter o texto estável
+    justifyContent: 'center',
+  },
   title: {
     fontSize: 28,
     color: 'white',
     textAlign: 'center',
-    
   },
   areadoinput: {
     width: '100%',
@@ -87,10 +134,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20, 
     backgroundColor: 'black',
-    borderBottom: 100,
-    border: 'solid',
-    borderColor: '#1a1a1a',
-    paddingBottom: 100,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1a1a1a',
   },
   input: {
     height: 50,
@@ -122,5 +167,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 50,
     borderRadius: 15,
+  },
+  btnredirecionamento: {
+    paddingBottom:50,
+    paddingTop:20,
   },
 });

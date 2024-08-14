@@ -12,6 +12,7 @@
     "@expo/metro-runtime": "~3.2.1",
     "@react-navigation/drawer": "^6.7.2",
     "@react-navigation/native": "^6.1.18",
+    "axios": "^1.7.4",
     "expo": "~51.0.24",
     "expo-linear-gradient": "~13.0.2",
     "expo-status-bar": "~1.12.1",

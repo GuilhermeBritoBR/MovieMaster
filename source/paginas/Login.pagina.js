@@ -1,8 +1,41 @@
-import React from 'react';
-import { View, TextInput, ImageBackground, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, TextInput, ImageBackground, StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+//axios
+import axios, { Axios }  from 'axios';
 
 export default function Login() {
+  //constante dos dados
+  const [emailEnome, setandoEmailEnome]= useState("");
+  const [senha, setandoSenha] = useState("");
+  //login dos usuarios
+  //novamente a conexão com a api primaria
+  function VerificarSeTemDados(){
+    if(emailEnome.length >= 3 && senha.length >= 5  ){
+      //no minino 3 letras em um nome e 8 caracteres na senha
+      console.log(`Segue o valor dos dados das constantes NomeOUEmail: ${emailEnome}, Senha ${senha}`);
+      RealizarLogin();
+    }else{
+      alert("Por gentileza, preencha os campos corretamente!");
+    }
+  } 
+   //sistema de login de dados
+  //vamos conectar com a api externa para o funcionamento primario
+  //usaremos o axios como intermediario, como o fetch do js
+  async function RealizarLogin(){
+    //jsonficando os dados para a transferencia via axios e posterirmente ate api
+    try{
+
+    await axios.post('http://192.168.35.157:3000/loginPage/login',{
+      emailEnome, senha,
+    });
+    alert("Login realizado! Bem vindo ao MovieMaster!")
+    }catch(err){
+      alert("Erro ao se logar!");
+      console.log(`Segue o erro ao se logar: ${err}`)
+    }
+    
+  }
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -15,24 +48,33 @@ export default function Login() {
           end={{ x: 0, y: 1 }}
           style={styles.gradient}
         >
-          <Text style={styles.title}>Entre No Movie Master!</Text>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>Entre no Movie Master!</Text>
+          </View>
         </LinearGradient>
       </ImageBackground>
 
-      <View style={styles.areadoinput}>
+      <KeyboardAvoidingView
+        style={styles.areadoinput}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
         <TextInput 
           style={styles.input}
           placeholder='Nome de Usuário/Email'
           keyboardType='email-address'
           placeholderTextColor='white'
+          value={emailEnome}
+          onChangeText={(textoDigitado)=>setandoEmailEnome(textoDigitado)}
         />
         <TextInput 
           style={styles.input}
           placeholder='Senha'
           secureTextEntry
           placeholderTextColor='white'
+          value={senha}
+          onChangeText={(textoDigitado)=>setandoSenha(textoDigitado)}
         />
-        <TouchableOpacity style={styles.button} onPress={() => console.log("Sign in Pressionado!")}>
+        <TouchableOpacity style={styles.button} onPress={() => VerificarSeTemDados()}>
           <LinearGradient 
             colors={['#9754CB', '#6237A0']} 
             start={{ x: 0, y: 0 }}
@@ -46,7 +88,7 @@ export default function Login() {
         <TouchableOpacity style={styles.btnredirecionamento} onPress={() => console.log("Cadastro Pressionado!")}>
           <Text style={styles.buttonText}>Cadastro</Text>
         </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     </View>
   );
 }
@@ -69,11 +111,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  titleContainer: {
+    height: 100, // Fixando a altura do contêiner do título
+    justifyContent: 'center',
+  },
   title: {
     fontSize: 28,
     color: 'white',
     textAlign: 'center',
-    marginBottom: 20, 
   },
   areadoinput: {
     width: '100%',
@@ -105,7 +150,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   btnredirecionamento: {
-    paddingTop: 50,
+    paddingTop: 20,
+    paddingBottom:0,
   },
   buttonText: {
     color: 'white',

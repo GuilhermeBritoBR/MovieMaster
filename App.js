@@ -51,7 +51,7 @@ export default function App() {
             <Image 
               source={require('./source/arquivos/icones/home.png')} 
               style={EstilosDoDrawer.iconeImageEsuaConfiguracao} 
-            />)}} name="Inicio" component={Login}  />
+            />)}} name="Inicio" component={Inicio}  />
         
         <Drawer.Screen 
          options={{
@@ -60,6 +60,13 @@ export default function App() {
               source={require('./source/arquivos/icones/home.png')} 
               style={EstilosDoDrawer.iconeImageEsuaConfiguracao} 
             />)}} name="Login" component={Login}  />
+            <Drawer.Screen 
+         options={{
+          drawerIcon: () => (
+            <Image 
+              source={require('./source/arquivos/icones/home.png')} 
+              style={EstilosDoDrawer.iconeImageEsuaConfiguracao} 
+            />)}} name="Cadastro" component={Cadastro}  />
 
       </Drawer.Navigator>
     </NavigationContainer>

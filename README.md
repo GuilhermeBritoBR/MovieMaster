@@ -22,12 +22,8 @@ A principal função é otimizar a expressão de opiniões sobre filmes e melhor
 
   
   <tr>
-    
-    
     <td align="center" width="96">
         <img src="https://techstack-generator.vercel.app/react-icon.svg" alt="icon" width="65" height="65" />
-    </td>
-
     </td>
   </tr>
   <tr>

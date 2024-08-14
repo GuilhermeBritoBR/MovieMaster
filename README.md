@@ -18,31 +18,52 @@ A principal função é otimizar a expressão de opiniões sobre filmes e melhor
 
 
 
-  <div> <h2><img src="https://cdn-icons-png.flaticon.com/512/2572/2572708.png" width="25" height="25" alt="Imagem icon sobre" />   Linguagens e Ferramentas </h2></div>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centralizar Tabela</title>
+    <style>
+        /* Centraliza o conteúdo da tabela */
+        .tabela-centralizada {
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
 
-  
-  <tr>
-    
-    
-    <td align="center" width="96">
-        <img src="https://techstack-generator.vercel.app/react-icon.svg" alt="icon" width="65" height="65" />
-    </td>
+        /* Centraliza o conteúdo das células da tabela */
+        .tabela-centralizada td {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center;">
+        <h2>
+            <img src="https://cdn-icons-png.flaticon.com/512/2572/2572708.png" width="25" height="25" alt="Imagem icon sobre" />
+            Linguagens e Ferramentas
+        </h2>
+    </div>
 
-    </td>
-  </tr>
-  <tr>
-    </td>
-    <td align="center" width="96">
-        <img src="https://techstack-generator.vercel.app/js-icon.svg" alt="icon" width="65" height="65" />
-    </td>
-    </td>
-        <img src="https://techstack-generator.vercel.app/mysql-icon.svg" alt="icon" width="65" height="65" />
-    </td>
-    <td align="center" width="96">
-        <img src="https://user-images.githubusercontent.com/74038190/212257460-738ff738-247f-4445-a718-cdd0ca76e2db.gif" alt="icon" width="65" height="65" />
-    </td>
-  </tr>
-</table> <br>
+    <table class="tabela-centralizada">
+        <tr>
+            <td width="96">
+                <img src="https://techstack-generator.vercel.app/react-icon.svg" alt="icon" width="65" height="65" />
+            </td>
+            <td width="96">
+                <img src="https://techstack-generator.vercel.app/js-icon.svg" alt="icon" width="65" height="65" />
+            </td>
+            <td width="96">
+                <img src="https://techstack-generator.vercel.app/mysql-icon.svg" alt="icon" width="65" height="65" />
+            </td>
+            <td width="96">
+                <img src="https://user-images.githubusercontent.com/74038190/212257460-738ff738-247f-4445-a718-cdd0ca76e2db.gif" alt="icon" width="65" height="65" />
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+  <br>
   
 
 

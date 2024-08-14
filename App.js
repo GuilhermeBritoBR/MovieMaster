@@ -9,8 +9,10 @@ import { LinearGradient } from "expo-linear-gradient";
 import Feather from '@expo/vector-icons/Feather';
 //paginas
 import Inicio from './source/paginas/Incio.pagina';
-import Login from './source/paginas/login.pagina';
+import Login from './source/paginas/Login.pagina';
 import Usuario from './source/paginas/Usuario.pagina';
+import Cadastro from './source/paginas/Cadastro.pagina';
+
 
 //importando as unidades responsivas do css
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -49,7 +51,7 @@ export default function App() {
             <Image 
               source={require('./source/arquivos/icones/home.png')} 
               style={EstilosDoDrawer.iconeImageEsuaConfiguracao} 
-            />)}} name="Inicio" component={Inicio}  />
+            />)}} name="Inicio" component={Login}  />
         
         <Drawer.Screen 
          options={{

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { View, TextInput, ImageBackground, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -7,30 +6,24 @@ export default function Login() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../arquivos/imagensDeFundo/maxxxine.jpg')}
+        source={require('../arquivos/imagensDeFundo/shawshank.jpg')}
         style={styles.image}
       >
         <LinearGradient
           colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.9)']}
-          start={{x: 0, y: 0}}
-          end={{x: 0, y: 1}}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
           style={styles.gradient}
         >
-          <Text style={styles.title}>Junte-se ao Movie Master!</Text>
+          <Text style={styles.title}>Entre No Movie Master!</Text>
         </LinearGradient>
       </ImageBackground>
 
       <View style={styles.areadoinput}>
         <TextInput 
           style={styles.input}
-          placeholder='Email'
+          placeholder='Nome de Usuário/Email'
           keyboardType='email-address'
-          placeholderTextColor='white'
-        />
-        <TextInput 
-          style={styles.input}
-          placeholder='Nome de Usuário'
-          keyboardType='text'
           placeholderTextColor='white'
         />
         <TextInput 
@@ -40,15 +33,19 @@ export default function Login() {
           placeholderTextColor='white'
         />
         <TouchableOpacity style={styles.button} onPress={() => console.log("Sign in Pressionado!")}>
-        <LinearGradient 
-      colors={['#9754CB', '#6237A0' ]} 
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0.68, y: 0.68 }} 
-      style={styles.btnDegradw}>
-          <Text style={styles.buttonText}>Registrar</Text>
+          <LinearGradient 
+            colors={['#9754CB', '#6237A0']} 
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0.68, y: 0.68 }} 
+            style={styles.btnDegradw}
+          >
+            <Text style={styles.buttonText}>Entrar</Text>
           </LinearGradient>
         </TouchableOpacity>
-    
+       
+        <TouchableOpacity style={styles.btnredirecionamento} onPress={() => console.log("Cadastro Pressionado!")}>
+          <Text style={styles.buttonText}>Cadastro</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -68,7 +65,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: '30%',
+    height: '40%',  
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -76,7 +73,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     color: 'white',
     textAlign: 'center',
-    
+    marginBottom: 20, 
   },
   areadoinput: {
     width: '100%',
@@ -85,10 +82,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20, 
     backgroundColor: 'black',
-    borderBottom: 100,
-    border: 'solid',
-    borderColor: '#1a1a1a',
-    paddingBottom: 100,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1a1a1a',
   },
   input: {
     height: 50,
@@ -108,6 +103,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 20,
+  },
+  btnredirecionamento: {
+    paddingTop: 50,
   },
   buttonText: {
     color: 'white',

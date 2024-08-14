@@ -3,7 +3,7 @@ import React from 'react';
 import { View, TextInput, ImageBackground, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function Login() {
+export default function Cadastro() {
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -48,7 +48,9 @@ export default function Login() {
           <Text style={styles.buttonText}>Registrar</Text>
           </LinearGradient>
         </TouchableOpacity>
-    
+        <TouchableOpacity style={styles.buttontxt} onPress={() => console.log("Sign in Pressionado!")}>
+        <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

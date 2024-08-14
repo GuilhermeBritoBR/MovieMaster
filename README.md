@@ -18,16 +18,12 @@ A principal função é otimizar a expressão de opiniões sobre filmes e melhor
 
 
 
-  <div> <h2><img src="https://cdn-icons-png.flaticon.com/512/2572/2572708.png" width="25" height="25" alt="Imagem icon sobre" />   Linguagens e Ferramentas </h2></div>
+ <div> <h2><img src="https://cdn-icons-png.flaticon.com/512/2572/2572708.png" width="25" height="25" alt="Imagem icon sobre" />   Linguagens e Ferramentas </h2></div>
 
   
   <tr>
-    
-    
     <td align="center" width="96">
         <img src="https://techstack-generator.vercel.app/react-icon.svg" alt="icon" width="65" height="65" />
-    </td>
-
     </td>
   </tr>
   <tr>
@@ -42,7 +38,8 @@ A principal função é otimizar a expressão de opiniões sobre filmes e melhor
         <img src="https://user-images.githubusercontent.com/74038190/212257460-738ff738-247f-4445-a718-cdd0ca76e2db.gif" alt="icon" width="65" height="65" />
     </td>
   </tr>
-</table> <br>
+</table>
+  <br>
   
 
 

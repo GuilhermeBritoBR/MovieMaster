@@ -55,15 +55,15 @@ Por isso, decidimos criar esse aplicativo.🤩
 **São esses os integrantes do projeto** 🧑‍💻
 
 Pedro Henrique 🙋‍♂️<br>
-Project Owner, responsável pela documentação e desenvolvedor front-end
+Project Owner, responsável pela documentação e desenvolvedor front-end <br>
 Pedro é um entusiasta do esporte, resolvedor de conflitos, um líder por onde vai, é filmaker, iniciante na arte de fotógrafar, auxiliar técnico de um time de futsal e muito firme na sua fé cristã. 
 
 Guilherme Brito 🙋‍♂️<br>
-Encarregado pelo back-end do projeto
+Encarregado pelo back-end do projeto <br>
 Guilherme, mais conhecido como Brito, é muito focado, disciplinado, estudioso e corredor de rua do alto nível.
 
 Nicolas Cardozo 🙋‍♂️<br>
-Atribuído a função de desenvolvedor front-end
+Atribuído a função de desenvolvedor front-end <br>
 Nicolas é um leitor nato, é crítico, amante da filosofia e grande apreciador da arte. 
 
 

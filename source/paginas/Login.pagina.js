@@ -3,8 +3,18 @@ import { View, TextInput, ImageBackground, StyleSheet, Text, TouchableOpacity, K
 import { LinearGradient } from 'expo-linear-gradient';
 //axios
 import axios, { Axios }  from 'axios';
-
+//para o salvalmento dos tokens
+import { SalvarNome } from '../funçoes/SalvarNomeDoUsuario.funcao';
+import { SalvarToken } from '../funçoes/SalvarToken.funcao';
+//navegação entre páginas
+import { useNavigation } from '@react-navigation/native';
+ //ip ou localhost
+  //ip da rede celular celular 192.168.35.157
+  import { local } from '../funçoes/IpOuLocalhost';
 export default function Login() {
+  //para a navegação
+  const navigation = useNavigation("");
+ 
   //constante dos dados
   const [emailEnome, setandoEmailEnome]= useState("");
   const [senha, setandoSenha] = useState("");
@@ -22,17 +32,27 @@ export default function Login() {
    //sistema de login de dados
   //vamos conectar com a api externa para o funcionamento primario
   //usaremos o axios como intermediario, como o fetch do js
-  async function RealizarLogin(){
+  const RealizarLogin = async (emailEnome, senha) =>{
     //jsonficando os dados para a transferencia via axios e posterirmente ate api
-    try{
-
-    await axios.post('http://192.168.35.157:3000/loginPage/login',{
+    const dadosParaEnviar = {
       emailEnome, senha,
-    });
-    alert("Login realizado! Bem vindo ao MovieMaster!")
+    };
+    try{
+    const resposta = await axios.post(`http://${local}:3000/loginPage/login`, dadosParaEnviar);
+    const {token, name} = resposta.data;
+    //salva token
+    await SalvarToken(token);
+    await SalvarNome(name);
+    //enviar para a pagina inicio
+    navigation.navigate("Inicio");
+    alert("Login realizado! Bem vindo ao MovieMaster!");
     }catch(err){
-      alert("Erro ao se logar!");
-      console.log(`Segue o erro ao se logar: ${err}`)
+      if (err.response && err.response.status === 401) {
+        alert("Dados incorretos! Tente novamente!");
+      } else {
+        alert("Erro ao se logar!");
+        console.log(`Segue o erro ao se logar: ${err}`);
+      }
     }
     
   }

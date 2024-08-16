@@ -2,9 +2,19 @@ import React, { useState } from 'react'; //HOOKS
 import { View, TextInput, ImageBackground, StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 //axios
-import axios, { Axios }  from 'axios';
-
+import axios from 'axios';
+//token funcionalidades
+import { SalvarNome } from '../funçoes/SalvarNomeDoUsuario.funcao.js';
+import { SalvarToken } from '../funçoes/SalvarToken.funcao.js';
+//navegação entre páginas
+import { useNavigation } from '@react-navigation/native';
+//ip ou localhost
+  //ip da rede celular celular 192.168.35.157
+  import { local } from '../funçoes/IpOuLocalhost.js';
 export default function Cadastro() {
+  //constante para navegação
+  const navigation = useNavigation("");
+  
   //coletando dados do formulário
   const [nome, setandoNome] = useState("");
   const [senha, setandoSenha] = useState("");
@@ -22,14 +32,21 @@ export default function Cadastro() {
   //sistema de cadastro de dados
   //vamos conectar com a api externa para o funcionamento primario
   //usaremos o axios como intermediario, como o fetch do js
-  async function RealizarCadastro(){
+  const RealizarCadastro = async()=>{
     //jsonficando os dados para a transferencia via axios e posterirmente ate api
+    const dadosParaEnviar = {
+      nome, email, senha,
+    };
     try{
+    const resposta = await axios.post(`http://${local}:3000/registerPage/cadastro`, dadosParaEnviar);
+    const {token, name} = resposta.data;
+    //salva token
+    await SalvarToken(token);
+    await SalvarNome(name);
+    alert("Cadastro realizado! Bem vindo ao MovieMaster!");
+    //enviar para a pagina inicio
+   
 
-    await axios.post('http://192.168.35.157:3000/registerPage/cadastro',{
-      nome, senha, email,
-    });
-    alert("Cadastro realizado! Bem vindo ao MovieMaster!")
     }catch(err){
       alert("Erro ao se cadastrar!");
       console.log(`Segue o erro ao se cadastrar: ${err}`)

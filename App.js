@@ -1,92 +1,121 @@
 import * as React from 'react';
-//para a construção da navegação o container
 import { NavigationContainer } from '@react-navigation/native';
-//componentes do react
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-//linear para o degrade
+import { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
-//para importar icones 
 import Feather from '@expo/vector-icons/Feather';
-//paginas
-import Inicio from './source/paginas/Incio.pagina';
-import Login from './source/paginas/Login.pagina';
-import Usuario from './source/paginas/Usuario.pagina';
-import Cadastro from './source/paginas/Cadastro.pagina';
+import Inicio from "./source/paginas/Incio.pagina.js";
+import Login from "./source/paginas/Login.pagina.js";
+import Cadastro from "./source/paginas/Cadastro.pagina.js";
+import { VerificarToken } from './source/funçoes/VerificarToken.funcao.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createStackNavigator } from '@react-navigation/stack';
 
-
-//importando as unidades responsivas do css
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-
-//fontes de texto
-import H3 from './source/componentes/textos/h3.componente';
-
-//O Drawer trabalha a barra lateral
-import { createDrawerNavigator  } from '@react-navigation/drawer';
 const Drawer = createDrawerNavigator();
 
-export default function App() {
-  
+
+const ConteudoDoDrawer =()=> {
+  // Estado para determinar qual página mostrar ao usuário
+  const [paginaParaOUsuarioSeEstiverDeslogadoOuLogado, setPage] = useState(null);
+
+  // Hook para verificar o token assim que o app carregar
+  useEffect(() => {
+    async function LoadToken() {
+      const token = await AsyncStorage.getItem('@token'); // Busca o token no AsyncStorage
+      const response = await VerificarToken(token); // Verifica a validade do token
+      if (response === 0) {
+        // Se o token for inválido ou estiver expirado, direciona para a página de login
+        console.log('Deslogado ou token expirado');
+        setPage("Login");  // Alterado para redirecionar para Login ao invés de Cadastro
+      } else if (response === 1) {
+        // Se o token for válido, direciona para a página inicial
+        console.log('Logado');
+        setPage("Inicio");
+      }
+    }
+    LoadToken();
+  }, []);
+
+  // Exibe uma tela de carregamento enquanto o token é verificado
+  if (paginaParaOUsuarioSeEstiverDeslogadoOuLogado === null) {
+    return (
+      <View style={EstilosDoDrawer.TelaDeCarregamento}>
+        <Text style={{ fontSize: 18, color: '#ffffff' }}>MovieMaster está carregando...</Text>
+      </View> 
+    );
+  }
+
+  // Configuração da navegação com base na verificação do token
   return (
-    <NavigationContainer>
-      
-      <Drawer.Navigator initialRouteName="inicio"
-      screenOptions={{
-        headerShown: false, //remove o header padrão
-        drawerActiveBackgroundColor: '#242424', // poe cor preta no background dos botoes
-        drawerStyle:{
-          backgroundColor: '#242424', // é o background de toda a barra lateral
-        },
-        drawerLabelStyle: {
-          fontSize: 18, // Tamanho da fonte dos itens
-          fontWeight: 'regular', // Peso da fonte dos itens
-          color: '#ffffff', // Cor da fonte dos itens
-        }, 
-      }}
-      >
-        
-
-        <Drawer.Screen 
-         options={{
-          drawerIcon: () => (
-            <Image 
-              source={require('./source/arquivos/icones/home.png')} 
-              style={EstilosDoDrawer.iconeImageEsuaConfiguracao} 
-            />)}} name="Inicio" component={Inicio}  />
-        
-        <Drawer.Screen 
-         options={{
-          drawerIcon: () => (
-            <Image 
-              source={require('./source/arquivos/icones/home.png')} 
-              style={EstilosDoDrawer.iconeImageEsuaConfiguracao} 
-            />)}} name="Login" component={Login}  />
-            <Drawer.Screen 
-         options={{
-          drawerIcon: () => (
-            <Image 
-              source={require('./source/arquivos/icones/home.png')} 
-              style={EstilosDoDrawer.iconeImageEsuaConfiguracao} 
-            />)}} name="Cadastro" component={Cadastro}  />
-
-      </Drawer.Navigator>
-    </NavigationContainer>
+    
+     
+              <Drawer.Navigator
+                initialRouteName={paginaParaOUsuarioSeEstiverDeslogadoOuLogado}
+                screenOptions={{
+                  headerShown: false, // Remove o header padrão
+                  drawerActiveBackgroundColor: '#242424', // Define a cor de fundo dos itens ativos no drawer
+                  drawerStyle: { backgroundColor: '#242424' }, // Define a cor de fundo do drawer
+                  drawerLabelStyle: {
+                    fontSize: 18, // Tamanho da fonte dos itens
+                    fontWeight: 'regular', // Peso da fonte dos itens
+                    color: '#ffffff', // Cor da fonte dos itens
+                  },
+                  swipeEnabled: false,
+                }}
+              >
+                {paginaParaOUsuarioSeEstiverDeslogadoOuLogado == "Inicio" ? (
+                <Drawer.Screen
+                options={{
+                  drawerIcon: () => (
+                    <Image
+                      source={require('./source/arquivos/icones/home.png')}
+                      style={EstilosDoDrawer.iconeImageEsuaConfiguracao}
+                    />
+                  ),
+                }}
+                name="Inicio"
+                component={Inicio}
+              />
+                ):(
+                <>
+                <Drawer.Screen name="Login" component={Login}/>
+                <Drawer.Screen
+                name="Cadastro"
+                component={Cadastro}/>
+                </>
+                )}
+                
+              </Drawer.Navigator>
   );
 }
-
-//css da rota drawer
-const EstilosDoDrawer = StyleSheet.create(({
-  ViewiconeDoDrawer:{
+export default function App(){
+  return(
+    <NavigationContainer>
+      <ConteudoDoDrawer/>
+    </NavigationContainer>
+  )
+}
+// Estilos da aplicação
+const EstilosDoDrawer = StyleSheet.create({
+  ViewiconeDoDrawer: {
     width: 24,
     height: 24,
   },
-  iconeImageEsuaConfiguracao:{
+  iconeImageEsuaConfiguracao: {
     width: 32,
     height: 32,
   },
-  ViewPrincipal:{
+  ViewPrincipal: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: wp('100%'),
-    height: wp('20%'), 
-},
-}))
+    width: '100%',
+    height: '20%',
+  },
+  TelaDeCarregamento: {
+    backgroundColor: '#242424',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

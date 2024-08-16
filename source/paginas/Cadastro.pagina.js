@@ -1,51 +1,66 @@
-import React, { useState } from 'react'; //HOOKS
-import { View, TextInput, ImageBackground, StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-//axios
-import axios, { Axios }  from 'axios';
+import React, { useState } from "react"; // HOOKS
+import {
+  View,
+  TextInput,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+// axios
+import axios from "axios";
 
 export default function Cadastro() {
-  //coletando dados do formulário
+  // coletando dados do formulário
   const [nome, setandoNome] = useState("");
   const [senha, setandoSenha] = useState("");
   const [email, setandoEmail] = useState("");
-  //função para verificar a procedencia dos dados
-  function VerificarSeTemDados(){
-    if(nome.length >= 3 && senha.length >= 8  ){
-      //no minino 3 letras em um nome e 8 caracteres na senha
-      console.log(`Segue o valor dos dados das constantes Nome: ${nome}, Senha ${senha}, Email: ${email}`);
+
+  // função para verificar a procedência dos dados
+  function VerificarSeTemDados() {
+    if (nome.length >= 3 && senha.length >= 8) {
+      // no mínimo 3 letras em um nome e 8 caracteres na senha
+      console.log(
+        `Segue o valor dos dados das constantes Nome: ${nome}, Senha ${senha}, Email: ${email}`
+      );
       RealizarCadastro();
-    }else{
+    } else {
       alert("Por gentileza, preencha os campos corretamente!");
     }
   }
-  //sistema de cadastro de dados
-  //vamos conectar com a api externa para o funcionamento primario
-  //usaremos o axios como intermediario, como o fetch do js
-  async function RealizarCadastro(){
-    //jsonficando os dados para a transferencia via axios e posterirmente ate api
-    try{
 
-    await axios.post('http://192.168.35.157:3000/registerPage/cadastro',{
-      nome, senha, email,
-    });
-    alert("Cadastro realizado! Bem vindo ao MovieMaster!")
-    }catch(err){
+  // sistema de cadastro de dados
+  // vamos conectar com a API externa para o funcionamento primário
+  // usaremos o axios como intermediário, como o fetch do js
+  async function RealizarCadastro() {
+    // jsonficando os dados para a transferência via axios e posteriormente até API
+    try {
+      await axios.post("http://192.168.35.157:3000/registerPage/cadastro", {
+        nome,
+        senha,
+        email,
+      });
+      alert("Cadastro realizado! Bem-vindo ao MovieMaster!");
+    } catch (err) {
       alert("Erro ao se cadastrar!");
-      console.log(`Segue o erro ao se cadastrar: ${err}`)
+      console.log(`Segue o erro ao se cadastrar: ${err}`);
     }
-    
   }
+
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../arquivos/imagensDeFundo/maxxxine.jpg')}
+        source={require("../arquivos/imagensDeFundo/maxxxine.jpg")}
         style={styles.image}
       >
         <LinearGradient
-          colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.9)']}
-          start={{x: 0, y: 0}}
-          end={{x: 0, y: 1}}
+          colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.9)"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
           style={styles.gradient}
         >
           <View style={styles.titleContainer}>
@@ -54,45 +69,48 @@ export default function Cadastro() {
         </LinearGradient>
       </ImageBackground>
 
-      <View
-        style={styles.areadoinput}
-        
-      >
-        <TextInput 
+      <View style={styles.areadoinput}>
+        <TextInput
           style={styles.input}
-          placeholder='Email'
-          keyboardType='email-address'
-          placeholderTextColor='white'
+          placeholder="Email"
+          keyboardType="email-address"
+          placeholderTextColor="white"
           value={email}
-          onChangeText={(textodigitado)=> setandoEmail(textodigitado)}
+          onChangeText={(textodigitado) => setandoEmail(textodigitado)}
         />
-        <TextInput 
+        <TextInput
           style={styles.input}
-          placeholder='Nome de Usuário'
-          keyboardType='default'
-          placeholderTextColor='white'
+          placeholder="Nome de Usuário"
+          keyboardType="default"
+          placeholderTextColor="white"
           value={nome}
-          onChangeText={(textodigitado)=> setandoNome(textodigitado)}
+          onChangeText={(textodigitado) => setandoNome(textodigitado)}
         />
-        <TextInput 
+        <TextInput
           style={styles.input}
-          placeholder='Senha'
+          placeholder="Senha"
           secureTextEntry
-          placeholderTextColor='white'
+          placeholderTextColor="white"
           value={senha}
-          onChangeText={(textodigitado)=> setandoSenha(textodigitado)}
+          onChangeText={(textodigitado) => setandoSenha(textodigitado)}
         />
-        <TouchableOpacity style={styles.button} onPress={() => VerificarSeTemDados()}>
-          <LinearGradient 
-            colors={['#9754CB', '#6237A0' ]} 
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => VerificarSeTemDados()}
+        >
+          <LinearGradient
+            colors={["#9754CB", "#6237A0"]}
             start={{ x: 0, y: 0 }}
-            end={{ x: 0.68, y: 0.68 }} 
+            end={{ x: 0.68, y: 0.68 }}
             style={styles.btnDegradw}
           >
             <Text style={styles.buttonText}>Registrar</Text>
           </LinearGradient>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btnredirecionamento} onPress={() => console.log("Login Pressionado!")}>
+        <TouchableOpacity
+          style={styles.btnredirecionamento}
+          onPress={() => console.log("Login Pressionado!")}
+        >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
@@ -104,72 +122,77 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  scrollViewContent: {
+    flexGrow: 1,
+    justifyContent: "center",
+  },
   image: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-end',
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
   gradient: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
-    height: '30%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: "40%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   titleContainer: {
-    height: 100, // Altura fixa para manter o texto estável
-    justifyContent: 'center',
+    height: 100,
+    justifyContent: "center",
+    marginTop: 50,
   },
   title: {
     fontSize: 28,
-    color: 'white',
-    textAlign: 'center',
+    color: "white",
+    textAlign: "center",
+    marginTop: 20,
   },
   areadoinput: {
-    width: '100%',
-    height: '40%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20, 
-    backgroundColor: 'black',
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+    backgroundColor: "black",
     borderBottomWidth: 1,
-    borderBottomColor: '#1a1a1a',
+    borderBottomColor: "#1a1a1a",
   },
   input: {
     height: 50,
-    width: '100%',
-    maxWidth: 350, 
-    borderBottomWidth: 2, 
-    borderBottomColor: 'white',
+    width: "100%",
+    maxWidth: 350,
+    borderBottomWidth: 2,
+    borderBottomColor: "white",
     marginVertical: 10,
-    color: 'white',
+    color: "white",
     paddingHorizontal: 10,
-    backgroundColor: 'transparent', 
+    backgroundColor: "transparent",
   },
   button: {
     width: 250,
     borderRadius: 15,
-    backgroundColor: '#6237A0',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#6237A0",
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 20,
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
   },
-  btnDegradw:{
+  btnDegradw: {
     width: 250,
-    backgroundColor: '#6237A0',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#6237A0",
+    alignItems: "center",
+    justifyContent: "center",
     height: 50,
     borderRadius: 15,
   },
   btnredirecionamento: {
-    paddingBottom:50,
-    paddingTop:20,
+    paddingBottom: 50,
+    paddingTop: 20,
   },
 });

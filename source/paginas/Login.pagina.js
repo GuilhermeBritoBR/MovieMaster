@@ -1,9 +1,8 @@
-<<<<<<< HEAD
 import React, { useState } from 'react';
 import { View, TextInput, ImageBackground, StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 //axios
-import axios, { Axios }  from 'axios';
+import axios from 'axios';
 //para o salvalmento dos tokens
 import { SalvarNome } from '../funçoes/SalvarNomeDoUsuario.funcao';
 import { SalvarToken } from '../funçoes/SalvarToken.funcao';
@@ -12,22 +11,13 @@ import { useNavigation } from '@react-navigation/native';
  //ip ou localhost
   //ip da rede celular celular 192.168.35.157
   import { local } from '../funçoes/IpOuLocalhost';
-  
-    
 export default function Login() {
-  const [focusedInput, setFocusedInput] = useState(false);
-  
-    const test = () => {
-      alert("HELLO");
-    };
   //para a navegação
   const navigation = useNavigation("");
  
   //constante dos dados
   const [emailEnome, setandoEmailEnome]= useState("");
   const [senha, setandoSenha] = useState("");
-  //login dos usuarios
-  //novamente a conexão com a api primaria
   function VerificarSeTemDados(){
     if(emailEnome.length >= 3 && senha.length >= 5  ){
       //no minino 3 letras em um nome e 8 caracteres na senha
@@ -47,10 +37,10 @@ export default function Login() {
     };
     try{
     const resposta = await axios.post(`http://${local}:3000/loginPage/login`, dadosParaEnviar);
-    const {token, name} = resposta.data;
+    const {token, nomeResposta} = resposta.data;
     //salva token
     await SalvarToken(token);
-    await SalvarNome(name);
+    await SalvarNome(nomeResposta);
     //enviar para a pagina inicio
     navigation.navigate("Inicio");
     alert("Login realizado! Bem vindo ao MovieMaster!");
@@ -64,58 +54,59 @@ export default function Login() {
     }
     
   }
-
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../arquivos/imagensDeFundo/iluminado.jpg")}
+        source={require('../arquivos/imagensDeFundo/shawshank.jpg')}
         style={styles.image}
       >
         <LinearGradient
-          colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.9)"]}
+          colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.9)']}
           start={{ x: 0, y: 0 }}
           end={{ x: 0, y: 1 }}
           style={styles.gradient}
         >
-          <Text style={styles.title}>Entre No Movie Master!</Text>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>Entre no Movie Master!</Text>
+          </View>
         </LinearGradient>
       </ImageBackground>
 
-      <View style={styles.areadoinput}>
-        <TextInput
+      <KeyboardAvoidingView
+        style={styles.areadoinput}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <TextInput 
           style={styles.input}
-          placeholder="Nome de Usuário/Email"
-          keyboardType="email-address"
-          placeholderTextColor="white"
-          onFocus={() => setFocusedInput(true)}
+          placeholder='Nome de Usuário/Email'
+          keyboardType='email-address'
+          placeholderTextColor='white'
+          value={emailEnome}
+          onChangeText={(textoDigitado)=>setandoEmailEnome(textoDigitado)}
         />
-        <TextInput
+        <TextInput 
           style={styles.input}
-          placeholder="Senha"
+          placeholder='Senha'
           secureTextEntry
-          placeholderTextColor="white"
+          placeholderTextColor='white'
+          value={senha}
+          onChangeText={(textoDigitado)=>setandoSenha(textoDigitado)}
         />
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => console.log("Sign in Pressionado!")}
-        >
-          <LinearGradient
-            colors={["#9754CB", "#6237A0"]}
+        <TouchableOpacity style={styles.button} onPress={() => VerificarSeTemDados()}>
+          <LinearGradient 
+            colors={['#9754CB', '#6237A0']} 
             start={{ x: 0, y: 0 }}
-            end={{ x: 0.68, y: 0.68 }}
+            end={{ x: 0.68, y: 0.68 }} 
             style={styles.btnDegradw}
           >
             <Text style={styles.buttonText}>Entrar</Text>
           </LinearGradient>
         </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.btnredirecionamento}
-          onPress={() => console.log("Cadastro Pressionado!")}
-        >
+       
+        <TouchableOpacity style={styles.btnredirecionamento} onPress={() => navigation.navigate("Cadastro")}>
           <Text style={styles.buttonText}>Cadastro</Text>
         </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     </View>
   );
 }
@@ -126,64 +117,69 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "flex-end",
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   gradient: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    height: "40%",
-    justifyContent: "center",
-    alignItems: "center",
+    height: '40%',  
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  titleContainer: {
+    height: 100, // Fixando a altura do contêiner do título
+    justifyContent: 'center',
   },
   title: {
     fontSize: 28,
-    color: "white",
-    textAlign: "center",
-    marginTop: 60,
+    color: 'white',
+    textAlign: 'center',
   },
   areadoinput: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-    backgroundColor: "black",
+    width: '100%',
+    height: '40%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20, 
+    backgroundColor: 'black',
     borderBottomWidth: 1,
-    borderBottomColor: "black",
+    borderBottomColor: '#1a1a1a',
   },
   input: {
     height: 50,
-    width: "100%",
-    maxWidth: 350,
-    borderBottomWidth: 2,
-    borderBottomColor: "white",
+    width: '100%',
+    maxWidth: 350, 
+    borderBottomWidth: 2, 
+    borderBottomColor: 'white',
     marginVertical: 10,
-    color: "white",
+    color: 'white',
     paddingHorizontal: 10,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent', 
   },
   button: {
     width: 250,
     borderRadius: 15,
-    backgroundColor: "#6237A0",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#6237A0',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 20,
   },
   btnredirecionamento: {
-    paddingTop: 50,
+    paddingTop: 20,
+    paddingBottom:0,
   },
   buttonText: {
-    color: "white",
+    color: 'white',
     fontSize: 16,
   },
-  btnDegradw: {
+  btnDegradw:{
     width: 250,
-    backgroundColor: "#6237A0",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#6237A0',
+    alignItems: 'center',
+    justifyContent: 'center',
     height: 50,
     borderRadius: 15,
   },

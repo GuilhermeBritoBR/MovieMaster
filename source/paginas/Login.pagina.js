@@ -7,9 +7,9 @@ import axios from 'axios';
 import { SalvarNome } from '../funçoes/SalvarNomeDoUsuario.funcao';
 import { SalvarToken } from '../funçoes/SalvarToken.funcao';
 //navegação entre páginas
-import { useNavigation } from '@react-navigation/native';
  //ip ou localhost
   //ip da rede celular celular 192.168.35.157
+  import { useNavigation } from '@react-navigation/native';
   import { local } from '../funçoes/IpOuLocalhost';
 export default function Login() {
   //para a navegação
@@ -22,7 +22,7 @@ export default function Login() {
     if(emailEnome.length >= 3 && senha.length >= 5  ){
       //no minino 3 letras em um nome e 8 caracteres na senha
       console.log(`Segue o valor dos dados das constantes NomeOUEmail: ${emailEnome}, Senha ${senha}`);
-      RealizarLogin();
+      RealizarLogin(emailEnome, senha);
     }else{
       alert("Por gentileza, preencha os campos corretamente!");
     }
@@ -42,8 +42,9 @@ export default function Login() {
     await SalvarToken(token);
     await SalvarNome(nomeResposta);
     //enviar para a pagina inicio
-    navigation.navigate("Inicio");
+    
     alert("Login realizado! Bem vindo ao MovieMaster!");
+    navigation.navigate("Inicio");
     }catch(err){
       if (err.response && err.response.status === 401) {
         alert("Dados incorretos! Tente novamente!");

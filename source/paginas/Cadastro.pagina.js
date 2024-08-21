@@ -48,7 +48,7 @@ export default function Cadastro() {
     await SalvarNome(dadosParaEnviar.nome);
     alert("Cadastro realizado! Bem vindo ao MovieMaster!");
     //enviar para a pagina inicio
-   
+    navigation.navigate("Inicio");
 
     }catch(err){
       alert("Erro ao se cadastrar!");
@@ -114,7 +114,7 @@ export default function Cadastro() {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.btnredirecionamento}
-          onPress={() => console.log("Login Pressionado!")}
+          onPress={() => navigation.navigate("Login")}
         >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>

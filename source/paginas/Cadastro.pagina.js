@@ -29,7 +29,7 @@ export default function Cadastro() {
       );
       RealizarCadastro();
     } else {
-      alert("Por gentileza, preencha os campos corretamente!");
+      alert("Por gentileza, preencha os campos corretamente! Nome deve minimamente 3 caracteres e senha 8 caracteres");
     }
   }
   //sistema de cadastro de dados
@@ -42,10 +42,10 @@ export default function Cadastro() {
     };
     try{
     const resposta = await axios.post(`http://${local}:3000/registerPage/cadastro`, dadosParaEnviar);
-    const {token} = resposta.data;
+    const {nomeResposta, token} = resposta.data;
     //salva token
     await SalvarToken(token);
-    await SalvarNome(dadosParaEnviar.nome);
+    await SalvarNome(nomeResposta);
     alert("Cadastro realizado! Bem vindo ao MovieMaster!");
     //enviar para a pagina inicio
     navigation.navigate("Inicio");

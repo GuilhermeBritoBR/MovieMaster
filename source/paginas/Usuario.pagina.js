@@ -6,29 +6,59 @@ import { ViewCentralCorpoDoAPP, ViewPrincipal } from '../estilos/EstilosEstrutur
 import Footer from '../componentes/estruturais/Footer.componente.js';
 //não remover status bar, para manter header bonito
 //importando hook
-import { useState } from 'react';
-//importando o menu que vai aparecer ao clicar
-import Menu from '../componentes/estruturais/Menu.componente.js';
-//importando para a navegação
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-
+import { useEffect, useState } from 'react';
+///axios para a conexão
+import axios from 'axios';
 //importando as unidades responsivas do css
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+//endereço da api
+import { local } from '../funçoes/IpOuLocalhost.js';
+//armazenamento local
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function Usuario() {
-    const Drawer = createDrawerNavigator();
-    const navigation = useNavigation();
-    //visibilidade do modal, aqui estamos controlando a tal por uma use state
-    const [visibilidadeModal, setandoVisibilidadeModal] = useState(false);    
+  //constantes que vão receber os dados
+  const [dadosDoUsuarioBRUTO, setandoDadosDoUsuarioBRUTO] = useState({});
+  const [nome, setandoNome]= useState("");
+  const [email, setandoEmail]= useState("");
+  const [senha, setandoSenha] = useState("");
+  //função
+  async function ColetandoDadosDoUsuario(){
+    //COLETANDO O TOKEN PARA ENVIAR JUNTAMENTE
+    const token = await AsyncStorage.getItem('@token');
+    const config = {
+      headers: {
+          'Authorization': token
+      }
+  };
+    try{
+        //buscando na API
+        const resposta = await axios.get(`http://${local}:3000/UserPage/ColetarDadosDoUsuario`, config);
+        if( resposta.status === 200){
+          //setando os dados bruto
+          setandoDadosDoUsuarioBRUTO(resposta.data);
+          setandoEmail(dadosDoUsuarioBRUTO.email);
+          setandoNome(dadosDoUsuarioBRUTO.nome);
+          setandoSenha(dadosDoUsuarioBRUTO.senha);
+          console.log(`Segue os valores: ${nome, email, senha}`);
+        }
+        else{
+          //se retornar 0, removo o token e vou para o login
+          console.log(`Token invalido`);
+        }
+    }catch(err){
+        console.log(`Segue o erro ao buscar os dados na API ${err}`);
+        alert(`Erro na aplicação, tente novamente!`);
+      }
+    }
+  //monitoradas por um useEffect
+  useEffect(()=>{
+    //FUNÇÃO PARA SER RODADA 
+    ColetandoDadosDoUsuario();
+  },[]);
   return (
     <View style={ViewPrincipal.estilo}>
-        {/* Não remover STATUS BAR!!!!!!!!!!!!!*/}
-        <Menu visibilidadeDoModalTrueFalse={visibilidadeModal} propriedadeParaFecharModal={()=>setandoVisibilidadeModal(false)}/>
-      <StatusBar backgroundColor={'#000000'}/>
-      <Header ativarMenuTrueFalse={() => navigation.openDrawer()} />
-
       <View style={ViewCentralCorpoDoAPP.estilo}>
           {/* Primeira View com os lançamentos */}
           <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>

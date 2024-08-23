@@ -58,7 +58,7 @@ export default function Login() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../arquivos/imagensDeFundo/shawshank.jpg')}
+        source={require('../arquivos/imagensDeFundo/iluminado.jpg')}
         style={styles.image}
       >
         <LinearGradient

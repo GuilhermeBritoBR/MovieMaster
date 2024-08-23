@@ -2,9 +2,12 @@
   import { NavigationContainer } from '@react-navigation/native';
   import { useEffect, useState } from 'react';
   import { View, Text, StyleSheet, Image , TouchableOpacity} from 'react-native';
+  //paginas
   import Inicio from "./source/paginas/Incio.pagina.js";
   import Login from "./source/paginas/Login.pagina.js";
   import Cadastro from "./source/paginas/Cadastro.pagina.js";
+  import Usuario from './source/paginas/Usuario.pagina.js';
+  
   import { VerificarToken } from './source/funçoes/VerificarToken.funcao.js';
   import AsyncStorage from '@react-native-async-storage/async-storage';
   import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -17,6 +20,7 @@
   import DeletarTokenFuncao from './source/funçoes/DeletarToken.funcao.js';
   //para a cone
   import axios from 'axios';
+
 
   export default function App(){
     // Estado para determinar qual página mostrar ao usuário
@@ -60,6 +64,10 @@
                     headerShown: false, // Remove o header padrão
                     drawerActiveBackgroundColor: '#242424', // Define a cor de fundo dos itens ativos no drawer
                     drawerStyle: { backgroundColor: '#242424' }, // Define a cor de fundo do drawer
+                    drawerActiveBackgroundColor: '#333', // Cor de fundo do item ativo
+                    drawerActiveTintColor: '#fff', // Cor do texto do item ativo
+                    drawerInactiveTintColor: '#ccc', // Cor do texto do item inativo
+                
                     drawerLabelStyle: {
                       fontSize: 18, // Tamanho da fonte dos itens
                       fontWeight: 'regular', // Peso da fonte dos itens
@@ -79,6 +87,18 @@
                   }}
                   name="Inicio"
                   component={Inicio}
+                />
+                <Drawer.Screen
+                  options={{
+                    drawerIcon: () => (
+                      <Image
+                        source={require('./source/arquivos/icones/home.png')}
+                        style={EstilosDoDrawer.iconeImageEsuaConfiguracao}
+                      />
+                    ),
+                  }}
+                  name="Usuario"
+                  component={Usuario}
                 />
                   <>
                   <Drawer.Screen name="Login" component={Login}

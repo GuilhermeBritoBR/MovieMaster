@@ -55,7 +55,7 @@ export default function DrawerStyle(props) {
         };
 
         BuscarNomeLocal();
-    },[]);
+    },[nome]);
 
     async function DeslogarUsuario() {
 

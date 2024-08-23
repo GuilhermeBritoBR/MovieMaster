@@ -10,7 +10,7 @@ import { useState } from 'react';
 //importando o menu que vai aparecer ao clicar
 import Menu from '../componentes/estruturais/Menu.componente.js';
 //importando para a navegação
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 //importando as unidades responsivas do css

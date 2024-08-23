@@ -42,10 +42,10 @@ export default function Cadastro() {
     };
     try{
     const resposta = await axios.post(`http://${local}:3000/registerPage/cadastro`, dadosParaEnviar);
-    const {nomeResposta, token} = resposta.data;
+    const {token, nome } = resposta.data;
     //salva token
     await SalvarToken(token);
-    await SalvarNome(nomeResposta);
+    await SalvarNome(dadosParaEnviar.nome);
     alert("Cadastro realizado! Bem vindo ao MovieMaster!");
     //enviar para a pagina inicio
     navigation.navigate("Inicio");

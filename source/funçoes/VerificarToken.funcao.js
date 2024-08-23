@@ -19,7 +19,7 @@ const VerificarToken = async (token) =>{
                     'Authorization': token
                 }
             };
-            const response = await axios.get(`http://${local}:3000/homePage`, config)
+            const response = await axios.get(`http://${local}:3000/homePage`, config, )
                 if( response.status === 200){
                     //se retornar 1 posso proseguir para a pagina
                     return 1;

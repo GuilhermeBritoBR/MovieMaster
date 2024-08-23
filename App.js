@@ -6,7 +6,7 @@
   import Inicio from "./source/paginas/Incio.pagina.js";
   import Login from "./source/paginas/Login.pagina.js";
   import Cadastro from "./source/paginas/Cadastro.pagina.js";
-  import Usuario from './source/paginas/Usuario.pagina.js';
+  import AlterarDados from './source/paginas/subPaginas/AlterarDados.pagina.js';
   
   import { VerificarToken } from './source/funçoes/VerificarToken.funcao.js';
   import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -20,6 +20,11 @@
   import DeletarTokenFuncao from './source/funçoes/DeletarToken.funcao.js';
   //para a cone
   import axios from 'axios';
+  //icones
+  import Feather from '@expo/vector-icons/Feather';
+  import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+  import Ionicons from '@expo/vector-icons/Ionicons';
+  import Entypo from '@expo/vector-icons/Entypo';
 
 
   export default function App(){
@@ -64,7 +69,7 @@
                     headerShown: false, // Remove o header padrão
                     drawerActiveBackgroundColor: '#242424', // Define a cor de fundo dos itens ativos no drawer
                     drawerStyle: { backgroundColor: '#242424' }, // Define a cor de fundo do drawer
-                    drawerActiveBackgroundColor: '#333', // Cor de fundo do item ativo
+                    drawerActiveBackgroundColor: '#6237A0', // Cor de fundo do item ativo
                     drawerActiveTintColor: '#fff', // Cor do texto do item ativo
                     drawerInactiveTintColor: '#ccc', // Cor do texto do item inativo
                 
@@ -79,10 +84,7 @@
                   <Drawer.Screen
                   options={{
                     drawerIcon: () => (
-                      <Image
-                        source={require('./source/arquivos/icones/home.png')}
-                        style={EstilosDoDrawer.iconeImageEsuaConfiguracao}
-                      />
+                      <Entypo name="home" size={36} color="white" />
                     ),
                   }}
                   name="Inicio"
@@ -91,14 +93,10 @@
                 <Drawer.Screen
                   options={{
                     drawerIcon: () => (
-                      <Image
-                        source={require('./source/arquivos/icones/home.png')}
-                        style={EstilosDoDrawer.iconeImageEsuaConfiguracao}
-                      />
-                    ),
+                      <MaterialIcons name="settings" size={36} color="white" />),
                   }}
-                  name="Usuario"
-                  component={Usuario}
+                  name="Alterar Dados"
+                  component={AlterarDados}
                 />
                   <>
                   <Drawer.Screen name="Login" component={Login}

@@ -61,14 +61,11 @@ export default function Usuario() {
     ColetandoDadosDoUsuario();
     //monitorando 
     console.log(`Segue os valores: ${nome, email}`);
-  },[]);
+  },[nome, email]);
 
   //funções para alterar os dados existentes
-  const AlterandoValorDoInputNome = (novoValor)=>{
+  const AlterandoValorDoInputSenha = (novoValor)=>{
     setandoNome(novoValor);
-  }
-  const AlterandoValorDoInputEmail = (novoValor)=>{
-    setandoEmail(novoValor);
   }
   //verificar valores
   async function FuncaoParaAlterarDados(nome, email){
@@ -76,7 +73,7 @@ export default function Usuario() {
     const token = await AsyncStorage.getItem('@token');
     //json com os dados alterados
     const DadosAlterados = {
-      nome, email
+      senha
     };
     const config = {
       headers: {
@@ -84,8 +81,7 @@ export default function Usuario() {
       }}
 
     try{
-      await axios.put(`http://${local}:3000/UserPage/AtualizarDadosDoUsuario`, DadosAlterados, config);
-      SalvarNome(DadosAlterados.nome);
+      const resposta = await axios.put(`http://${local}:3000/UserPage/AtualizarDadosDoUsuario`, DadosAlterados, config);
       alert("Informações alteradas com sucesso!");
     }catch(err){
       console.log(`Segue o erro: ${err}`);
@@ -107,17 +103,12 @@ export default function Usuario() {
             <H2 texto={"Altere suas informações pessoais"}/>
           <TextInput
           style={EstilosDoInicio.InputDeTexto}
-            placeholder={"Altere seu nome.."}
+            placeholder={"Altere sua senha.."}
             value={nome}  
-            onChangeText={(texto)=>AlterandoValorDoInputNome(texto)}  
+            onChangeText={AlterandoValorDoInputSenha}  
           />
-          <TextInput
-          style={EstilosDoInicio.InputDeTexto}
-            placeholder={"Altere seu email.."}
-            value={email}  
-            onChangeText={(texto)=>AlterandoValorDoInputEmail(texto)}  
-          />
-          <TouchableOpacity onPress={()=>FuncaoParaAlterarDados(nome, email)}
+          
+          <TouchableOpacity onPress={()=>FuncaoParaAlterarDados(senha)}
           style={EstilosDoInicio.botaoAlterar}>
           <LinearGradient 
             colors={['#9754CB', '#6237A0']} 

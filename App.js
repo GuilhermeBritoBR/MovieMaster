@@ -25,6 +25,7 @@
   import MaterialIcons from '@expo/vector-icons/MaterialIcons';
   import Ionicons from '@expo/vector-icons/Ionicons';
   import Entypo from '@expo/vector-icons/Entypo';
+import Configuracoes from './source/paginas/Configuracoes.pagina.js';
 
 
   export default function App(){
@@ -92,11 +93,18 @@
                 />
                 <Drawer.Screen
                   options={{
-                    drawerIcon: () => (
-                      <MaterialIcons name="settings" size={36} color="white" />),
+                    drawerItemStyle: { display: 'none' }, // Ocultar essa opção
                   }}
                   name="Alterar Dados"
                   component={AlterarDados}
+                />
+                <Drawer.Screen
+                  options={{
+                    drawerIcon: () => (
+                      <MaterialIcons name="settings" size={36} color="white" />),
+                  }}
+                  name="Configurações"
+                  component={Configuracoes}
                 />
                   <>
                   <Drawer.Screen name="Login" component={Login}

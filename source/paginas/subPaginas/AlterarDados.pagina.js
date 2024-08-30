@@ -111,12 +111,14 @@ export default function Usuario() {
             placeholder={"Altere seu nome.."}
             value={nome}  
             onChangeText={(texto)=>AlterandoValorDoInputNome(texto)}  
+            placeholderTextColor="white" 
           />
           <TextInput
           style={EstilosDoInicio.InputDeTexto}
             placeholder={"Altere seu email.."}
             value={email}  
             onChangeText={(texto)=>AlterandoValorDoInputEmail(texto)}  
+            placeholderTextColor="white" 
           />
           <TouchableOpacity onPress={()=>FuncaoParaAlterarDados(nome, email)}
           style={EstilosDoInicio.botaoAlterar}>

@@ -124,7 +124,7 @@ export default function DrawerStyle(props) {
     headerImage: {
       width: 80,
       height: 80,
-      borderRadius: 20, // deixa a imagem redonda
+      borderRadius: 80, // deixa a imagem redonda
       marginRight: 20, 
     },
     headerText: {

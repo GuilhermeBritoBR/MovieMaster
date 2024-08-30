@@ -65,7 +65,7 @@ const EstiloDoHeader = StyleSheet.create({
     ViewPrincipal:{
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 2,
+        height:60,
         backgroundColor: '#7100CA',   
     
     },

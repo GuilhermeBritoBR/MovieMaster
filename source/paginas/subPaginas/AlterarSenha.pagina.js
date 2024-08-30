@@ -1,4 +1,4 @@
-import {StatusBar,  StyleSheet,  Text,  View, TextInput, TouchableOpacity } from 'react-native';
+import {StatusBar,  StyleSheet,  Text,  View, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 //componentes importados para a estruturação do aplicativo
 import Header from '../../componentes/estruturais/Header.componente.js';
 //estilizações importadas
@@ -66,9 +66,12 @@ export default function AlterarSenha() {
   const navigation = useNavigation("");
     //FRONT END
   return (
+ 
     <View style={ViewPrincipal.estilo}>
        <StatusBar backgroundColor={'#000000'}/>
+       
        <HeaderRetorno voltarApaginaAnterior={()=> navigation.goBack("")}/>
+       
       <View style={ViewCentralCorpoDoAPP.estilo}>
      
           {/* Primeira View com os lançamentos */}
@@ -79,6 +82,7 @@ export default function AlterarSenha() {
             placeholder={"Altere sua senha.."}
             value={senha}  
             onChangeText={AlterandoValorDoInputSenha}  
+            placeholderTextColor="white" 
           />
           
           <TouchableOpacity onPress={()=>VerificarCaracteres()}
@@ -97,6 +101,7 @@ export default function AlterarSenha() {
       </View>
 
     </View>
+
   );
 }
 

@@ -93,7 +93,7 @@ export default function DrawerStyle(props) {
         {/* header */}
         <View style={styles.ViewPrincipalDoDrawer}>
           <Image
-            source={require('../../arquivos/icones/kaneki.png')}
+            source={require('../../arquivos/icones/MusashiPraying.png')}
             style={styles.headerImage}
           />
           <Text style={styles.headerText}>{nome}</Text>

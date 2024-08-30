@@ -20,6 +20,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SalvarNome } from '../../funçoes/SalvarNomeDoUsuario.funcao.js';
 import H2 from '../../componentes/textos/h2.componente.js';
 import { useNavigation } from '@react-navigation/native';
+import HeaderRetorno from '../../componentes/estruturais/HeaderRetorno.componente.js';
 
 
 export default function Usuario() {
@@ -99,7 +100,7 @@ export default function Usuario() {
   return (
     <View style={ViewPrincipal.estilo}>
        <StatusBar backgroundColor={'#000000'}/>
-       <Header ativarMenuTrueFalse={() => navigation.openDrawer()} />
+       <HeaderRetorno voltarApaginaAnterior={() => navigation.goBack()}/>
       <View style={ViewCentralCorpoDoAPP.estilo}>
      
           {/* Primeira View com os lançamentos */}

@@ -6,6 +6,7 @@
   import Inicio from "./source/paginas/Incio.pagina.js";
   import Login from "./source/paginas/Login.pagina.js";
   import Cadastro from "./source/paginas/Cadastro.pagina.js";
+  import Perfil from "./source/paginas/Perfil.pagina.js";
   import AlterarDados from './source/paginas/subPaginas/AlterarDados.pagina.js';
   
   import { VerificarToken } from './source/funçoes/VerificarToken.funcao.js';
@@ -26,6 +27,7 @@
   import Ionicons from '@expo/vector-icons/Ionicons';
   import Entypo from '@expo/vector-icons/Entypo';
 import Configuracoes from './source/paginas/Configuracoes.pagina.js';
+import AlterarSenha from './source/paginas/subPaginas/AlterarSenha.pagina.js';
 
 
   export default function App(){
@@ -91,6 +93,15 @@ import Configuracoes from './source/paginas/Configuracoes.pagina.js';
                   name="Inicio"
                   component={Inicio}
                 />
+                 <Drawer.Screen
+                  options={{
+                    drawerIcon: () => (
+                      <Entypo name="home" size={36} color="white" />
+                    ),
+                  }}
+                  name="Perfil"
+                  component={Perfil}
+                />
                 <Drawer.Screen
                   options={{
                     drawerItemStyle: { display: 'none' }, // Ocultar essa opção
@@ -114,6 +125,12 @@ import Configuracoes from './source/paginas/Configuracoes.pagina.js';
                   <Drawer.Screen
                   name="Cadastro"
                   component={Cadastro}
+                  options={{
+                    drawerItemStyle: { display: 'none' }, // Ocultar essa opção
+                  }}/>
+                   <Drawer.Screen
+                  name="AlterarSenha"
+                  component={AlterarSenha}
                   options={{
                     drawerItemStyle: { display: 'none' }, // Ocultar essa opção
                   }}/>

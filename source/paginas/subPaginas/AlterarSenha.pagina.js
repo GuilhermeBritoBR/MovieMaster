@@ -20,55 +20,28 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SalvarNome } from '../../funçoes/SalvarNomeDoUsuario.funcao.js';
 import H2 from '../../componentes/textos/h2.componente.js';
 import { useNavigation } from '@react-navigation/native';
+import HeaderRetorno from '../../componentes/estruturais/HeaderRetorno.componente.js';
 
 
-export default function Usuario() {
+export default function AlterarSenha() {
   //constantes que vão receber os dados
-  const [dadosDoUsuarioBRUTO, setandoDadosDoUsuarioBRUTO] = useState({});
-  const [nome, setandoNome]= useState("");
-  const [email, setandoEmail]= useState("");
   const [senha, setandoSenha] = useState("");
   //função
-  async function ColetandoDadosDoUsuario(){
-    //COLETANDO O TOKEN PARA ENVIAR JUNTAMENTE
-    const token = await AsyncStorage.getItem('@token');
-    const config = {
-      headers: {
-          'Authorization': token
-      }
-  };
-    try{
-        //buscando na API
-        const resposta = await axios.get(`http://${local}:3000/UserPage/ColetarDadosDoUsuario`, config);
-        if( resposta.status === 200){
-          //setando os dados bruto
-          setandoDadosDoUsuarioBRUTO(resposta.data);
-          setandoEmail(resposta.data.email);
-          setandoNome(resposta.data.nome);
-        }
-        else{
-          //se retornar 0, removo o token e vou para o login
-          console.log(`Token invalido`);
-        }
-    }catch(err){
-        console.log(`Segue o erro ao buscar os dados na API ${err}`);
-        alert(`Erro na aplicação, tente novamente!`);
-      }
-    }
-  //monitoradas por um useEffect
-  useEffect(()=>{
-    //FUNÇÃO PARA SER RODADA 
-    ColetandoDadosDoUsuario();
-    //monitorando 
-    console.log(`Segue os valores: ${nome, email}`);
-  },[nome, email]);
-
+  
   //funções para alterar os dados existentes
   const AlterandoValorDoInputSenha = (novoValor)=>{
-    setandoNome(novoValor);
+    setandoSenha(novoValor);
+  }
+  //verificando validade da senha em caracteres
+  function VerificarCaracteres(){
+    if(senha.length >= 8){
+     FuncaoParaAlterarDados(senha);
+    }else{
+      alert("Por favor, preencha corretamente o campo, são no mínimo 8 caracteres!");
+    }
   }
   //verificar valores
-  async function FuncaoParaAlterarDados(nome, email){
+  async function FuncaoParaAlterarDados(senha){
     //coletando token
     const token = await AsyncStorage.getItem('@token');
     //json com os dados alterados
@@ -81,7 +54,7 @@ export default function Usuario() {
       }}
 
     try{
-      const resposta = await axios.put(`http://${local}:3000/UserPage/AtualizarDadosDoUsuario`, DadosAlterados, config);
+      await axios.put(`http://${local}:3000/UserPage/AtualizarSenhaDoUsuario`, DadosAlterados, config);
       alert("Informações alteradas com sucesso!");
     }catch(err){
       console.log(`Segue o erro: ${err}`);
@@ -95,7 +68,7 @@ export default function Usuario() {
   return (
     <View style={ViewPrincipal.estilo}>
        <StatusBar backgroundColor={'#000000'}/>
-       <Header ativarMenuTrueFalse={() => navigation.openDrawer()} />
+       <HeaderRetorno voltarApaginaAnterior={()=> navigation.goBack("")}/>
       <View style={ViewCentralCorpoDoAPP.estilo}>
      
           {/* Primeira View com os lançamentos */}
@@ -104,11 +77,11 @@ export default function Usuario() {
           <TextInput
           style={EstilosDoInicio.InputDeTexto}
             placeholder={"Altere sua senha.."}
-            value={nome}  
+            value={senha}  
             onChangeText={AlterandoValorDoInputSenha}  
           />
           
-          <TouchableOpacity onPress={()=>FuncaoParaAlterarDados(senha)}
+          <TouchableOpacity onPress={()=>VerificarCaracteres()}
           style={EstilosDoInicio.botaoAlterar}>
           <LinearGradient 
             colors={['#9754CB', '#6237A0']} 
@@ -116,7 +89,7 @@ export default function Usuario() {
             end={{ x: 0.68, y: 0.68 }} 
             style={EstilosDoInicio.btnDegradw}
           >
-            <Text style={EstilosDoInicio.textoBotao}>Alterar dados</Text>
+            <Text style={EstilosDoInicio.textoBotao}>Alterar senha</Text>
           </LinearGradient>
           </TouchableOpacity>
           </View>

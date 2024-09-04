@@ -22,7 +22,8 @@ import H2 from '../../componentes/textos/h2.componente.js';
 import { useNavigation } from '@react-navigation/native';
 import HeaderRetorno from '../../componentes/estruturais/HeaderRetorno.componente.js';
 
-
+//neste trecho, não recebemos a senha por uma questão de segurança
+//mas lançamos uma requisição PUT para alterar a tal
 export default function AlterarSenha() {
   //constantes que vão receber os dados
   const [senha, setandoSenha] = useState("");
@@ -48,6 +49,7 @@ export default function AlterarSenha() {
     const DadosAlterados = {
       senha
     };
+    //enviar token para a validação se o usuário está logadfo
     const config = {
       headers: {
           'Authorization': token
@@ -69,11 +71,11 @@ export default function AlterarSenha() {
  
     <View style={ViewPrincipal.estilo}>
        <StatusBar backgroundColor={'#000000'}/>
-       
+       {/* Observe que este header retorna a página anterior */}
        <HeaderRetorno voltarApaginaAnterior={()=> navigation.goBack("")}/>
        
       <View style={ViewCentralCorpoDoAPP.estilo}>
-     
+
           {/* Primeira View com os lançamentos */}
           <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
             <H2 texto={"Altere suas informações pessoais"}/>
@@ -97,7 +99,6 @@ export default function AlterarSenha() {
           </LinearGradient>
           </TouchableOpacity>
           </View>
-          {/* Segunda View com outra seção */}
       </View>
 
     </View>

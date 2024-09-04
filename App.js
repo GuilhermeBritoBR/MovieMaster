@@ -28,6 +28,8 @@
   import Entypo from '@expo/vector-icons/Entypo';
 import Configuracoes from './source/paginas/Configuracoes.pagina.js';
 import AlterarSenha from './source/paginas/subPaginas/AlterarSenha.pagina.js';
+import Amigos from './source/paginas/Amigos.pagina.js';
+import Pesquisar from './source/paginas/Pesquisar.pagina.js';
 
 
   export default function App(){
@@ -117,8 +119,18 @@ import AlterarSenha from './source/paginas/subPaginas/AlterarSenha.pagina.js';
                   name="Configurações"
                   component={Configuracoes}
                 />
-                  <>
+                <Drawer.Screen
+                  name="Pesquisar"
+                  component={Pesquisar}
+                  options={{
+                    drawerItemStyle: { display: 'none' }, // Ocultar essa opção
+                  }}/>
+                  
                   <Drawer.Screen name="Login" component={Login}
+                  options={{
+                    drawerItemStyle: { display: 'none' }, // Ocultar essa opção
+                  }}/>
+                  <Drawer.Screen name="Amigos" component={Amigos}
                   options={{
                     drawerItemStyle: { display: 'none' }, // Ocultar essa opção
                   }}/>
@@ -134,6 +146,7 @@ import AlterarSenha from './source/paginas/subPaginas/AlterarSenha.pagina.js';
                   options={{
                     drawerItemStyle: { display: 'none' }, // Ocultar essa opção
                   }}/>
+                  
                   <Drawer.Screen
                   name="Sair"
                   component={Cadastro}
@@ -142,7 +155,7 @@ import AlterarSenha from './source/paginas/subPaginas/AlterarSenha.pagina.js';
                   }}
                   />
 
-                  </>
+                  
                 </Drawer.Navigator>
                 </NavigationContainer>
     );

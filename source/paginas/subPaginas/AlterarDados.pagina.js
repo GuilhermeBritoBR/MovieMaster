@@ -22,7 +22,7 @@ import H2 from '../../componentes/textos/h2.componente.js';
 import { useNavigation } from '@react-navigation/native';
 import HeaderRetorno from '../../componentes/estruturais/HeaderRetorno.componente.js';
 
-
+//
 export default function Usuario() {
   //constantes que vão receber os dados
   const [dadosDoUsuarioBRUTO, setandoDadosDoUsuarioBRUTO] = useState({});

@@ -4,7 +4,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 //fontes de texto
 import H1 from "../textos/h1.componente";
 
-export default function CapaDoFilme({propriedadeParaReceberAcapaDoFilme, tamonhoMenorOuMaiorrStingVazia,  }){
+export default function MenorCapaDoFilme({propriedadeParaReceberAcapaDoFilme, tamonhoMenorOuMaiorrStingVazia,  }){
     return(
         <View style={tamonhoMenorOuMaiorrStingVazia === "" ? EstiloDaCapaDoFilme.ViewPrincipalDaCapa: [EstiloDaCapaDoFilme.ViewPrincipalDaCapaMe]}>
             <Image 
@@ -29,15 +29,15 @@ const EstiloDaCapaDoFilme = StyleSheet.create(({
         borderRadius: 20,
     },
     ImagemDaCapaMenor:{
-        width: wp('38%'),
-        height: wp('56%'),
+        width: wp('28%'),
+        height: wp('46%'),
         backgroundColor: 'purple',
         borderRadius: 20,
         marginRight: 29,
     },
     ViewPrincipalDaCapaMenor:{
-        width: wp('38%'),
-        height: wp('56%'),
+        width: wp('28%'),
+        height: wp('46%'),
         backgroundColor: 'purple',
         borderRadius: 20,
         marginRight: 29,

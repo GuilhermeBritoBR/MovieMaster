@@ -1,48 +1,128 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, ScrollView, Image } from "react-native";
-//ESTILOS IMPORTADOS
+import React from 'react';
+import { StatusBar } from "react-native";
+import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, FlatList } from "react-native";
+
+// ESTILOS IMPORTADOS
 import { ViewCentralCorpoDoAPP, ViewPrincipal } from "../estilos/EstilosEstruturais.estilos";
-//estruturais
+
+// Componentes
 import HeaderRetorno from "../componentes/estruturais/HeaderRetorno.componente";
-//navegação
+
+// Navegação
 import { useNavigation } from "@react-navigation/native";
-//textos
+
+// Textos
 import H3 from "../componentes/textos/h3.componente";
 
 export default function Perfil() {
-  //constante de navegação
-  const navigation = useNavigation("");
+  // Constante de navegação
+  const navigation = useNavigation();
+
+  // Dados para a FlatList
+  const filmesFavoritos = [
+    { id: '1', title: 'Filme 1' },
+    { id: '2', title: 'Filme 2' },
+    { id: '3', title: 'Filme 3' },
+  ];
 
   return (
-      <View style={ViewPrincipal.estilo}>
-        <StatusBar backgroundColor={'#000000'}/>
-        <HeaderRetorno voltarApaginaAnterior={()=> navigation.goBack("")}/>
-        <ScrollView style={ViewCentralCorpoDoAPP.estilo}>
+    <View style={ViewPrincipal.estilo}>
+      <StatusBar backgroundColor={'#1A1A1A'} />
+      <HeaderRetorno voltarApaginaAnterior={() => navigation.goBack()} />
 
-            <View style={styles.ViewComFotoDoPerfil}>
-              <Image/>
-              <H3 texto={""}/>
-            </View>
+      <ScrollView style={ViewCentralCorpoDoAPP.estilo}>
 
-        </ScrollView>
-      </View>
+        <View style={styles.ViewComFotoDoPerfil}>
+          <Image
+            source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyLM6VhXMEu2gouo_heuwy_w1IQOZEGOMAIw&s' }} 
+            style={styles.profileImage}
+          />
+          <H3 texto={"oi"} />
+        </View>
+
+        {/* View Filmes Favoritos */}
+        <View>
+          <Text style={styles.textoprincipal}>Filmes Favoritos</Text>
+          <FlatList
+            horizontal
+            data={filmesFavoritos}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <View style={styles.filmeItem}>
+                <Text>{item.title}</Text>
+              </View>
+            )}
+          />
+        </View>
+
+        {/* View Atividade Recente */}
+        <View>
+          <Text style={styles.textoprincipal}>Atividade Recente</Text>
+        </View>
+
+        {/* View Informações */}
+        <View>
+          <TouchableOpacity>
+            <Text style={styles.textoinfos}>Filmes</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <Text style={styles.textoinfos}>Reviews</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <Text style={styles.textoinfos}>Watchlist</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <Text style={styles.textoinfos}>Filmes curtidos</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <Text style={styles.textoinfos}>Seguindo</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <Text style={styles.textoinfos}>Seguidores</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "#fff",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    profileImage:{
-      width: 80,
-      height: 80,
-      borderRadius: 80, // deixa a imagem redonda
-      marginRight: 20,
-    },
-    ViewComFotoDoPerfil:{
-      flex:1,
-    },
 
-  });
+const styles = StyleSheet.create({
+  profileImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40, // Ajustado para manter a imagem redonda
+    marginRight: 20,
+  },
+  ViewComFotoDoPerfil: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  textoprincipal: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginVertical: 10,
+    color: "white",
+  },
+  atvrecente: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginVertical: 10,
+  },
+  textoinfos: {
+    fontSize: 16,
+    color: '#C7BEBE',
+    paddingVertical: 10,
+  },
+  filmeItem: {
+    marginRight: 15,
+    padding: 10,
+    backgroundColor: '#eee',
+    borderRadius: 5,
+  },
+});

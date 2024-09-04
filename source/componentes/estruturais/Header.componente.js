@@ -11,31 +11,28 @@ import Feather from '@expo/vector-icons/Feather';
 
 //fontes para texto
 import H3 from '../textos/h3.componente';
-
+//navegação
+import { useNavigation } from '@react-navigation/native';
 //importandos hoooks
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Header({ativarMenuTrueFalse}) {
-
+    //CONSTANTWE PARA A NAVEGACAO
+    const navigation = useNavigation("");
     //relação de sim ou não com a borda do menu inferior, aonde ela fica rosa quando clicada
     //Para o 3 menus
-    const [FILMES_AtivadorTrueFalse, setarBordaMenuInferiorFILMES] = useState(true);
-    const [AMIGOS_AtivadorTrueFalse, setarBordaMenuInferiorAMIGOS] = useState(false);
-    const [LISTAS_AtivadorTrueFalse, setarBordaMenuInferiorLISTAS] = useState(false);
     
-
+    
     //função para setar borda do menu inferior aonde o clicado tem o border ativado
     //respectivamente, função de setar variavel e variavel a ser setada
     //as outras duas são os outros menu a serem desativados
-    function AtivarBordaDoMenuInferior(variavelDoMenuSetado,funcaoAsetarMenu, primeiraVariavelAserDesativadaPorFuncaoDeSetar, 
-        segundaVariavelAserDesativadaPorFuncaoDeSetar ){
-        if(variavelDoMenuSetado === false){
+    async function AtivarBordaDoMenuInferior(menuSelecionado,funcaoAsetarMenu, ...funcoesParaDesativar 
+         ){
             funcaoAsetarMenu(true);
-            primeiraVariavelAserDesativadaPorFuncaoDeSetar(false);
-            segundaVariavelAserDesativadaPorFuncaoDeSetar(false);
-        }else{
-            funcaoAsetarMenu(true)
-        }
+            await AsyncStorage.setItem('@menu', menuSelecionado);
+            funcoesParaDesativar.forEach(funcao => funcao(false));
+        
     }
 
 
@@ -58,7 +55,9 @@ export default function Header({ativarMenuTrueFalse}) {
 
         <View style={[EstiloDoHeader.ViewParaPosicionarOsElementosDoHeader,{ alignItems: 'flex-end', marginRight: 20,}]}>
             {/* O FEATHER é o icone dos elementos sendo que o TOUCHABLE encobre os tais com uma função que abre um modal ou ativa uma rota */}
-            <TouchableOpacity>
+            <TouchableOpacity
+            onPress={()=> navigation.navigate("Pesquisar")}
+            >
             <Feather name="search" size={36} color="white" />
             </TouchableOpacity>
         </View>
@@ -71,10 +70,9 @@ export default function Header({ativarMenuTrueFalse}) {
                 <View style={EstiloDoHeader.BarraDeNavegaçãoDoMenuInferior}>
 
                     <TouchableOpacity 
-                    onPress={()=>AtivarBordaDoMenuInferior(FILMES_AtivadorTrueFalse, setarBordaMenuInferiorFILMES, setarBordaMenuInferiorAMIGOS
-                        ,setarBordaMenuInferiorLISTAS
-                    )}
-                    style={[EstiloDoHeader.BotoesDeNavegacaoInferiores,{  borderBottomWidth: FILMES_AtivadorTrueFalse === true ? 3 : 0 }]}>
+                    onPress={()=> navigation.navigate("Inicio")}
+                    
+                    style={[EstiloDoHeader.BotoesDeNavegacaoInferiores  ]}>
 
                         <H3 texto={"Filmes"}/>
                     
@@ -82,11 +80,10 @@ export default function Header({ativarMenuTrueFalse}) {
                 </View>
 
                 <View style={EstiloDoHeader.BarraDeNavegaçãoDoMenuInferior}>
-                    <TouchableOpacity 
-                    onPress={()=>AtivarBordaDoMenuInferior(AMIGOS_AtivadorTrueFalse, setarBordaMenuInferiorAMIGOS, setarBordaMenuInferiorFILMES,
-                        setarBordaMenuInferiorLISTAS
-                    )}
-                    style={[EstiloDoHeader.BotoesDeNavegacaoInferiores,{borderBottomWidth: AMIGOS_AtivadorTrueFalse === true ? 3 : 0 }]}>
+                        <TouchableOpacity 
+                        onPress={()=> navigation.navigate("Amigos")
+                        }
+                    style={[EstiloDoHeader.BotoesDeNavegacaoInferiores]}>
 
                         <H3 texto={"Amigos"}/>
                     
@@ -95,10 +92,9 @@ export default function Header({ativarMenuTrueFalse}) {
 
                 <View style={EstiloDoHeader.BarraDeNavegaçãoDoMenuInferior}>
                     <TouchableOpacity 
-                    onPress={()=>AtivarBordaDoMenuInferior(LISTAS_AtivadorTrueFalse, setarBordaMenuInferiorLISTAS, setarBordaMenuInferiorAMIGOS, 
-                        setarBordaMenuInferiorFILMES
-                    )}
-                    style={[EstiloDoHeader.BotoesDeNavegacaoInferiores,{borderBottomWidth: LISTAS_AtivadorTrueFalse === true ? 3 : 0 }]}>
+                    
+                    
+                    style={[EstiloDoHeader.BotoesDeNavegacaoInferiores]}>
 
                         <H3 texto={"Listas"}/>   
 
@@ -119,6 +115,7 @@ const EstiloDoHeader = StyleSheet.create({
         flex: 2,
         backgroundColor: '#7100CA',   
         flexDirection: 'column',     
+        
     
     },
     ViewParaPosicionarOsElementosDoHeader:{
@@ -143,7 +140,6 @@ const EstiloDoHeader = StyleSheet.create({
         height: 32,
         justifyContent: 'center',
         alignItems: 'center',
-        border: 'solid',
-        borderBlockColor: '#DEACF5',
+        
     },
 })

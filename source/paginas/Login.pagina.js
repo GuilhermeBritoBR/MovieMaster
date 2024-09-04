@@ -56,6 +56,7 @@ export default function Login() {
     
   }
   return (
+    //imagem de fundo com degrade//
     <View style={styles.container}>
       <ImageBackground
         source={require('../arquivos/imagensDeFundo/iluminado.jpg')}

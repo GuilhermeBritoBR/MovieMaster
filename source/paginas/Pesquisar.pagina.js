@@ -27,9 +27,7 @@ import Matrix from '../arquivos/Matrix_Nomes_.json';
 
 
 export default function Pesquisar() {
-    useEffect(()=>{
-
-    },[])
+    
     const BlocoDosGeneros = ({nomeDoGenero, iconeRespectivo, }) => (
         <TouchableOpacity style={[EstilosDoPesquisar.BlocosComGenero,{ flexDirection: 'row', margin: 15}]}>
         <LinearGradient
@@ -60,7 +58,9 @@ export default function Pesquisar() {
     }
     //função para fechar modal de pesquisa
     function FecharModal(){
+        setandoPalavraPesquisada("");
         setandoModalDePesquisa(false);
+        
     }
     //constante para pesquisar
     const [palavraPesquisada, setandoPalavraPesquisada] = useState("");

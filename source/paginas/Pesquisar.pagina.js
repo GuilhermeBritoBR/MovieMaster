@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal} from 'react-native';
+import React, { useRef } from 'react';
+import {View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, TextInput} from 'react-native';
 //css 
 import { ViewPrincipal } from '../estilos/EstilosEstruturais.estilos';
 import { ViewCentralCorpoDoAPP } from '../estilos/EstilosEstruturais.estilos';
@@ -20,11 +20,8 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Entypo from '@expo/vector-icons/Entypo';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import HeaderPesquisar from '../componentes/estruturais/HeaderPesquisar.componente.js';
-import { FlatList } from 'react-native-gesture-handler';
 import HeaderRetornoEPesquisar from '../componentes/estruturais/HeaderRetornoEPesquisar.componente.js';
 import Matrix from '../arquivos/Matrix_Nomes_.json'; 
-
-
 
 export default function Pesquisar() {
     
@@ -62,26 +59,47 @@ export default function Pesquisar() {
         setandoModalDePesquisa(false);
         
     }
+    //states para distrair o filter, esperar essa ser formada para posteriormente chamar a função e filtrar
+    const [PalavraSalvaNoHeader, setandoPalavraSalvaNoHeader] = useState("");
+    
     //constante para pesquisar
     const [palavraPesquisada, setandoPalavraPesquisada] = useState("");
-    const FrontModalDePesquisar = (texto, dadosDaApi)=>(
+    const [resultadosDaPesquisa, setandoResultadosDaPesquisa] = useState([]);
+    
+    //
+    function SetarVariavelParaFiltrar(texto) {
+         setandoPalavraPesquisada(texto);
+         const resultadosFiltrados = Matrix.filter((valor) => {
+         if (texto === "") {
+         return valor;
+         } else if (valor.nome.toLowerCase().includes(texto.toLowerCase())) {
+                     return valor;
+         }
+         });
+         setandoResultadosDaPesquisa(resultadosFiltrados); // Atualiza o estado com os resultados filtrados
+         }
+
+    const FrontModalDePesquisar = ()=>(
         <View style={ViewPrincipal.estilo}>
-        <HeaderRetornoEPesquisar voltarApaginaAnterior={()=>FecharModal()} VariavelDaPesquisa={palavraPesquisada} 
-        funcaoAsetarVariavelDaPesquisa={(texto)=>setandoPalavraPesquisada(texto)}/>
+        <HeaderRetornoEPesquisar voltarApaginaAnterior={()=>FecharModal()} 
+        FuncaoParaPesquisar={()=> SetarVariavelParaFiltrar(PalavraSalvaNoHeader)} inputDePesquisa={
+            <TextInput 
+            placeholder='Pesquise aqui um filme...'
+            placeholderTextColor={'#000000'}
+            onChangeText={(texto)=>setandoPalavraSalvaNoHeader(texto)}
+            value={PalavraSalvaNoHeader}
+            style={EstilosDoPesquisar.inputDePesquisa}
+            
+            />
+            }/>
         <View style={[ViewCentralCorpoDoAPP.estilo,{width: '100%'}]}>
             
-                {Matrix.filter((valor)=> {
-                    if(palavraPesquisada === ""){
-                        return valor;
-                    }else if(valor.nome.toLowerCase().includes(palavraPesquisada.toLowerCase())){
-                        return valor;
-                    }}
-                ).map((item, index)=>(
-                <View style={EstilosDoPesquisar.OpcaoDePesquisa}>
+                {resultadosDaPesquisa.map((item, index)=>(
+                <ScrollView  style={EstilosDoPesquisar.OpcaoDePesquisa}>
                 <TouchableOpacity style={[EstilosDoPesquisar.OpcaoDePesquisa]}>
-                <Text style={{color: '#ffffff', fontSize: 18}} key={index}>{item.nome}</Text>
+                <Text style={{color: '#ffffff', fontSize: 18}} >{item.nome}</Text>
                 </TouchableOpacity>
-                </View>
+                </ScrollView>
                 ))} 
               
                 
@@ -93,7 +111,9 @@ export default function Pesquisar() {
       <StatusBar backgroundColor={'#000000'}/>
       <HeaderPesquisar ativarMenuTrueFalse={() => navigation.openDrawer()} ativarPesquisa={(texto)=> AtivarModalDePesquisa(texto)} />
             <Modal visible={ModalDePesquisa}>
+                
                 <FrontModalDePesquisar/>
+                
             </Modal>
 
             <View style={ViewCentralCorpoDoAPP.estilo}>
@@ -182,5 +202,12 @@ const EstilosDoPesquisar = StyleSheet.create(({
         borderBottomColor: '#ffffff',
         borderBottomWidth: 1,
         height: 60,
+    },
+    inputDePesquisa:{
+        width: 200,
+        height: 32,
+        backgroundColor:'#ffffff',
+        borderRadius: 10,
+        textAlign: 'center',
     },
 }))

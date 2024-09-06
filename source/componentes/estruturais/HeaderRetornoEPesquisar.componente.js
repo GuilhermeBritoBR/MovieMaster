@@ -1,4 +1,4 @@
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View, TextInput } from 'react-native';
 //importando stylesheet para poder criar folha de estilo
 import { StyleSheet } from 'react-native';
 //O LINEAR GRADIENTE serve para construir um degrade, como posição na estrutura da pagina ele tem o mesmo papel que uma VIEW
@@ -17,30 +17,14 @@ import { useNavigation } from '@react-navigation/native';
 //importandos hoooks
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { TextInput } from 'react-native-gesture-handler';
 
-export default function HeaderRetornoEPesquisar({voltarApaginaAnterior, VariavelDaPesquisa,FuncaoParaPesquisar, funcaoAsetarVariavelDaPesquisa}) {
+
+export default function HeaderRetornoEPesquisar({inputDePesquisa, voltarApaginaAnterior, VariavelDaPesquisa,FuncaoParaPesquisar, funcaoAsetarVariavelDaPesquisa}) {
     //CONSTANTWE PARA A NAVEGACAO
-    const navigation = useNavigation("");
-    //relação de sim ou não com a borda do menu inferior, aonde ela fica rosa quando clicada
-    //Para o 3 menus
-    useEffect(()=>{
-        aplicarFoco(VariavelDaPesquisa);
-    },[])
-    
+    const navigation = useNavigation("");   
     //função para setar borda do menu inferior aonde o clicado tem o border ativado
     //respectivamente, função de setar variavel e variavel a ser setada
     //as outras duas são os outros menu a serem desativados
-   
-    const referenciaDoInput = useRef(null);
-
-    const aplicarFoco = () => {
-        if (referenciaDoInput.current) {
-            referenciaDoInput.current.focus();
-        }
-    };
-
-
   return (
       <LinearGradient 
       colors={['#9754CB', '#6237A0' ]} 
@@ -59,15 +43,7 @@ export default function HeaderRetornoEPesquisar({voltarApaginaAnterior, Variavel
         </View>
         <View style={[EstiloDoHeader.ViewParaPosicionarOsElementosDoHeader,{ alignItems: 'center', marginRight: 20,}]}>
             {/* O FEATHER é o icone dos elementos sendo que o TOUCHABLE encobre os tais com uma função que abre um modal ou ativa uma rota */}
-            <TextInput 
-            placeholder='Pesquise aqui um filme...'
-            placeholderTextColor={'#000000'}
-            onChangeText={funcaoAsetarVariavelDaPesquisa}
-            value={VariavelDaPesquisa}
-            style={EstiloDoHeader.inputDePesquisa}
-            ref={referenciaDoInput}
-            onFocus={aplicarFoco}
-            />
+            {inputDePesquisa}
         </View>
         <View style={[EstiloDoHeader.ViewParaPosicionarOsElementosDoHeader,{ alignItems: 'flex-end', marginRight: 20,}]}>
             {/* O FEATHER é o icone dos elementos sendo que o TOUCHABLE encobre os tais com uma função que abre um modal ou ativa uma rota */}

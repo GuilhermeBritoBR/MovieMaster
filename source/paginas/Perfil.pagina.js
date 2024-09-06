@@ -7,6 +7,7 @@ import { ViewCentralCorpoDoAPP, ViewPrincipal } from "../estilos/EstilosEstrutur
 
 // Componentes
 import HeaderRetorno from "../componentes/estruturais/HeaderRetorno.componente";
+import CapaDoFilme from '../componentes/estruturais/CapaDoFilme.componente';
 
 // Navegação
 import { useNavigation } from "@react-navigation/native";
@@ -37,26 +38,26 @@ export default function Perfil() {
             source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyLM6VhXMEu2gouo_heuwy_w1IQOZEGOMAIw&s' }} 
             style={styles.profileImage}
           />
-          <H3 texto={"oi"} />
+          <Text style={styles.txtnome}>nicolas</Text>
         </View>
 
         {/* View Filmes Favoritos */}
-        <View>
+        <View style={{borderBottomColor: 'white', borderBottomWidth: 1,}}>
           <Text style={styles.textoprincipal}>Filmes Favoritos</Text>
           <FlatList
             horizontal
             data={filmesFavoritos}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              <View style={styles.filmeItem}>
+              <CapaDoFilme style={styles.filmeItem}>
                 <Text>{item.title}</Text>
-              </View>
+              </CapaDoFilme>
             )}
           />
         </View>
 
         {/* View Atividade Recente */}
-        <View>
+        <View style={{borderBottomColor: 'white', borderBottomWidth: 1,}}>
           <Text style={styles.textoprincipal}>Atividade Recente</Text>
         </View>
 
@@ -102,6 +103,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
+    borderBottomColor: 'white', 
+    borderBottomWidth: 1,
   },
   textoprincipal: {
     fontSize: 18,
@@ -125,4 +128,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
     borderRadius: 5,
   },
+  txtnome: {
+    fontSize: 20,
+    color: 'white',
+  }
 });

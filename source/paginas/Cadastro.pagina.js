@@ -1,63 +1,47 @@
 import React, { useState } from 'react'; //HOOKS
 import { View, TextInput, ImageBackground, StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-//axios
 import axios from 'axios';
-//token funcionalidades
 import { SalvarNome } from '../funçoes/SalvarNomeDoUsuario.funcao.js';
 import { SalvarToken } from '../funçoes/SalvarToken.funcao.js';
-//navegação entre páginas
 import { useNavigation } from '@react-navigation/native';
-//ip ou localhost
-  //ip da rede celular celular 192.168.35.157
-  import { local } from '../funçoes/IpOuLocalhost.js';
+import { local } from '../funçoes/IpOuLocalhost.js';
+
 export default function Cadastro() {
-  //constante para navegação
   const navigation = useNavigation("");
-  
-  //coletando dados do formulário
   const [nome, setandoNome] = useState("");
   const [senha, setandoSenha] = useState("");
   const [email, setandoEmail] = useState("");
 
-  // função para verificar a procedência dos dados
   function VerificarSeTemDados() {
     if (nome.length >= 3 && senha.length >= 8) {
-      // no mínimo 3 letras em um nome e 8 caracteres na senha
-      console.log(
-        `Segue o valor dos dados das constantes Nome: ${nome}, Senha ${senha}, Email: ${email}`
-      );
+      console.log(`Segue o valor dos dados das constantes Nome: ${nome}, Senha ${senha}, Email: ${email}`);
       RealizarCadastro();
     } else {
       alert("Por gentileza, preencha os campos corretamente! Nome deve minimamente 3 caracteres e senha 8 caracteres");
     }
   }
-  //sistema de cadastro de dados
-  //vamos conectar com a api externa para o funcionamento primario
-  //usaremos o axios como intermediario, como o fetch do js
-  const RealizarCadastro = async()=>{
-    //jsonficando os dados para a transferencia via axios e posterirmente ate api
-    const dadosParaEnviar = {
-      nome, email, senha,
-    };
-    try{
-    const resposta = await axios.post(`http://${local}:3000/registerPage/cadastro`, dadosParaEnviar);
-    const {token, nome } = resposta.data;
-    //salva token
-    await SalvarToken(token);
-    await SalvarNome(dadosParaEnviar.nome);
-    alert("Cadastro realizado! Bem vindo ao MovieMaster!");
-    //enviar para a pagina inicio
-    navigation.navigate("Inicio");
 
-    }catch(err){
+  const RealizarCadastro = async() => {
+    const dadosParaEnviar = { nome, email, senha };
+    try {
+      const resposta = await axios.post(`http://${local}:3000/registerPage/cadastro`, dadosParaEnviar);
+      const { token, nome } = resposta.data;
+      await SalvarToken(token);
+      await SalvarNome(dadosParaEnviar.nome);
+      alert("Cadastro realizado! Bem vindo ao MovieMaster!");
+      navigation.navigate("Inicio");
+    } catch(err) {
       alert("Erro ao se cadastrar!");
       console.log(`Segue o erro ao se cadastrar: ${err}`);
     }
   }
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView 
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
       <ImageBackground
         source={require("../arquivos/imagensDeFundo/maxxxine.jpg")}
         style={styles.image}
@@ -119,17 +103,13 @@ export default function Cadastro() {
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  scrollViewContent: {
-    flexGrow: 1,
-    justifyContent: "center",
   },
   image: {
     flex: 1,

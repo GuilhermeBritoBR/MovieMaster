@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal} from 'react-native';
 //css 
 import { ViewPrincipal } from '../estilos/EstilosEstruturais.estilos';
 import { ViewCentralCorpoDoAPP } from '../estilos/EstilosEstruturais.estilos';
@@ -8,7 +8,7 @@ import Header from '../componentes/estruturais/Header.componente.js';
 //navegação
 import { useNavigation } from '@react-navigation/native';
 //hooks
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StatusBar } from 'react-native';
 //degrade
 import { LinearGradient } from 'expo-linear-gradient';
@@ -19,13 +19,18 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Entypo from '@expo/vector-icons/Entypo';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-
+import HeaderPesquisar from '../componentes/estruturais/HeaderPesquisar.componente.js';
+import { FlatList } from 'react-native-gesture-handler';
+import HeaderRetornoEPesquisar from '../componentes/estruturais/HeaderRetornoEPesquisar.componente.js';
+import Matrix from '../arquivos/Matrix_Nomes_.json'; 
 
 
 
 export default function Pesquisar() {
-    
-    const BlocoDosGeneros = ({nomeDoGenero, iconeRespectivo}) => (
+    useEffect(()=>{
+
+    },[])
+    const BlocoDosGeneros = ({nomeDoGenero, iconeRespectivo, }) => (
         <TouchableOpacity style={[EstilosDoPesquisar.BlocosComGenero,{ flexDirection: 'row', margin: 15}]}>
         <LinearGradient
         style={[EstilosDoPesquisar.BlocosComGenero,{ flexDirection: 'row'}]}
@@ -44,14 +49,54 @@ export default function Pesquisar() {
         </TouchableOpacity>
 );
 
-    const navigation = useNavigation("");
+    const navigation = useNavigation();
     //visibilidade do modal, aqui estamos controlando a tal por uma use state
+    //constantes para o modal de pesquisa
+    const [ModalDePesquisa, setandoModalDePesquisa] = useState(false);
+    const [DadosRecebidos, setandoDadosRecebidos] = useState({});
+    //função de pesquisa
+    function AtivarModalDePesquisa(texto){   
+            setandoModalDePesquisa(true);
+    }
+    //função para fechar modal de pesquisa
+    function FecharModal(){
+        setandoModalDePesquisa(false);
+    }
+    //constante para pesquisar
+    const [palavraPesquisada, setandoPalavraPesquisada] = useState("");
+    const FrontModalDePesquisar = (texto, dadosDaApi)=>(
+        <View style={ViewPrincipal.estilo}>
+        <HeaderRetornoEPesquisar voltarApaginaAnterior={()=>FecharModal()} VariavelDaPesquisa={palavraPesquisada} 
+        funcaoAsetarVariavelDaPesquisa={(texto)=>setandoPalavraPesquisada(texto)}/>
+        <View style={[ViewCentralCorpoDoAPP.estilo,{width: '100%'}]}>
+            
+                {Matrix.filter((valor)=> {
+                    if(palavraPesquisada === ""){
+                        return valor;
+                    }else if(valor.nome.toLowerCase().includes(palavraPesquisada.toLowerCase())){
+                        return valor;
+                    }}
+                ).map((item, index)=>(
+                <View style={EstilosDoPesquisar.OpcaoDePesquisa}>
+                <TouchableOpacity style={[EstilosDoPesquisar.OpcaoDePesquisa]}>
+                <Text style={{color: '#ffffff', fontSize: 18}} key={index}>{item.nome}</Text>
+                </TouchableOpacity>
+                </View>
+                ))} 
+              
+                
+             </View>
+             </View>
+        )
     return(
         <View style={ViewPrincipal.estilo}>     
       <StatusBar backgroundColor={'#000000'}/>
-      <Header ativarMenuTrueFalse={() => navigation.openDrawer()} />
+      <HeaderPesquisar ativarMenuTrueFalse={() => navigation.openDrawer()} ativarPesquisa={(texto)=> AtivarModalDePesquisa(texto)} />
+            <Modal visible={ModalDePesquisa}>
+                <FrontModalDePesquisar/>
+            </Modal>
+
             <View style={ViewCentralCorpoDoAPP.estilo}>
-                
 
                     <View style={EstilosDoPesquisar.DivHorizontalCabeDoisBlocos}>
                         <BlocoDosGeneros nomeDoGenero={"Ação"} 
@@ -127,5 +172,15 @@ const EstilosDoPesquisar = StyleSheet.create(({
     },
     BlocoGenero:{
         
+    },
+    OpcaoDePesquisa:{
+        width: '100%',
+        backgroundColor: '#1A1A1A',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottom: 'solid',
+        borderBottomColor: '#ffffff',
+        borderBottomWidth: 1,
+        height: 60,
     },
 }))

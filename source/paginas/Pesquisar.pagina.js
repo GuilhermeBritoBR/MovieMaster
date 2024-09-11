@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import {View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, TextInput} from 'react-native';
 //css 
 import { ViewPrincipal } from '../estilos/EstilosEstruturais.estilos';
@@ -43,79 +43,11 @@ export default function Pesquisar() {
         </LinearGradient>
         </TouchableOpacity>
 );
-
     const navigation = useNavigation();
-    //visibilidade do modal, aqui estamos controlando a tal por uma use state
-    //constantes para o modal de pesquisa
-    const [ModalDePesquisa, setandoModalDePesquisa] = useState(false);
-    const [DadosRecebidos, setandoDadosRecebidos] = useState({});
-    //função de pesquisa
-    function AtivarModalDePesquisa(texto){   
-            setandoModalDePesquisa(true);
-    }
-    //função para fechar modal de pesquisa
-    function FecharModal(){
-        setandoPalavraPesquisada("");
-        setandoModalDePesquisa(false);
-        
-    }
-    //states para distrair o filter, esperar essa ser formada para posteriormente chamar a função e filtrar
-    const [PalavraSalvaNoHeader, setandoPalavraSalvaNoHeader] = useState("");
-    
-    //constante para pesquisar
-    const [palavraPesquisada, setandoPalavraPesquisada] = useState("");
-    const [resultadosDaPesquisa, setandoResultadosDaPesquisa] = useState([]);
-    
-    //
-    function SetarVariavelParaFiltrar(texto) {
-         setandoPalavraPesquisada(texto);
-         const resultadosFiltrados = Matrix.filter((valor) => {
-         if (texto === "") {
-         return valor;
-         } else if (valor.nome.toLowerCase().includes(texto.toLowerCase())) {
-                     return valor;
-         }
-         });
-         setandoResultadosDaPesquisa(resultadosFiltrados); // Atualiza o estado com os resultados filtrados
-         }
-
-    const FrontModalDePesquisar = ()=>(
-        <View style={ViewPrincipal.estilo}>
-        <HeaderRetornoEPesquisar voltarApaginaAnterior={()=>FecharModal()} 
-        FuncaoParaPesquisar={()=> SetarVariavelParaFiltrar(PalavraSalvaNoHeader)} inputDePesquisa={
-            <TextInput 
-            placeholder='Pesquise aqui um filme...'
-            placeholderTextColor={'#000000'}
-            onChangeText={(texto)=>setandoPalavraSalvaNoHeader(texto)}
-            value={PalavraSalvaNoHeader}
-            style={EstilosDoPesquisar.inputDePesquisa}
-            
-            />
-            }/>
-        <View style={[ViewCentralCorpoDoAPP.estilo,{width: '100%'}]}>
-            
-                {resultadosDaPesquisa.map((item, index)=>(
-                <ScrollView  style={EstilosDoPesquisar.OpcaoDePesquisa}>
-                <TouchableOpacity style={[EstilosDoPesquisar.OpcaoDePesquisa]}>
-                <Text style={{color: '#ffffff', fontSize: 18}} >{item.nome}</Text>
-                </TouchableOpacity>
-                </ScrollView>
-                ))} 
-              
-                
-             </View>
-             </View>
-        )
     return(
         <View style={ViewPrincipal.estilo}>     
       <StatusBar backgroundColor={'#000000'}/>
-      <HeaderPesquisar ativarMenuTrueFalse={() => navigation.openDrawer()} ativarPesquisa={(texto)=> AtivarModalDePesquisa(texto)} />
-            <Modal visible={ModalDePesquisa}>
-                
-                <FrontModalDePesquisar/>
-                
-            </Modal>
-
+      <HeaderPesquisar ativarMenuTrueFalse={() => navigation.openDrawer()} ativarPesquisa={()=> navigation.navigate('PequisaDeTexto')} />
             <View style={ViewCentralCorpoDoAPP.estilo}>
 
                     <View style={EstilosDoPesquisar.DivHorizontalCabeDoisBlocos}>
@@ -160,11 +92,7 @@ export default function Pesquisar() {
                         <BlocoDosGeneros nomeDoGenero={"Romance"} 
                         iconeRespectivo={<AntDesign name="heart" size={36} color="white" />}
                         /> 
-                    </View>
-
-                   
-
-                
+                    </View>    
             </View>
         </View>
     );

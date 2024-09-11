@@ -18,6 +18,9 @@ import { StatusBar } from 'react-native';
 //porcentagem
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import MenorCapaDoFilme from '../componentes/estruturais/MenorCapaFilme.componente.js';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+//icones
+import AntDesign from '@expo/vector-icons/AntDesign';
 const data = [
     {
       id: '1',
@@ -65,9 +68,7 @@ const EstruturaDaPaginaDosAmigos = StyleSheet.create(({
     ViewQueCentralizaCadaPostagem:{
         flex: 1,
         width: '100%',
-        flex: 1,
-        flexDirection: 'row',
-        padding: 10,
+        flexDirection: 'column',
         borderBottomWidth: 1,
         borderBottomColor: '#ffffff',
         border: 'solid',
@@ -87,8 +88,7 @@ const EstruturaDaPaginaDosAmigos = StyleSheet.create(({
         marginLeft: 40,
     },
     ComentarioDoUsuarioView:{
-        flex:3,
-        
+        flex:3, 
     },
     UsuarioEsuasInformacoes:{
         flex: 1,
@@ -99,12 +99,38 @@ const EstruturaDaPaginaDosAmigos = StyleSheet.create(({
         color: '#ffffff',
         fontSize: 16,
     },
+    AreaSuperior:{
+        flex:10,
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 10,
+    },
+    AreaInferior:{
+        border: 'solid',
+        borderTopWidth: 1,
+        borderTopColor: '#ffffff',
+        flex: 1,
+        flexDirection: 'row',
+        width:'100%',
+        
+        padding: 3,
+    },
+    ViewIconeDeFeedBack:{
+        flex:1, 
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 3,
+        
+    },
 }));
     
  const Amigos = () =>{
 
     const Corpo = ({item})=>(
                 <View style={EstruturaDaPaginaDosAmigos.ViewQueCentralizaCadaPostagem}>
+                    <View style={EstruturaDaPaginaDosAmigos.AreaSuperior}>
                     <View style={EstruturaDaPaginaDosAmigos.SecaoEsquerda}>
                     <Text style={[EstruturaDaPaginaDosAmigos.Nome,{textAlign: 'center', marginRight: 10}]}>{item.Nomefilme}</Text>
                         <MenorCapaDoFilme 
@@ -127,7 +153,19 @@ const EstruturaDaPaginaDosAmigos = StyleSheet.create(({
                         </View>
 
                     </View>
-                    
+                    </View>
+                    <View style={EstruturaDaPaginaDosAmigos.AreaInferior}>
+                        <View style={EstruturaDaPaginaDosAmigos.ViewIconeDeFeedBack}>
+                            <TouchableOpacity style={EstruturaDaPaginaDosAmigos.ViewIconeDeFeedBack}>
+                            <AntDesign name="like2" size={24} color="white" />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={EstruturaDaPaginaDosAmigos.ViewIconeDeFeedBack}>
+                            <TouchableOpacity style={EstruturaDaPaginaDosAmigos.ViewIconeDeFeedBack}>
+                            <AntDesign name="dislike2" size={24} color="white" />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </View>
               
     

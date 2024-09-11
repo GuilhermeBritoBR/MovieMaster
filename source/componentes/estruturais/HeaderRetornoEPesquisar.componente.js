@@ -19,7 +19,7 @@ import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export default function HeaderRetornoEPesquisar({inputDePesquisa, voltarApaginaAnterior, VariavelDaPesquisa,FuncaoParaPesquisar, funcaoAsetarVariavelDaPesquisa}) {
+export default function HeaderRetornoEPesquisar({PalavraSalvaNoHeader,setandoVariavelDePesquisa, voltarApaginaAnterior, VariavelDaPesquisa,FuncaoParaPesquisar, funcaoAsetarVariavelDaPesquisa}) {
     //CONSTANTWE PARA A NAVEGACAO
     const navigation = useNavigation("");   
     //função para setar borda do menu inferior aonde o clicado tem o border ativado
@@ -43,7 +43,13 @@ export default function HeaderRetornoEPesquisar({inputDePesquisa, voltarApaginaA
         </View>
         <View style={[EstiloDoHeader.ViewParaPosicionarOsElementosDoHeader,{ alignItems: 'center', marginRight: 20,}]}>
             {/* O FEATHER é o icone dos elementos sendo que o TOUCHABLE encobre os tais com uma função que abre um modal ou ativa uma rota */}
-            {inputDePesquisa}
+            <TextInput 
+            placeholder='Pesquise aqui um filme...'
+            placeholderTextColor={'#000000'}
+            onChangeText={setandoVariavelDePesquisa}
+            value={PalavraSalvaNoHeader}
+            style={EstiloDoHeader.inputDePesquisa}
+            />
         </View>
         <View style={[EstiloDoHeader.ViewParaPosicionarOsElementosDoHeader,{ alignItems: 'flex-end', marginRight: 20,}]}>
             {/* O FEATHER é o icone dos elementos sendo que o TOUCHABLE encobre os tais com uma função que abre um modal ou ativa uma rota */}

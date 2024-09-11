@@ -30,6 +30,7 @@ import Configuracoes from './source/paginas/Configuracoes.pagina.js';
 import AlterarSenha from './source/paginas/subPaginas/AlterarSenha.pagina.js';
 import Amigos from './source/paginas/Amigos.pagina.js';
 import Pesquisar from './source/paginas/Pesquisar.pagina.js';
+import PesquisaDeTexto from './source/paginas/subPaginas/PesquisaDeTexto.pagina.js';
 
 
   export default function App(){
@@ -122,6 +123,12 @@ import Pesquisar from './source/paginas/Pesquisar.pagina.js';
                 <Drawer.Screen
                   name="Pesquisar"
                   component={Pesquisar}
+                  options={{
+                    drawerItemStyle: { display: 'none' }, // Ocultar essa opção
+                  }}/>
+                  <Drawer.Screen
+                  name="PequisaDeTexto"
+                  component={PesquisaDeTexto}
                   options={{
                     drawerItemStyle: { display: 'none' }, // Ocultar essa opção
                   }}/>

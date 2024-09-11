@@ -42,7 +42,7 @@ export default function Perfil() {
         </View>
 
         {/* View Filmes Favoritos */}
-        <View style={{borderBottomColor: 'white', borderBottomWidth: 1,}}>
+        <View style={{borderBottomColor: '6F6D6D', borderBottomWidth: 1,}}>
           <Text style={styles.textoprincipal}>Filmes Favoritos</Text>
           <FlatList
             horizontal

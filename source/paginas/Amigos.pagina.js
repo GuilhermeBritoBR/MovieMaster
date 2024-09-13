@@ -154,7 +154,7 @@ const EstruturaDaPaginaDosAmigos = StyleSheet.create(({
 
                     </View>
                     </View>
-                    <View style={EstruturaDaPaginaDosAmigos.AreaInferior}>
+                    {/* <View style={EstruturaDaPaginaDosAmigos.AreaInferior}>
                         <View style={EstruturaDaPaginaDosAmigos.ViewIconeDeFeedBack}>
                             <TouchableOpacity style={EstruturaDaPaginaDosAmigos.ViewIconeDeFeedBack}>
                             <AntDesign name="like2" size={24} color="white" />
@@ -165,7 +165,7 @@ const EstruturaDaPaginaDosAmigos = StyleSheet.create(({
                             <AntDesign name="dislike2" size={24} color="white" />
                             </TouchableOpacity>
                         </View>
-                    </View>
+                    </View> */}
                 </View>
               
     

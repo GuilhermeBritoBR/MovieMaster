@@ -127,6 +127,7 @@ const EstiloDoHeader = StyleSheet.create({
     ViewDosElementosInferioresFilmesAmigosListas:{
         flex: 3,
         flexDirection: 'row', 
+        height: 60,
     },
     BarraDeNavegaçãoDoMenuInferior:{
         flex: 1,

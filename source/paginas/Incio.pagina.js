@@ -44,7 +44,7 @@ export default function Inicio() {
   return (
     <View style={ViewPrincipal.estilo}>
         {/* Não remover STATUS BAR!!!!!!!!!!!!!*/}
-        <Menu visibilidadeDoModalTrueFalse={visibilidadeModal} propriedadeParaFecharModal={()=>setandoVisibilidadeModal(false)}/>
+        
       <StatusBar backgroundColor={'#000000'}/>
       <Header ativarMenuTrueFalse={() => navigation.openDrawer()} />
       {/* Flat list para carregar toda a página home */}

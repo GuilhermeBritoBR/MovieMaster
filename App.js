@@ -31,7 +31,9 @@ import AlterarSenha from './source/paginas/subPaginas/AlterarSenha.pagina.js';
 import Amigos from './source/paginas/Amigos.pagina.js';
 import Pesquisar from './source/paginas/Pesquisar.pagina.js';
 import PesquisaDeTexto from './source/paginas/subPaginas/PesquisaDeTexto.pagina.js';
-import PublicarPostagem from './source/paginas/subPaginas/PublicarPostagem.pagina.js';
+import PublicarPostagem from './source/paginas/subPaginas/PublicarPostagem2.pagina.js';
+import AlterarPostagem from './source/paginas/subPaginas/AlterarPostagem.pagina.js';
+import MinhasPostagens from './source/paginas/MinhasPostagens.pagina.js';
 
 
   export default function App(){
@@ -50,7 +52,7 @@ import PublicarPostagem from './source/paginas/subPaginas/PublicarPostagem.pagin
         } else if (response === 1) {
           // Se o token for válido, direciona para a página inicial
           console.log('Logado');
-          setPage("PublicarPostagem");
+          setPage("Inicio");
         }
       }
       LoadToken();
@@ -113,10 +115,19 @@ import PublicarPostagem from './source/paginas/subPaginas/PublicarPostagem.pagin
                   name="Alterar Dados"
                   component={AlterarDados}
                 />
+                
                 <Drawer.Screen
-                  options={{
-                    drawerItemStyle: { display: 'none' }, // Ocultar essa opção
-                  }}
+                  
+                  name="AlterarPostagem"
+                  component={AlterarPostagem}
+                />
+                 <Drawer.Screen
+                  
+                  name="MinhasPostagens"
+                  component={MinhasPostagens}
+                />
+                <Drawer.Screen
+                 
                   name="PublicarPostagem"
                   component={PublicarPostagem}
                 />

@@ -1,5 +1,8 @@
 const VerificarConteudoDaPostagem = (variavelAserComparada, tamanhoMinimoEmLength) =>{
-    if(variavelAserComparada <= tamanhoMinimoEmLength){
+    let variavel = variavelAserComparada;
+    let tamanho = tamanhoMinimoEmLength;
+
+    if(variavel <= tamanho){
         return 1;
     }else{
         return 0;

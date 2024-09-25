@@ -58,7 +58,7 @@ const EditarPostagem= async()=>{
       },
     };
     try {
-      await axios.put(
+      await axios.put(  
         `http://${local}:3000/Amigos/EditarPublicacao`,
         dadosAenviar,
         config
@@ -141,7 +141,6 @@ const styles = StyleSheet.create({
     container: {
         width: "100%",
         flex: 1,
-        
         backgroundColor: "#1A1A1A",
     },
     header: {

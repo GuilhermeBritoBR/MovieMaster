@@ -22,21 +22,23 @@ export default function PublicarPostagem({ idDoFilme, imagemDoFilme, tituloDoFil
     const [conteudoDaPublicacao , setandoConteudoDaPublicacao] = useState("");
     const [favorito, setandoFavorito] = useState(false);
     const [nota, setNota] = useState(0);
+    const [likesDaPostagem, setlikesDaPostagem] = useState(0);
 //função
 const route = useRoute();
   var id = route.params.id;
   var Dados = route.params.dados;
-
-  const postarPublicacao = async () => { 
-
-      //buscar dados
   
 
+  const postarPublicacao = async () => { 
+      //buscar dados
     const token = await AsyncStorage.getItem("@token");
+    
 const config = {
   headers: {
     Authorization: `${token}`,
-  },};   
+  },}; 
+  
+  const tituloDoFilme = Dados.title;
     if( conteudoDaPublicacao.length >= 3){
       const date = new Date();
       const options = {
@@ -49,12 +51,19 @@ const config = {
       }; 
     const dataDaPublicacao = date.toLocaleString('pt-BR', options).replace(/ GMT.*$/, ''); //remove esse GMT
     const filmeID = id;
+    const autor = await AsyncStorage.getItem("@name");
+    const tituloDoFilme = Dados.title;
+    const capaDoFilme = `https://image.tmdb.org/t/p/w500${Dados.poster_path}`;
     const dadosAenviar = {
       conteudoDaPublicacao,
       filmeID,
       dataDaPublicacao,
       nota,
       favorito,
+      autor,
+      tituloDoFilme,
+      likesDaPostagem,
+      capaDoFilme
     };
     try {
       await axios.post(

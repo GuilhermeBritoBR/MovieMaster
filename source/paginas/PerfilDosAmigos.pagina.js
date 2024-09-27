@@ -14,9 +14,11 @@ import { useNavigation } from "@react-navigation/native";
 import { BuscarNome } from '../funçoes/BuscarNome.funcao';
 // Textos
 import H3 from "../componentes/textos/h3.componente";
-
-export default function Perfil() {
-  
+import { useRoute } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+export default function PerfilDosAmigos() {
+  const route = useRoute();
+  var id = route.params.id;
   // Constante de navegação
   const navigation = useNavigation();
 
@@ -28,7 +30,13 @@ export default function Perfil() {
   ];
   //hooks
 
-  const [nome, setNome] = useState("");
+  const BuscarDadosDoAmigo = async()=>{
+    const token = await AsyncStorage.getItem("@token");
+    const config = {
+      headers: {
+        Authorization: `${token}`,
+      },};
+  }
 
   //monitorar entrada de dados
 

@@ -10,8 +10,11 @@ import { useEffect, useState } from "react";
 import VerificarConteudoDoObjetoFuncao from "../../funçoes/VerificarConteudoDoObjeto.funcao";
 import { useNavigation } from "@react-navigation/native";
 import { Alert } from "react-native";
-
+import { useRoute } from "@react-navigation/native";
 export default function PublicarPostagem({idDoFilme}) {
+  const route = useRoute();
+  var id = route.params.id;
+  var dados = route.params.dados;
   const navigation = useNavigation();
     //states de dados para postar
     const [conteudoDaPublicacao , setandoConteudoDaPublicacao] = useState("");
@@ -33,7 +36,7 @@ const config = {
           timeZoneName: undefined // Remove a exibição do fuso horário
       }; 
     const dataDaPublicacao = date.toLocaleString('pt-BR', options).replace(/ GMT.*$/, ''); //remove esse GMT
-    const filmeID = 1;
+    const filmeID = id;
     const dadosAenviar = {
       conteudoDaPublicacao,
       filmeID,

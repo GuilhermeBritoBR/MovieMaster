@@ -8,7 +8,7 @@ import { StatusBar } from "react-native";
 import Entypo from '@expo/vector-icons/Entypo';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-
+import { useRoute } from "@react-navigation/native";
 //para buscar token
 //endereçamento
 import { useEffect, useState } from "react";
@@ -23,7 +23,15 @@ export default function PublicarPostagem({ idDoFilme, imagemDoFilme, tituloDoFil
     const [favorito, setandoFavorito] = useState(false);
     const [nota, setNota] = useState(0);
 //função
+const route = useRoute();
+  var id = route.params.id;
+  var Dados = route.params.dados;
+
   const postarPublicacao = async () => { 
+
+      //buscar dados
+  
+
     const token = await AsyncStorage.getItem("@token");
 const config = {
   headers: {
@@ -40,7 +48,7 @@ const config = {
           timeZoneName: undefined // Remove a exibição do fuso horário
       }; 
     const dataDaPublicacao = date.toLocaleString('pt-BR', options).replace(/ GMT.*$/, ''); //remove esse GMT
-    const filmeID = 1;
+    const filmeID = id;
     const dadosAenviar = {
       conteudoDaPublicacao,
       filmeID,
@@ -63,66 +71,7 @@ const config = {
     alert("Por favor, preencha os campos!");
 }
   };
-  //função deletar post
-  const DeletarPost = async(id_do_post)=>{
-    const token = await AsyncStorage.getItem("@token");
-const config = {
-  headers: {
-    Authorization: `${token}`,
-  },};
-    const dadosAenviar = {
-      id_do_post,
-    }
-    console.log(`Segue o ID: ${id_do_post}`);
-    
-            try {
-                await axios.delete(`http://${local}:3000/Amigos/DeletarPublicacao/${id_do_post}`,config, dadosAenviar);
-                alert('Deletado com sucesso!');
-            } catch (err) {
-                console.log(`Segue o erro: ${err}`);
-            }
-            console.log("Item excluído");
-        
 
-  };
-//componente para a flat list tratar os dados
- const Publicacao = ({nomeDoUsuario,data_postagem,filme_id, texto, id_do_post}) => (
-  <View style={{ flex: 1, margin: 10, border: 'solid 1px black' }}>
-    <Text style={{color: 'black', fontSize: 18}}>Nome:{nomeDoUsuario}</Text>
-    <Text style={{color: 'black', fontSize: 18}}>Data:{data_postagem}</Text>
-    <Text style={{color: 'black', fontSize: 18}}>Filme:{filme_id}</Text>
-    <Text style={{color: 'black', fontSize: 18}}>Conteudo:{texto}</Text>
-    <TouchableOpacity onPress={()=> navigation.navigate('AlterarPostagem', {id_do_post})}>
-      <Text>Alterar Informações</Text>
-    </TouchableOpacity>
-    <TouchableOpacity onPress={()=> DeletarPost(id_do_post)}>
-      <Text>Deletar post</Text>
-    </TouchableOpacity>
-    
-  </View>
-)
-//receber dados
-//states necessárias
-const [MeusTreinos, setandoMeusTreinos] = useState([]);
-//função
-  const ReceberMinhasPostagens = async()=>{
-    const token = await AsyncStorage.getItem("@token");
-const config = {
-  headers: {
-    Authorization: `${token}`,
-  },};
-    try{
-      const resposta = await axios.get(`http://${local}:3000/Amigos/ReceberPublicacao`, config);
-      setandoMeusTreinos(resposta.data);
-    }catch(err){
-      console.error(`Erro ao buscar treinos: segue o tal ${err}`);
-    }
-  }
-  //monitorar coleta GET
-  useEffect(()=>{
-    ReceberMinhasPostagens();
-  },[nota])
-  //modal de alterar dados
  //definir nota
 const clicarNaEstrela = (index) =>{
     console.log(nota);
@@ -138,8 +87,8 @@ const clicarNaEstrela = (index) =>{
        <HeaderRetorno voltarApaginaAnterior={()=> navigation.goBack("")}/>
         <View style={{flex:1, padding: 16}}>
             <View style={styles.header}>
-                <Text style={styles.title}>{}</Text>
-                <Image source={{ uri: "https://a.ltrbxd.com/resized/sm/upload/ye/jq/f3/22/nmb4QhCRmdfNP6rgb81yUFgI83l-0-1000-0-1500-crop.jpg?v=caa3999c6f" }} style={styles.image} />
+                <Text style={styles.title}>{Dados.title}</Text>
+                <Image source={{ uri: `https://image.tmdb.org/t/p/w500${Dados.poster_path}` }} style={styles.image} />
             </View>
 
             {/* Data de visualização */}

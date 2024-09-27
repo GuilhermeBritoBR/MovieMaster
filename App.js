@@ -34,6 +34,7 @@ import PesquisaDeTexto from './source/paginas/subPaginas/PesquisaDeTexto.pagina.
 import PublicarPostagem from './source/paginas/subPaginas/PublicarPostagem2.pagina.js';
 import AlterarPostagem from './source/paginas/subPaginas/AlterarPostagem.pagina.js';
 import MinhasPostagens from './source/paginas/MinhasPostagens.pagina.js';
+import InformaçoesFilme from './source/paginas/subPaginas/InformaçoesFilme.pagina.js';
 
 
   export default function App(){
@@ -120,16 +121,23 @@ import MinhasPostagens from './source/paginas/MinhasPostagens.pagina.js';
                   
                   name="AlterarPostagem"
                   component={AlterarPostagem}
+                  options={{
+                    drawerItemStyle: { display: 'none' }, // Ocultar essa opção
+                  }}
                 />
                  <Drawer.Screen
                   
                   name="MinhasPostagens"
                   component={MinhasPostagens}
+                  
                 />
                 <Drawer.Screen
                  
                   name="PublicarPostagem"
                   component={PublicarPostagem}
+                  options={{
+                    drawerItemStyle: { display: 'none' }, // Ocultar essa opção
+                  }}
                 />
                 
                 <Drawer.Screen
@@ -177,6 +185,13 @@ import MinhasPostagens from './source/paginas/MinhasPostagens.pagina.js';
                   <Drawer.Screen
                   name="Sair"
                   component={Cadastro}
+                  options={{
+                    drawerItemStyle: { display: 'none' }, // Ocultar essa opção
+                  }}
+                  />
+                  <Drawer.Screen
+                  name="InformaçoesFilme"
+                  component={InformaçoesFilme}
                   options={{
                     drawerItemStyle: { display: 'none' }, // Ocultar essa opção
                   }}

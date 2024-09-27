@@ -25,7 +25,7 @@ export default function Login() {
       RealizarLogin(emailEnome, senha);
     }else{
       alert("Por gentileza, preencha os campos corretamente!");
-    }
+    }  
   } 
    //sistema de login de dados
   //vamos conectar com a api externa para o funcionamento primario

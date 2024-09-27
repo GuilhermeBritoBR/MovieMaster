@@ -56,7 +56,7 @@ export default function HeaderPesquisar({ativarMenuTrueFalse, ativarPesquisa}) {
         <View style={[EstiloDoHeader.ViewParaPosicionarOsElementosDoHeader,{ alignItems: 'center', marginRight: 20,}]}>
             {/* O FEATHER é o icone dos elementos sendo que o TOUCHABLE encobre os tais com uma função que abre um modal ou ativa uma rota */}
             <TextInput 
-            placeholder='Pesquise aqui um filme...'
+            placeholder='Pesquise um filme e amigos...'
             placeholderTextColor={'#000000'}
             onChangeText={ativarPesquisa}
             style={EstiloDoHeader.inputDePesquisa}

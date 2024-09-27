@@ -4,7 +4,8 @@ import {
   View,
   FlatList,
   ScrollView,
-  Text
+  Text,
+  TouchableOpacity
 } from "react-native";
 // componentes importados para a estruturação do aplicativo
 import Header from "../componentes/estruturais/Header.componente.js";
@@ -33,6 +34,9 @@ import CapaDoFilme from "../componentes/estruturais/CapaDoFilme.componente.js";
 import H3 from "../componentes/textos/h3.componente.js";
 // para api
 import axios from "axios";
+
+//importando as unidades responsivas do css
+
 
 export default function Inicio() {
   const [filmesRecebidosDaAPI, setFilmesRecebidosDaAPI] = useState([]);
@@ -111,6 +115,40 @@ const [familia, setFamilia] = useState([]);
              filme.genres.some(genre => genre.id === generoEscolhido);
     });
   };
+
+  const generos = [
+    { titulo: "Guerra", dados: guerra },
+    { titulo: "Ação", dados: acao },
+    { titulo: "Drama", dados: drama },
+    { titulo: "Comédia", dados: comedia },
+    { titulo: "Terror", dados: terror },
+    { titulo: "Romance", dados: romance },
+    { titulo: "Fantasia", dados: fantasia },
+    { titulo: "Aventura", dados: aventura },
+    { titulo: "Documentário", dados: documentario },
+    { titulo: "Ficção Científica", dados: sciFi },
+    { titulo: "Animação", dados: animacao },
+    { titulo: "Musical", dados: musical },
+    { titulo: "Histórico", dados: historico },
+    { titulo: "Crime", dados: crime },
+    { titulo: "Mistério", dados: misterio },
+    { titulo: "Thriller", dados: thriller },
+    { titulo: "Família", dados: familia },
+  ];
+  const renderItem = ({ item }) => (
+    <View style={EstilosDoInicio.ViewQueSeguraInternamenteAflatList}>
+      <TouchableOpacity style={EstilosDoInicio.ImagemDaCapaMenor} onPress={()=>navigation.navigate("InformaçoesFilme",{id: item.id})}>
+      <CapaDoFilme
+        propriedadeParaReceberAcapaDoFilme={
+          item.poster_path
+            ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+            : 'https://img.freepik.com/fotos-gratis/conceito-de-fundo-do-estudio-abstrato-vazio-claro-gradiente-roxo-fundo-do-quarto-do-estudio-para-o-produto_1258-54682.jpg' // imagem padrão
+        }
+        tamonhoMenorOuMaiorrStingVazia={"Menor"}
+      />
+      </TouchableOpacity>
+    </View>
+  );
   const SelecionarFilmesDoGenero = async (variavelAsetar, idDoGenero) =>{
     try {
       const FilmesGeral = await axios.get(
@@ -137,6 +175,7 @@ const [familia, setFamilia] = useState([]);
           {/* Primeira View com os lançamentos */}
           <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
             <H3 texto={"Populares"} />
+            
             <FlatList
               style={EstilosDoInicio.EstilizacaoDaFlatList}
               data={filmesRecebidosDaAPI}
@@ -144,318 +183,30 @@ const [familia, setFamilia] = useState([]);
               horizontal={true}
               renderItem={({ item }) => (
                 <View style={EstilosDoInicio.ViewQueSeguraInternamenteAflatList}>
+                  <TouchableOpacity style={EstilosDoInicio.ImagemDaCapa} onPress={()=>navigation.navigate("InformaçoesFilme",{id: item.id})}>
                   <CapaDoFilme
                     propriedadeParaReceberAcapaDoFilme={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
                     tamonhoMenorOuMaiorrStingVazia={""}
                   />
+                  </TouchableOpacity>
                 </View>
               )}
             />
+            
           </View>
           {/* Seção de Gêneros */}
-          <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
-            <H3 texto={"Guerra"} />
-            <FlatList
-              style={EstilosDoInicio.EstilizacaoDaFlatList}
-              data={
-                guerra
-              } // Filtra os filmes por gênero de Guerra
-              keyExtractor={(item) => item.id.toString()}
-              horizontal={true}
-              renderItem={({ item }) => (
-                <View style={EstilosDoInicio.ViewQueSeguraInternamenteAflatList}>
-                  <CapaDoFilme
-                    propriedadeParaReceberAcapaDoFilme={
-                      item.poster_path 
-                        ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-                        : 'https://img.freepik.com/fotos-gratis/conceito-de-fundo-do-estudio-abstrato-vazio-claro-gradiente-roxo-fundo-do-quarto-do-estudio-para-o-produto_1258-54682.jpg' // Coloque uma imagem padrão aqui
-                    }
-                    tamonhoMenorOuMaiorrStingVazia={"Menor"}
-                  />
-                </View>
-              )}
-            />
-          </View>
-
-          <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
-            <H3 texto={"Ação"} />
-            <FlatList
-              style={EstilosDoInicio.EstilizacaoDaFlatList}
-              data={acao} // Filtra os filmes por gênero de Ação
-              keyExtractor={(item) => item.id.toString()}
-              horizontal={true}
-              renderItem={({ item }) => (
-                <View style={EstilosDoInicio.ViewQueSeguraInternamenteAflatList}>
-                  <CapaDoFilme
-                    propriedadeParaReceberAcapaDoFilme={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                    tamonhoMenorOuMaiorrStingVazia={"Menor"}
-                  />
-                </View>
-              )}
-            />
-          </View>
-          <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
-            <H3 texto={"Drama"} />
-            <FlatList
-              style={EstilosDoInicio.EstilizacaoDaFlatList}
-              data={drama} // Filtra os filmes por gênero de Ação
-              keyExtractor={(item) => item.id.toString()}
-              horizontal={true}
-              renderItem={({ item }) => (
-                <View style={EstilosDoInicio.ViewQueSeguraInternamenteAflatList}>
-                  <CapaDoFilme
-                    propriedadeParaReceberAcapaDoFilme={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                    tamonhoMenorOuMaiorrStingVazia={"Menor"}
-                  />
-                </View>
-              )}
-            />
-          </View>
-          <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
-            <H3 texto={"Comédia"} />
-            <FlatList
-              style={EstilosDoInicio.EstilizacaoDaFlatList}
-              data={comedia} // Filtra os filmes por gênero de Ação
-              keyExtractor={(item) => item.id.toString()}
-              horizontal={true}
-              renderItem={({ item }) => (
-                <View style={EstilosDoInicio.ViewQueSeguraInternamenteAflatList}>
-                  <CapaDoFilme
-                    propriedadeParaReceberAcapaDoFilme={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                    tamonhoMenorOuMaiorrStingVazia={"Menor"}
-                  />
-                </View>
-              )}
-            />
-          </View>
-          <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
-            <H3 texto={"Terror"} />
-            <FlatList
-              style={EstilosDoInicio.EstilizacaoDaFlatList}
-              data={terror} // Filtra os filmes por gênero de Ação
-              keyExtractor={(item) => item.id.toString()}
-              horizontal={true}
-              renderItem={({ item }) => (
-                <View style={EstilosDoInicio.ViewQueSeguraInternamenteAflatList}>
-                  <CapaDoFilme
-                    propriedadeParaReceberAcapaDoFilme={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                    tamonhoMenorOuMaiorrStingVazia={"Menor"}
-                  />
-                </View>
-              )}
-            />
-          </View>
-          <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
-            <H3 texto={"romance"} />
-            <FlatList
-              style={EstilosDoInicio.EstilizacaoDaFlatList}
-              data={romance} // Filtra os filmes por gênero de Ação
-              keyExtractor={(item) => item.id.toString()}
-              horizontal={true}
-              renderItem={({ item }) => (
-                <View style={EstilosDoInicio.ViewQueSeguraInternamenteAflatList}>
-                  <CapaDoFilme
-                    propriedadeParaReceberAcapaDoFilme={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                    tamonhoMenorOuMaiorrStingVazia={"Menor"}
-                  />
-                </View>
-              )}
-            />
-          </View>
-          <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
-            <H3 texto={"Fantasia"} />
-            <FlatList
-              style={EstilosDoInicio.EstilizacaoDaFlatList}
-              data={fantasia} // Filtra os filmes por gênero de Ação
-              keyExtractor={(item) => item.id.toString()}
-              horizontal={true}
-              renderItem={({ item }) => (
-                <View style={EstilosDoInicio.ViewQueSeguraInternamenteAflatList}>
-                  <CapaDoFilme
-                    propriedadeParaReceberAcapaDoFilme={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                    tamonhoMenorOuMaiorrStingVazia={"Menor"}
-                  />
-                </View>
-              )}
-            />
-          </View>
-          <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
-            <H3 texto={"Aventura"} />
-            <FlatList
-              style={EstilosDoInicio.EstilizacaoDaFlatList}
-              data={aventura} // Filtra os filmes por gênero de Ação
-              keyExtractor={(item) => item.id.toString()}
-              horizontal={true}
-              renderItem={({ item }) => (
-                <View style={EstilosDoInicio.ViewQueSeguraInternamenteAflatList}>
-                  <CapaDoFilme
-                    propriedadeParaReceberAcapaDoFilme={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                    tamonhoMenorOuMaiorrStingVazia={"Menor"}
-                  />
-                </View>
-              )}
-            />
-          </View>
-          <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
-            <H3 texto={"Documentário"} />
-            <FlatList
-              style={EstilosDoInicio.EstilizacaoDaFlatList}
-              data={documentario} // Filtra os filmes por gênero de Ação
-              keyExtractor={(item) => item.id.toString()}
-              horizontal={true}
-              renderItem={({ item }) => (
-                <View style={EstilosDoInicio.ViewQueSeguraInternamenteAflatList}>
-                  <CapaDoFilme
-                    propriedadeParaReceberAcapaDoFilme={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                    tamonhoMenorOuMaiorrStingVazia={"Menor"}
-                  />
-                </View>
-              )}
-            />
-          </View>
-          <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
-            <H3 texto={"Ficção Científica"} />
-            <FlatList
-              style={EstilosDoInicio.EstilizacaoDaFlatList}
-              data={sciFi} // Filtra os filmes por gênero de Ação
-              keyExtractor={(item) => item.id.toString()}
-              horizontal={true}
-              renderItem={({ item }) => (
-                <View style={EstilosDoInicio.ViewQueSeguraInternamenteAflatList}>
-                  <CapaDoFilme
-                    propriedadeParaReceberAcapaDoFilme={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                    tamonhoMenorOuMaiorrStingVazia={"Menor"}
-                  />
-                </View>
-              )}
-            />
-          </View>
-          <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
-            <H3 texto={"Animação"} />
-            <FlatList
-              style={EstilosDoInicio.EstilizacaoDaFlatList}
-              data={animacao} // Filtra os filmes por gênero de Ação
-              keyExtractor={(item) => item.id.toString()}
-              horizontal={true}
-              renderItem={({ item }) => (
-                <View style={EstilosDoInicio.ViewQueSeguraInternamenteAflatList}>
-                  <CapaDoFilme
-                    propriedadeParaReceberAcapaDoFilme={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                    tamonhoMenorOuMaiorrStingVazia={"Menor"}
-                  />
-                </View>
-              )}
-            />
-            
-          </View>
-          <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
-            <H3 texto={"Musical"} />
-            <FlatList
-              style={EstilosDoInicio.EstilizacaoDaFlatList}
-              data={musical} // Filtra os filmes por gênero de Ação
-              keyExtractor={(item) => item.id.toString()}
-              horizontal={true}
-              renderItem={({ item }) => (
-                <View style={EstilosDoInicio.ViewQueSeguraInternamenteAflatList}>
-                  <CapaDoFilme
-                    propriedadeParaReceberAcapaDoFilme={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                    tamonhoMenorOuMaiorrStingVazia={"Menor"}
-                  />
-                </View>
-              )}
-            />
-            
-          </View>
-          <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
-            <H3 texto={"Histórico"} />
-            <FlatList
-              style={EstilosDoInicio.EstilizacaoDaFlatList}
-              data={historico} // Filtra os filmes por gênero de Ação
-              keyExtractor={(item) => item.id.toString()}
-              horizontal={true}
-              renderItem={({ item }) => (
-                <View style={EstilosDoInicio.ViewQueSeguraInternamenteAflatList}>
-                  <CapaDoFilme
-                    propriedadeParaReceberAcapaDoFilme={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                    tamonhoMenorOuMaiorrStingVazia={"Menor"}
-                  />
-                </View>
-              )}
-            />
-            
-          </View>
-          <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
-            <H3 texto={"Crime"} />
-            <FlatList
-              style={EstilosDoInicio.EstilizacaoDaFlatList}
-              data={crime} // Filtra os filmes por gênero de Ação
-              keyExtractor={(item) => item.id.toString()}
-              horizontal={true}
-              renderItem={({ item }) => (
-                <View style={EstilosDoInicio.ViewQueSeguraInternamenteAflatList}>
-                  <CapaDoFilme
-                    propriedadeParaReceberAcapaDoFilme={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                    tamonhoMenorOuMaiorrStingVazia={"Menor"}
-                  />
-                </View>
-              )}
-            />
-            
-          </View>
-          <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
-            <H3 texto={"Mistério"} />
-            <FlatList
-              style={EstilosDoInicio.EstilizacaoDaFlatList}
-              data={misterio} // Filtra os filmes por gênero de Ação
-              keyExtractor={(item) => item.id.toString()}
-              horizontal={true}
-              renderItem={({ item }) => (
-                <View style={EstilosDoInicio.ViewQueSeguraInternamenteAflatList}>
-                  <CapaDoFilme
-                    propriedadeParaReceberAcapaDoFilme={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                    tamonhoMenorOuMaiorrStingVazia={"Menor"}
-                  />
-                </View>
-              )}
-            />
-            
-          </View>
-          <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
-            <H3 texto={"Thriller"} />
-            <FlatList
-              style={EstilosDoInicio.EstilizacaoDaFlatList}
-              data={thriller} // Filtra os filmes por gênero de Ação
-              keyExtractor={(item) => item.id.toString()}
-              horizontal={true}
-              renderItem={({ item }) => (
-                <View style={EstilosDoInicio.ViewQueSeguraInternamenteAflatList}>
-                  <CapaDoFilme
-                    propriedadeParaReceberAcapaDoFilme={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                    tamonhoMenorOuMaiorrStingVazia={"Menor"}
-                  />
-                </View> 
-              )}
-            />
-            
-          </View>
-          <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
-            <H3 texto={"Família"} />
-            <FlatList
-              style={EstilosDoInicio.EstilizacaoDaFlatList}
-              data={familia} // Filtra os filmes por gênero de Ação
-              keyExtractor={(item) => item.id.toString()}
-              horizontal={true}
-              renderItem={({ item }) => (
-                <View style={EstilosDoInicio.ViewQueSeguraInternamenteAflatList}>
-                  <CapaDoFilme
-                    propriedadeParaReceberAcapaDoFilme={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                    tamonhoMenorOuMaiorrStingVazia={"Menor"}
-                  />
-                </View> 
-              )}
-            />
-            
-          </View>
+          {generos.map((genero) => (
+      <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos} key={genero.titulo}>
+        <H3 texto={genero.titulo} />
+        <FlatList
+          style={EstilosDoInicio.EstilizacaoDaFlatList}
+          data={genero.dados}
+          keyExtractor={(item) => item.id.toString()}
+          horizontal={true}
+          renderItem={renderItem}
+        />
+      </View>
+    ))}
         </ScrollView>
       </View> 
     </View>
@@ -477,4 +228,16 @@ const EstilosDoInicio = StyleSheet.create({
   ViewQueSeguraInternamenteAflatList: {
     flex: 2,
   },
+  ImagemDaCapaMenor:{
+    width: wp('38%'),
+    height: wp('56%'),
+    backgroundColor: 'purple',
+    borderRadius: 20,
+    marginRight: 29,
+},
+ImagemDaCapa:{
+  width: '100%',
+  height: '100%',
+  borderRadius: 20,
+},
 });

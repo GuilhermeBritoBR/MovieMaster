@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 20/09/2024 às 20:37
+-- Tempo de geração: 27/09/2024 às 20:45
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -150,16 +150,11 @@ CREATE TABLE `postagens` (
   `texto` varchar(255) NOT NULL,
   `data_postagem` varchar(255) DEFAULT current_timestamp(),
   `nota` int(11) NOT NULL,
-  `favorito` tinyint(1) NOT NULL
+  `favorito` tinyint(1) NOT NULL,
+  `autor` varchar(255) NOT NULL,
+  `tituloDoFilme` varchar(255) NOT NULL,
+  `likesDaPostagem` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `postagens`
---
-
-INSERT INTO `postagens` (`id`, `credenciais_id`, `filme_id`, `texto`, `data_postagem`, `nota`, `favorito`) VALUES
-(28, 52, 1, 'welington', '20/09/2024, 15:26', 2, 1),
-(30, 52, 1, 'dsfdghksufodhsdhw', '20/09/2024, 14:52', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -231,6 +226,7 @@ INSERT INTO `tokensrevogados` (`token`, `tempoExpirado`) VALUES
 ('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTIsIm5vbWVSZXNwb3N0YSI6InRlc3RlIiwiaWF0IjoxNzI2MDU2MTg3LCJleHAiOjE3Mjg2NDgxODd9.Iw2KiDnrkmUB7BAqN6zMvpFfUKGU2FB7QwexHGMvznI', '2024-10-11 12:03:07'),
 ('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTIsIm5vbWVSZXNwb3N0YSI6InRlc3RlIiwiaWF0IjoxNzI2MjI1Nzk5LCJleHAiOjE3Mjg4MTc3OTl9.TJe-Nu845C8cGmjjjHDnOpSx-XyCjmF66KghJdxZVhA', '2024-10-13 11:09:59'),
 ('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTIsIm5vbWVSZXNwb3N0YSI6InRlc3RlIiwiaWF0IjoxNzI2ODM0MjA1LCJleHAiOjE3Mjk0MjYyMDV9.Gg1eJ66YIYXADkE6uqno_gaS9hwXRtcNaKPOoEfcZDs', '2024-10-20 12:10:05'),
+('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTIsIm5vbWVSZXNwb3N0YSI6InRlc3RlIiwiaWF0IjoxNzI3Mjg2MTkxLCJleHAiOjE3Mjk4NzgxOTF9.3HvpNBpslYegke7X_6qGRB51rwmhY0cHTJT-T8_fKJU', '2024-10-25 17:43:11'),
 ('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTQsIm5vbWUiOiJzb2NyYXRlcyIsImlhdCI6MTcyNTYyMTgxNCwiZXhwIjoxNzI4MjEzODE0fQ.trcl1cmmADYXZz0Xcx4ET2wUjb6HJ9nCtTpbPYoqXCU', '2024-10-06 11:23:34'),
 ('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTUsIm5vbWUiOiJQYXVsaW5obyIsImlhdCI6MTcyNjIyNjQyMSwiZXhwIjoxNzI4ODE4NDIxfQ.pmxrFZBmRLJ9OgId1zbRXv275PZiGTGwvGCiBSRy2Kw', '2024-10-13 11:20:21'),
 ('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTUsIm5vbWVSZXNwb3N0YSI6IlBhdWxpbmhvRGFWaW9sYSIsImlhdCI6MTcyNjIyNjU2NCwiZXhwIjoxNzI4ODE4NTY0fQ.9l70zMg8_VbJ62Gqg1BpM2fzvxpgGncfHCngf3soQJ4', '2024-10-13 11:22:44'),
@@ -333,7 +329,7 @@ ALTER TABLE `filmes`
 -- AUTO_INCREMENT de tabela `postagens`
 --
 ALTER TABLE `postagens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -17,6 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const AvaliaçaoModal = ({ visible, onClose, id, dados }) => {
     const navigation = useNavigation("");
+    
   const { height } = Dimensions.get("window"); // Obter a altura da tela
   return (
     <Modal
@@ -61,7 +62,7 @@ const AvaliaçaoModal = ({ visible, onClose, id, dados }) => {
             ))}
           </View>
         </View>
-        <TouchableOpacity onPress={()=> navigation.navigate('PublicarPostagem',{id: id, dados: dados})}>
+        <TouchableOpacity onPress={()=> {navigation.navigate('PublicarPostagem',{id: id, dados: dados});{onClose}}}>
             <Text>
             FAZER RESENHA
             </Text>

@@ -34,9 +34,7 @@ const InformaçoesFilme = () => {
       alert(`Erro ao buscar informações sobre o filme: ${err}`);
     }
   };
-  useEffect(() => {
-    BuscarDadosDoFilme(id);
-  }, [id]);
+
   const navigation = useNavigation("");
   const nota = infoDoFilme.vote_average;
   const nota_arredondada = parseFloat(nota).toFixed(1);
@@ -45,6 +43,10 @@ const InformaçoesFilme = () => {
   const toggleModal = () => {
     setModalVisible(!modalVisible); // Alterna a visibilidade do modal
   };
+  useEffect(() => {
+    BuscarDadosDoFilme(id);
+    
+  }, [id, modalVisible]);
   return (
     <View style={styles.container}>
       {/* 20% da tela para a imagem do filme */}
@@ -58,8 +60,6 @@ const InformaçoesFilme = () => {
           <TouchableOpacity style={{margin:20}} onPress={() => navigation.goBack("")}>
             <Ionicons name="arrow-back" size={36} color="white" />
             </TouchableOpacity>
-
-          
         </ImageBackground>
 
       {/* Container para informações do filme e imagem do lado */}

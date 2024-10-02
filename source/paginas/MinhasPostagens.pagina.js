@@ -74,7 +74,7 @@ import HeaderRetorno from "../componentes/estruturais/HeaderRetorno.componente";
 
       </View>
       </View>
-          <TouchableOpacity onPress={()=> navigation.navigate('AlterarPostagem', {id_do_post})}>
+          <TouchableOpacity onPress={()=> navigation.navigate('AlterarPostagem', {id_do_post: id_do_post,filme_id: filme_id, capa: capaDoFilme, TituloDoFilme: TituloDoFilme, texto: texto})}>
            <Text style={EstruturaDaPaginaDosAmigos.comentarioEstilizacao}>Alterar Informações</Text>
           </TouchableOpacity>
          <TouchableOpacity onPress={()=> DeletarPost(id_do_post)}>
@@ -98,7 +98,7 @@ import HeaderRetorno from "../componentes/estruturais/HeaderRetorno.componente";
                 texto={item.texto}
                 id_do_post={item.id}
                 capaDoFilme={item.capaDoFilme}
-                TituloDoFilme={item.TituloDoFilme}
+                TituloDoFilme={item.tituloDoFilme}
                 />
             )}
             />
@@ -140,7 +140,7 @@ import HeaderRetorno from "../componentes/estruturais/HeaderRetorno.componente";
     },
     Nome:{
         color: '#ffffff',
-        fontSize: 16,
+        fontSize: 13,
     },
     AreaSuperior:{
         flex:10,

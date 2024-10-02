@@ -20,12 +20,20 @@ import HeaderRetorno from "../../componentes/estruturais/HeaderRetorno.component
 export default function AlterarPostagem() {
     const route = useRoute();
     const id_do_post = route.params.id_do_post;
+    const capaDoFilme = route.params.capa;
+    const TituloDoFilme = route.params.TituloDoFilme;
     console.log(id_do_post);
+    const idFilme = route.params.filme_id;
     const navigation = useNavigation();
+    const texto = route.params.texto;
     //states de dados para postar
-    const [conteudoDaPublicacao , setandoConteudoDaPublicacao] = useState("");
+    const [conteudoDaPublicacao , setandoConteudoDaPublicacao] = useState(`${texto}`);
     const [favorito, setandoFavorito] = useState(false);
     const [nota, setNota] = useState(0);
+    console.log(`id do filme: ${idFilme}`);
+    useEffect(()=>{
+
+    },[id_do_post, capaDoFilme, TituloDoFilme, idFilme, texto])
 //função
 
 const EditarPostagem= async()=>{
@@ -42,14 +50,14 @@ const EditarPostagem= async()=>{
       
       const dataDaPublicacao = date.toLocaleString('pt-BR', options).replace(/ GMT.*$/, ''); //remove esse GMT
 
-    const filmeID = 1;
+    const filmeID = idFilme;
     const dadosAenviar = {
       id_do_post,
       conteudoDaPublicacao,
       filmeID,
       dataDaPublicacao,
       nota,
-      favorito
+      favorito,     
     };
     const token = await AsyncStorage.getItem("@token");
     const config = {
@@ -88,8 +96,8 @@ const clicarNaEstrela = (index) =>{
        <HeaderRetorno voltarApaginaAnterior={()=> navigation.goBack("")}/>
         <View style={{flex:1, padding: 16}}>
             <View style={styles.header}>
-                <Text style={styles.title}>{}</Text>
-                <Image source={{ uri: "https://a.ltrbxd.com/resized/sm/upload/ye/jq/f3/22/nmb4QhCRmdfNP6rgb81yUFgI83l-0-1000-0-1500-crop.jpg?v=caa3999c6f" }} style={styles.image} />
+                <Text style={styles.title}>{TituloDoFilme}</Text>
+                <Image source={{ uri: capaDoFilme }} style={styles.image} />
             </View>
 
             {/* Data de visualização */}
@@ -124,7 +132,7 @@ const clicarNaEstrela = (index) =>{
                 onChangeText={setandoConteudoDaPublicacao}
                 value={conteudoDaPublicacao}
                 style={styles.textInput}
-                placeholder="Escreva sua review aqui..."
+                placeholder="Escreva sua review aqui... (Opcional)"
               placeholderTextColor={"white"}
             />
 
@@ -156,7 +164,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold',
         marginRight: 10,
-        color: "#fff",
+        color: "#ffffff",
         
     },
     image: {

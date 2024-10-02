@@ -35,6 +35,7 @@ import PublicarPostagem from './source/paginas/subPaginas/PublicarPostagem2.pagi
 import AlterarPostagem from './source/paginas/subPaginas/AlterarPostagem.pagina.js';
 import MinhasPostagens from './source/paginas/MinhasPostagens.pagina.js';
 import InformaçoesFilme from './source/paginas/subPaginas/InformaçoesFilme.pagina.js';
+import PerfilDosAmigos from './source/paginas/PerfilDosAmigos.pagina.js';
 
 
   export default function App(){
@@ -169,6 +170,11 @@ import InformaçoesFilme from './source/paginas/subPaginas/InformaçoesFilme.pag
                   options={{
                     drawerItemStyle: { display: 'none' }, // Ocultar essa opção
                   }}/>
+                   <Drawer.Screen name="PerfilDosAmigos" component={PerfilDosAmigos}
+                  options={{
+                    drawerItemStyle: { display: 'none' }, // Ocultar essa opção
+                  }}/>
+                  
                   <Drawer.Screen
                   name="Cadastro"
                   component={Cadastro}

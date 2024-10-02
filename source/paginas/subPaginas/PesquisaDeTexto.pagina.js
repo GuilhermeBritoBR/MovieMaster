@@ -90,7 +90,10 @@ export default function PesquisaDeTexto() {
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
           <View style={EstilosDoPesquisar.OpcaoDePesquisa}>
+             <TouchableOpacity onPress={()=>navigation.navigate('PerfilDosAmigos', {id: item.id, nome: item.nome})} style={EstilosDoPesquisar.OpcaoDePesquisa}>
+            
             <Text style={EstilosDoPesquisar.fonteDETexto}>{item.nome}</Text>
+            </TouchableOpacity>
           </View>
         )}
       />

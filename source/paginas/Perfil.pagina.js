@@ -14,18 +14,32 @@ import { useNavigation } from "@react-navigation/native";
 import { BuscarNome } from '../funçoes/BuscarNome.funcao';
 // Textos
 import H3 from "../componentes/textos/h3.componente";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { local } from '../funçoes/IpOuLocalhost';
+import axios from 'axios';
 
 export default function Perfil() {
-  
+  //constanstes de dados
+  const [meusFavoritos, setandoMeusFavoritos] = useState([]);
   // Constante de navegação
   const navigation = useNavigation();
 
   // Dados para a FlatList
-  const filmesFavoritos = [
-    { id: '1', title: 'Filme 1' },
-    { id: '2', title: 'Filme 2' },
-    { id: '3', title: 'Filme 3' },
-  ];
+  const BuscarFilmesFavoritos = async()=>{
+    const token = await AsyncStorage.getItem("@token");
+    const config = {
+      headers: {
+        Authorization: `${token}`,
+      },};
+        try{
+          const resposta = await axios.get(`http://${local}:3000/Perfil/BuscarMeusFilmesFavoritos`, config);
+          setandoMeusFavoritos(resposta.data);
+          
+        }catch(err){
+          console.error(`Erro ao buscar treinos: segue o tal ${err}`);
+        }
+      
+  }
   //hooks
 
   const [nome, setNome] = useState("");
@@ -37,20 +51,20 @@ export default function Perfil() {
           const nome = await BuscarNome();
           setNome(nome);
       };
-
+      BuscarFilmesFavoritos();
       BuscarNomeLocal();
-  },[nome]);
+  },[nome, meusFavoritos]);
 
   return (
-    <View style={ViewPrincipal.estilo}>
+    <View style={[ViewPrincipal.estilo,{width: '100%'}]}>
       <StatusBar backgroundColor={'#1A1A1A'} />
       <HeaderRetorno voltarApaginaAnterior={() => navigation.goBack()} />
 
-      <ScrollView style={ViewCentralCorpoDoAPP.estilo}>
+      <ScrollView style={[ViewCentralCorpoDoAPP.estilo,{width: '100%'}]}>
 
         <View style={styles.ViewComFotoDoPerfil}>
           <Image
-            source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyLM6VhXMEu2gouo_heuwy_w1IQOZEGOMAIw&s' }} 
+            source={ require('../arquivos/icones/MusashiPraying.png') } 
             style={styles.profileImage}
           />
           <Text style={styles.txtnome}>{nome}
@@ -62,11 +76,12 @@ export default function Perfil() {
           <Text style={styles.textoprincipal}>Filmes Favoritos</Text>
           <FlatList
             horizontal
-            data={filmesFavoritos}
-            keyExtractor={(item) => item.id}
+            data={meusFavoritos}
+            keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <CapaDoFilme style={styles.filmeItem}>
-                <Text>{item.title}</Text>
+              
+              <CapaDoFilme propriedadeParaReceberAcapaDoFilme={`${item.capaDoFilme}`} style={styles.filmeItem}>
+                <Text>{item.tituloDoFilme}</Text>
               </CapaDoFilme>
             )}
           />
@@ -79,18 +94,11 @@ export default function Perfil() {
 
         {/* View Informações */}
         <View style={styles.atividadeRecente}>
-          <TouchableOpacity>
-            <Text style={styles.textoinfos}>Filmes</Text>
-          </TouchableOpacity>
+    
 
           <TouchableOpacity>
             <Text style={styles.textoinfos}>Reviews</Text>
           </TouchableOpacity>
-
-          <TouchableOpacity>
-            <Text style={styles.textoinfos}>Watchlist</Text>
-          </TouchableOpacity>
-
           <TouchableOpacity>
             <Text style={styles.textoinfos}>Filmes curtidos</Text>
           </TouchableOpacity>

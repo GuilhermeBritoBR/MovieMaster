@@ -16,41 +16,43 @@ import { BuscarNome } from '../funçoes/BuscarNome.funcao';
 import H3 from "../componentes/textos/h3.componente";
 import { useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { local } from '../funçoes/IpOuLocalhost';
+import axios from 'axios';
 export default function PerfilDosAmigos() {
   const route = useRoute();
   var id = route.params.id;
+  const nome = route.params.nome;
   // Constante de navegação
   const navigation = useNavigation();
-
+//constanstes de dados
+const [meusFavoritos, setandoMeusFavoritos] = useState([]);
   // Dados para a FlatList
-  const filmesFavoritos = [
-    { id: '1', title: 'Filme 1' },
-    { id: '2', title: 'Filme 2' },
-    { id: '3', title: 'Filme 3' },
-  ];
-  //hooks
-
-  const BuscarDadosDoAmigo = async()=>{
-    const token = await AsyncStorage.getItem("@token");
+  const BuscarDadosDoAmigo = async() =>{
+      const token = await AsyncStorage.getItem("@token");
     const config = {
       headers: {
         Authorization: `${token}`,
       },};
+      const aEnviar = {
+        id      }
+        try{
+          const resposta = await axios.get(`http://${local}:3000/Amigos/ReceberPublicacaoDosAmigos/${id}`,config);
+          setandoMeusFavoritos(resposta.data);
+        }catch(err){
+          console.error(`Erro ao buscar treinos: segue o tal ${err}`);
+        }
+      
   }
+  
 
   //monitorar entrada de dados
 
   useEffect(()=>{
-      const BuscarNomeLocal = async()=>{
-          const nome = await BuscarNome();
-          setNome(nome);
-      };
-
-      BuscarNomeLocal();
-  },[nome]);
+     BuscarDadosDoAmigo();
+  },[]);
 
   return (
-    <View style={ViewPrincipal.estilo}>
+    <View style={[ViewPrincipal.estilo,{width: '100%'}]}>
       <StatusBar backgroundColor={'#1A1A1A'} />
       <HeaderRetorno voltarApaginaAnterior={() => navigation.goBack()} />
 
@@ -58,7 +60,7 @@ export default function PerfilDosAmigos() {
 
         <View style={styles.ViewComFotoDoPerfil}>
           <Image
-            source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyLM6VhXMEu2gouo_heuwy_w1IQOZEGOMAIw&s' }} 
+            source={ require('../arquivos/icones/MusashiPraying.png') } 
             style={styles.profileImage}
           />
           <Text style={styles.txtnome}>{nome}
@@ -70,7 +72,7 @@ export default function PerfilDosAmigos() {
           <Text style={styles.textoprincipal}>Filmes Favoritos</Text>
           <FlatList
             horizontal
-            data={filmesFavoritos}
+            data={meusFavoritos}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <CapaDoFilme style={styles.filmeItem}>

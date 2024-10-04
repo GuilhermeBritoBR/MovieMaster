@@ -142,6 +142,7 @@ const EstilosDoPesquisar = StyleSheet.create({
     borderBottomColor: "#ffffff",
     borderBottomWidth: 1,
     height: 60,
+    padding: 2,
   },
   inputDePesquisa: {
     width: 200,

@@ -8,7 +8,7 @@ export default function CapaDoFilme({propriedadeParaReceberAcapaDoFilme, tamonho
     return(
         <View style={tamonhoMenorOuMaiorrStingVazia === "" ? EstiloDaCapaDoFilme.ViewPrincipalDaCapa: [EstiloDaCapaDoFilme.ViewPrincipalDaCapaMe]}>
             <Image 
-            source={{uri: propriedadeParaReceberAcapaDoFilme,}}
+            source={{uri: propriedadeParaReceberAcapaDoFilme}}
             style={tamonhoMenorOuMaiorrStingVazia === "" ? EstiloDaCapaDoFilme.ImagemDaCapa: [EstiloDaCapaDoFilme.ImagemDaCapaMenor]}
             />
         </View>

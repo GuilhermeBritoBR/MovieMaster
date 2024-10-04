@@ -1,18 +1,34 @@
 import React, { useState } from 'react'; //HOOKS
-import { View, TextInput, ImageBackground, StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, TextInput, ImageBackground, StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView, Platform, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import axios from 'axios';
 import { SalvarNome } from '../funçoes/SalvarNomeDoUsuario.funcao.js';
 import { SalvarToken } from '../funçoes/SalvarToken.funcao.js';
 import { useNavigation } from '@react-navigation/native';
 import { local } from '../funçoes/IpOuLocalhost.js';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 export default function Cadastro() {
   const navigation = useNavigation("");
   const [nome, setandoNome] = useState("");
   const [senha, setandoSenha] = useState("");
   const [email, setandoEmail] = useState("");
-
+  const [foto, setFoto] = useState(null);
+  
+    const selecionarImagem = () => {
+      launchImageLibrary(
+          { mediaType: 'photo', includeBase64: false },
+          (response) => {
+              if (response.didCancel) {
+                  console.log('Usuário cancelou a seleção da imagem');
+              } else if (response.error) {
+                  console.log('Erro ao selecionar a imagem:', response.error);
+              } else {
+                  setFoto(response.assets[0]); // Salva a imagem selecionada no estado
+              }
+          }
+      );
+  };
   function VerificarSeTemDados() {
     if (nome.length >= 3 && senha.length >= 8) {
       console.log(`Segue o valor dos dados das constantes Nome: ${nome}, Senha ${senha}, Email: ${email}`);
@@ -21,22 +37,48 @@ export default function Cadastro() {
       alert("Por gentileza, preencha os campos corretamente! Nome deve minimamente 3 caracteres e senha 8 caracteres");
     }
   }
-
-  const RealizarCadastro = async() => {
-    const dadosParaEnviar = { nome, email, senha };
-    try {
-      const resposta = await axios.post(`http://${local}:3000/registerPage/cadastro`, dadosParaEnviar);
-      const { token, nome } = resposta.data;
-      await SalvarToken(token);
-      await SalvarNome(dadosParaEnviar.nome);
-      alert("Cadastro realizado! Bem vindo ao MovieMaster!");
-      navigation.navigate("Inicio");
-    } catch(err) {
-      alert("Erro ao se cadastrar!");
-      console.log(`Segue o erro ao se cadastrar: ${err}`);
+  
+  const RealizarCadastro = async () => {
+    // Crie um novo FormData
+    const dadosParaEnviar = new FormData();
+    dadosParaEnviar.append('nome', nome);
+    dadosParaEnviar.append('email', email);
+    dadosParaEnviar.append('senha', senha);
+    const formDataFoto = new FormData();
+    
+    // Adicionando a imagem ao FormData se existir
+    if (foto) {
+        formDataFoto.append('image', {
+            uri: foto.uri,
+            type: foto.type,
+            name: foto.fileName || 'foto.jpg', // Nome padrão se não houver
+        });
     }
-  }
+    try {
+      const respostaFoto = await axios.post(`http://${local}:3000/EnvioDaFoto`, formDataFoto);
+      console.log(respostaFoto);
 
+    // Obtenha o caminho da foto da resposta
+    const caminhoFoto = respostaFoto.data; 
+    dadosParaEnviar.append('foto', caminhoFoto);
+        const resposta = await axios.post(`http://${local}:3000/registerPage/cadastro`, dadosParaEnviar, 
+          {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        }
+        );
+        const { token, nome } = resposta.data;
+        await SalvarToken(token);
+        await SalvarNome(nome);
+        alert("Cadastro realizado! Bem vindo ao MovieMaster!");
+        navigation.navigate("Inicio");
+    } catch (err) {
+        alert("Erro ao se cadastrar!");
+        console.log(`Segue o erro ao se cadastrar: ${err}`);
+    }
+};
+  
   return (
     <KeyboardAvoidingView 
       style={styles.container}
@@ -83,10 +125,23 @@ export default function Cadastro() {
           value={senha}
           onChangeText={(textodigitado) => setandoSenha(textodigitado)}
         />
+        <View style={{ alignItems: 'center', marginVertical: 20 }}>
+        {/* Botão para selecionar imagem */}
+        <TouchableOpacity onPress={selecionarImagem} style={{ padding: 10, backgroundColor: '#007BFF', borderRadius: 5 }}>
+            <Text style={{ color: '#fff', fontSize: 16 }}>Selecionar Imagem</Text>
+            {/* Aqui você pode adicionar um ícone personalizado */}
+        </TouchableOpacity>
+
+        {/* Exibe a imagem selecionada, se houver */}
+        {foto && (
+            <Image source={{ uri: foto.uri }} style={{ width: 100, height: 100, marginTop: 10 }} />
+        )}
+    </View>
         <TouchableOpacity
           style={styles.button}
           onPress={() => VerificarSeTemDados()}
         >
+          
           <LinearGradient
             colors={["#9754CB", "#6237A0"]}
             start={{ x: 0, y: 0 }}

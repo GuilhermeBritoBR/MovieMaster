@@ -33,7 +33,7 @@ export default function Perfil() {
       },};
         try{
           const resposta = await axios.get(`http://${local}:3000/Perfil/BuscarMeusFilmesFavoritos`, config);
-          setandoMeusFavoritos(resposta.data);
+          setandoMeusFavoritos(resposta.data.resposta);
           
         }catch(err){
           console.error(`Erro ao buscar treinos: segue o tal ${err}`);
@@ -53,7 +53,7 @@ export default function Perfil() {
       };
       BuscarFilmesFavoritos();
       BuscarNomeLocal();
-  },[nome, meusFavoritos]);
+  },[]);
 
   return (
     <View style={[ViewPrincipal.estilo,{width: '100%'}]}>
@@ -77,18 +77,17 @@ export default function Perfil() {
           <FlatList
             horizontal
             data={meusFavoritos}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              
-              <CapaDoFilme propriedadeParaReceberAcapaDoFilme={`${item.capaDoFilme}`} style={styles.filmeItem}>
-                <Text>{item.tituloDoFilme}</Text>
-              </CapaDoFilme>
+              <View style={{flex: 1}}>
+              <CapaDoFilme propriedadeParaReceberAcapaDoFilme={item.capaDoFilme}/>
+              </View>
             )}
           />
         </View>
 
         {/* View Atividade Recente */}
-        <View style={{borderBottomColor: 'white', borderBottomWidth: 1,}}>
+        <View style={{borderBottomColor: 'white', borderBottomWidth: 1, padding:10}}>
           <Text style={styles.textoprincipal}>Atividade Recente</Text>
         </View>
 
@@ -103,7 +102,7 @@ export default function Perfil() {
             <Text style={styles.textoinfos}>Filmes curtidos</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>navigation.navigate()}>
             <Text style={styles.textoinfos}>Seguindo</Text>
           </TouchableOpacity>
 

@@ -15,19 +15,20 @@ export default function Cadastro() {
   const [email, setandoEmail] = useState("");
   const [foto, setFoto] = useState(null);
   
-    const selecionarImagem = () => {
-      launchImageLibrary(
-          { mediaType: 'photo', includeBase64: false },
-          (response) => {
-              if (response.didCancel) {
-                  console.log('Usuário cancelou a seleção da imagem');
-              } else if (response.error) {
-                  console.log('Erro ao selecionar a imagem:', response.error);
-              } else {
-                  setFoto(response.assets[0]); // Salva a imagem selecionada no estado
-              }
-          }
-      );
+  const selecionarImagem = () => {
+    launchImageLibrary(
+      { mediaType: 'photo', includeBase64: true }, // Adiciona `includeBase64`
+      (response) => {
+        if (response.didCancel) {
+          console.log('Usuário cancelou a seleção da imagem');
+        } else if (response.error) {
+          console.log('Erro ao selecionar a imagem:', response.error);
+        } else {
+          console.log(response.assets[0]); // Exibe a imagem selecionada
+          setFoto(response.assets[0].base64); // Salva a imagem em Base64 no estado
+        }
+      }
+    );
   };
   function VerificarSeTemDados() {
     if (nome.length >= 3 && senha.length >= 8) {
@@ -40,33 +41,20 @@ export default function Cadastro() {
   
   const RealizarCadastro = async () => {
     // Crie um novo FormData
-    const dadosParaEnviar = new FormData();
-    dadosParaEnviar.append('nome', nome);
-    dadosParaEnviar.append('email', email);
-    dadosParaEnviar.append('senha', senha);
-    const formDataFoto = new FormData();
-    
-    // Adicionando a imagem ao FormData se existir
-    if (foto) {
-        formDataFoto.append('image', {
-            uri: foto.uri,
-            type: foto.type,
-            name: foto.fileName || 'foto.jpg', // Nome padrão se não houver
-        });
-    }
-    try {
-      const respostaFoto = await axios.post(`http://${local}:3000/EnvioDaFoto`, formDataFoto);
-      console.log(respostaFoto);
+    const dadosParaEnviar = {
+      nome: nome,
+      email: email,
+      senha: senha,
+      foto: foto, // A imagem em Base64
+    };
 
-    // Obtenha o caminho da foto da resposta
-    const caminhoFoto = respostaFoto.data; 
-    dadosParaEnviar.append('foto', caminhoFoto);
+  
+    try {
+        console.log(dadosParaEnviar);
         const resposta = await axios.post(`http://${local}:3000/registerPage/cadastro`, dadosParaEnviar, 
-          {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        }
+          {headers: {
+            'Content-Type': 'application/json',
+          },}
         );
         const { token, nome } = resposta.data;
         await SalvarToken(token);

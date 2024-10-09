@@ -1,23 +1,41 @@
-import { StyleSheet, View, TouchableOpacity, Image, FlatList } from "react-native"
+import { StyleSheet, View, TouchableOpacity, Image, FlatList, Text } from "react-native"
 import { ViewCentralCorpoDoAPP, ViewPrincipal } from "../../estilos/EstilosEstruturais.estilos"
-import { Text } from "react-native"
-import { useState } from "react"
 
+import { useState, useEffect } from "react"
+import { useRoute } from "@react-navigation/native"
+import HeaderRetorno from "../../componentes/estruturais/HeaderRetorno.componente";
+import { useNavigation } from "@react-navigation/native";
+import { local } from "../../funçoes/IpOuLocalhost";
 
 export default function MeusAmigos(){
+    const navigation = useNavigation();
+    const route = useRoute();
     const [meusAmigos, setMeusAmigos] = useState([]);
+   
+    const bruto = route.params.amigos;
+    useEffect(()=>{
+        setMeusAmigos(bruto)
+    },[bruto])
+    
+
+    
     return(
         <View style={[ViewPrincipal.estilo,{width: '100%'}]}>
-            <View style={ViewCentralCorpoDoAPP.estilo}>
+            <HeaderRetorno voltarApaginaAnterior={()=> navigation.goBack()}/>
+            <View style={[ViewCentralCorpoDoAPP.estilo,{width: '100%'}]}>
                 <View style={{flex: 1}}>
                 <FlatList
                 data={meusAmigos}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                    <TouchableOpacity style={Estilos.Linha}>
-                    <Image source={item.foto}
-                    />
-                    <Text>{item.nome}</Text>
+                    <TouchableOpacity style={Estilos.Linha} onPress={()=> navigation.navigate('PerfilDosAmigos',{id:item.id, nome: item.nome})}>
+                    <Image
+            source={
+            {uri: `http://${local}:3000/${item.foto}`}
+            }
+            style={Estilos.headerImage}
+          />
+                    <Text style={{color:'#ffffff'}}>{item.nome}</Text>
                     </TouchableOpacity>
             )}
           />    
@@ -37,6 +55,12 @@ const Estilos = StyleSheet.create(({
         borderBottom: "solid",
         borderBottomColor: "#ffffff",
         borderBottomWidth: 1,
-    }
+    },
+    headerImage: {
+        width: 30,
+        height: 30,
+        borderRadius: 60, // deixa a imagem redonda
+        marginRight: 2, 
+      },
 }))
 

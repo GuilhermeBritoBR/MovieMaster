@@ -19,11 +19,14 @@
   import { local } from '../funçoes/IpOuLocalhost';
   import Icon from 'react-native-vector-icons/FontAwesome';
   import axios from 'axios';
+  import { useIsFocused } from '@react-navigation/native';
 
   export default function PerfilDosAmigos() {
     const [isAmigo, setIsAmigo] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [foto, setFoto] = useState('');
     const [amigosBruto, setAmigosBruto] = useState(true);
+    const isFocused = useIsFocused();
     const route = useRoute();
     var id = route.params.id;
     const nome = route.params.nome;
@@ -50,7 +53,7 @@
     
     useEffect(()=>{
       BuscarDadosDoAmigo();
-    },[id]);
+    },[id, ]);
     const BuscarAmigos = async () => {
       const token = await AsyncStorage.getItem("@token");
       const config = {
@@ -59,6 +62,10 @@
         },};
       try {
           const response = await axios.get(`http://${local}:3000/Amigos/VerificarAmigos`, config );
+          
+          const foto = await axios.get(`http://${local}:3000/Perfil/BuscarFotoDePerfilDosAmigos/${id}`, config );
+          const resposta = foto.data.foto;
+          setFoto(resposta);
           const amigos = response.data.amigos;
 
           if (amigos.includes(id)) {
@@ -113,8 +120,10 @@
 };
   useEffect(() => {
     BuscarAmigos();
-}, []);
-
+}, [foto]);
+if (isFocused) {
+  BuscarAmigos();
+}
 if (loading) {
     return <Text>Carregando...</Text>;
 }
@@ -127,7 +136,7 @@ if (loading) {
 
           <View style={styles.ViewComFotoDoPerfil}>
             <Image
-              source={ require('../arquivos/icones/MusashiPraying.png') } 
+              source={ {uri: `http://${local}:3000/${foto}`} } 
               style={styles.profileImage}
             />
             <Text style={styles.txtnome}>{nome}

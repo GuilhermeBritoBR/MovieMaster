@@ -40,22 +40,37 @@ import { BuscarNome } from "../../funçoes/BuscarNome.funcao";
 
 
 
-export default function DrawerStyle(props) {
+export default function DrawerStyle(props, ) {
 
     //hooks
 
     const [nome, setNome] = useState("");
+    const [foto, setFoto] = useState("");
 
     //monitorar entrada de dados
+  const buscarFoto = async()=>{
+    const token = await AsyncStorage.getItem('@token');
+      
+      const config = {
+        headers: {
+          Authorization: `${token}`,
+        },};
+      try {
+       
+        const resposta = await axios.get(`http://${local}:3000/Perfil/BuscarFotoDePerfil`, config);
+        setFoto(resposta.data.foto);
+  }catch(err){
+    console.error(`Erro ao buscar treinos: segue o tal ${err}`);
+  }}
 
     useEffect(()=>{
         const BuscarNomeLocal = async()=>{
             const nome = await BuscarNome();
             setNome(nome);
         };
-
+        buscarFoto();
         BuscarNomeLocal();
-    },[nome]);
+    },[nome,foto]);
 
     async function DeslogarUsuario() {
 
@@ -93,7 +108,9 @@ export default function DrawerStyle(props) {
         {/* header */}
         <View style={styles.ViewPrincipalDoDrawer}>
           <Image
-            source={require('../../arquivos/icones/MusashiPraying.png')}
+            source={
+            {uri: `http://${local}:3000/${foto}`}
+            }
             style={styles.headerImage}
           />
           <Text style={styles.headerText}>{nome}</Text>

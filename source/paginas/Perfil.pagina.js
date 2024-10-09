@@ -21,6 +21,8 @@ import axios from 'axios';
 export default function Perfil() {
   //constanstes de dados
   const [meusFavoritos, setandoMeusFavoritos] = useState([]);
+  const [fotoPerfil, setFotoPerfil]= useState('');
+  const [amigos, setAmigos]= useState('');
   // Constante de navegação
   const navigation = useNavigation();
 
@@ -33,7 +35,11 @@ export default function Perfil() {
       },};
         try{
           const resposta = await axios.get(`http://${local}:3000/Perfil/BuscarMeusFilmesFavoritos`, config);
+          const foto = await axios.get(`http://${local}:3000/Perfil/BuscarFotoDePerfil`, config);
+          const amigos = await axios.get(`http://${local}:3000/Amigos/VerificarMeusAmigos`, config);
           setandoMeusFavoritos(resposta.data.resposta);
+          setFotoPerfil(foto.data.foto);
+          setAmigos(amigos.data.amigos);
           
         }catch(err){
           console.error(`Erro ao buscar treinos: segue o tal ${err}`);
@@ -53,7 +59,7 @@ export default function Perfil() {
       };
       BuscarFilmesFavoritos();
       BuscarNomeLocal();
-  },[]);
+  },[fotoPerfil, amigos]);
 
   return (
     <View style={[ViewPrincipal.estilo,{width: '100%'}]}>
@@ -64,7 +70,7 @@ export default function Perfil() {
 
         <View style={styles.ViewComFotoDoPerfil}>
           <Image
-            source={ require('../arquivos/icones/MusashiPraying.png') } 
+            source={{ uri:`http://${local}:3000/${fotoPerfil}`}} 
             style={styles.profileImage}
           />
           <Text style={styles.txtnome}>{nome}
@@ -72,7 +78,7 @@ export default function Perfil() {
         </View>
 
         {/* View Filmes Favoritos */}
-        <View style={{borderBottomColor: '6F6D6D', borderBottomWidth: 1, padding: 10,}}>
+        <View style={{borderBottomColor: '6F6D6D', borderBottomWidth: 1, padding: 10, width: '100%'}}>
           <Text style={styles.textoprincipal}>Filmes Favoritos</Text>
           <FlatList
             horizontal
@@ -87,7 +93,7 @@ export default function Perfil() {
         </View>
 
         {/* View Atividade Recente */}
-        <View style={{borderBottomColor: 'white', borderBottomWidth: 1, padding:10}}>
+        <View style={{borderBottomColor: 'white', borderBottomWidth: 1, padding:10,}}>
           <Text style={styles.textoprincipal}>Atividade Recente</Text>
         </View>
 
@@ -102,7 +108,7 @@ export default function Perfil() {
             <Text style={styles.textoinfos}>Filmes curtidos</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={()=>navigation.navigate()}>
+          <TouchableOpacity onPress={()=>navigation.navigate('MeusAmigos',{amigos: amigos})}>
             <Text style={styles.textoinfos}>Seguindo</Text>
           </TouchableOpacity>
 

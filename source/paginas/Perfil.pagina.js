@@ -23,6 +23,7 @@ export default function Perfil() {
   const [meusFavoritos, setandoMeusFavoritos] = useState([]);
   const [fotoPerfil, setFotoPerfil]= useState('');
   const [amigos, setAmigos]= useState('');
+  const [MeusSeguidores, setMeusSeguidores] = useState([]);
   // Constante de navegação
   const navigation = useNavigation();
 
@@ -33,13 +34,18 @@ export default function Perfil() {
       headers: {
         Authorization: `${token}`,
       },};
+      const zero = 0;
         try{
+          const respostaMeusSeguidores = await axios.get(`http://${local}:3000/Perfil/BuscarOsQueMeSeguem/${zero}`, config );
           const resposta = await axios.get(`http://${local}:3000/Perfil/BuscarMeusFilmesFavoritos`, config);
           const foto = await axios.get(`http://${local}:3000/Perfil/BuscarFotoDePerfil`, config);
           const amigos = await axios.get(`http://${local}:3000/Amigos/VerificarMeusAmigos`, config);
+          
+          setMeusSeguidores(respostaMeusSeguidores.data.seguidores);
           setandoMeusFavoritos(resposta.data.resposta);
           setFotoPerfil(foto.data.foto);
           setAmigos(amigos.data.amigos);
+          
           
         }catch(err){
           console.error(`Erro ao buscar treinos: segue o tal ${err}`);
@@ -59,7 +65,7 @@ export default function Perfil() {
       };
       BuscarFilmesFavoritos();
       BuscarNomeLocal();
-  },[fotoPerfil, amigos]);
+  },[ fotoPerfil]);
 
   return (
     <View style={[ViewPrincipal.estilo,{width: '100%'}]}>
@@ -111,8 +117,8 @@ export default function Perfil() {
           <TouchableOpacity onPress={()=>navigation.navigate('MeusAmigos',{amigos: amigos})}>
             <Text style={styles.textoinfos}>Seguindo</Text>
           </TouchableOpacity>
-
-          <TouchableOpacity>
+          
+          <TouchableOpacity onPress={()=>navigation.navigate('MeusSeguidores',{seguidores: MeusSeguidores})}>
             <Text style={styles.textoinfos}>Seguidores</Text>
           </TouchableOpacity>
         </View>

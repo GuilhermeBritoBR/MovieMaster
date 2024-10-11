@@ -32,7 +32,7 @@ import { local } from "../../funçoes/IpOuLocalhost";
 
 //NAVEGAÇÃO
 
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 
 import { BuscarNome } from "../../funçoes/BuscarNome.funcao";
 
@@ -99,6 +99,7 @@ export default function DrawerStyle(props, ) {
 
     }
 
+  const focus = useIsFocused();
   
 
     return (

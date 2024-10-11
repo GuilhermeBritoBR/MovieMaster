@@ -7,26 +7,26 @@ import HeaderRetorno from "../../componentes/estruturais/HeaderRetorno.component
 import { useNavigation } from "@react-navigation/native";
 import { local } from "../../funçoes/IpOuLocalhost";
 
-export default function MeusAmigos(){
+export default function MeusSeguidores(){
     const navigation = useNavigation();
     const route = useRoute();
-    const [meusAmigos, setMeusAmigos] = useState([]);
+    const bruto = route.params.seguidores;
+    const [MeusSeguidores, setMeusSeguidores] = useState([]);
    
-    const bruto = route.params.amigos;
+    
     useEffect(()=>{
-        setMeusAmigos(bruto)
-    },[bruto, meusAmigos])
+        setMeusSeguidores(bruto)
+    },[bruto])
     
 
-    
     return(
         <View style={[ViewPrincipal.estilo,{width: '100%'}]}>
             <HeaderRetorno voltarApaginaAnterior={()=> navigation.goBack()}/>
             <View style={[ViewCentralCorpoDoAPP.estilo,{width: '100%'}]}>
                 <View style={{flex: 1}}>
                 <FlatList
-                data={meusAmigos}
-                keyExtractor={(item) => item.id}
+                data={MeusSeguidores}
+                keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
                     <TouchableOpacity style={Estilos.Linha} onPress={()=> navigation.navigate('PerfilDosAmigos',{id:item.id, nome: item.nome})}>
                     <Image

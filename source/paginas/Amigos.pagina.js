@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {View, FlatList, Image, StyleSheet, Text} from 'react-native';
 //componentes importados
 import Header from '../componentes/estruturais/Header.componente.js';
@@ -21,48 +21,10 @@ import MenorCapaDoFilme from '../componentes/estruturais/MenorCapaFilme.componen
 import { TouchableOpacity } from 'react-native-gesture-handler';
 //icones
 import AntDesign from '@expo/vector-icons/AntDesign';
-const data = [
-    {
-      id: '1',
-      user: 'Neymar',
-      comment: 'Eliud Kipchoge (Kapsisiywa, 5 de novembro de 1984) é um fundista queniano, bicampeão olímpico e campeão mundial especializado em provas de pista de longas distâncias e na maratona, e vencedor das ',
-      filme: 'https://th.bing.com/th/id/OIP.iAf-VzZLAZXHOb2HFuP8dgHaLH?rs=1&pid=ImgDetMain',
-      Nomefilme: 'Vingadores',
-      data: '20/08/1970',
-    },
-    {
-      id: '2',
-      user: 'Ribamar',
-      comment: 'Eliud Kipchoge (Kapsisiywa, 5 de novembro de 1984) é um fundista queniano, bicampeão olímpico e campeão mundial especializado em provas de pista de longas distâncias e na maratona, e vencedor das ',
-      filme: 'https://th.bing.com/th/id/OIP.iAf-VzZLAZXHOb2HFuP8dgHaLH?rs=1&pid=ImgDetMain',
-      Nomefilme: 'Vingadores',
-      data: '20/08/1970',
-    },
-    {
-        id: '2',
-        user: 'Gabriel',
-        comment: 'Eliud Kipchoge (Kapsisiywa, 5 de novembro de 1984) é um fundista queniano, bicampeão olímpico e campeão mundial especializado em provas de pista ',
-        filme: 'https://th.bing.com/th/id/OIP.iAf-VzZLAZXHOb2HFuP8dgHaLH?rs=1&pid=ImgDetMain',
-        Nomefilme: 'Vingadores',
-        data: '20/08/1970',
-      },
-      {
-        id: '2',
-        user: 'Benilson',
-        comment: 'Eliud Kipchoge (Kapsisiywa, 5 de novembro de 1984) é um fundista queniano, bicampeão olímpico e campeão mundial especializado em provas',
-        filme: 'https://th.bing.com/th/id/OIP.iAf-VzZLAZXHOb2HFuP8dgHaLH?rs=1&pid=ImgDetMain',
-        Nomefilme: 'Vingadores',
-        data: '20/08/1970',
-      },
-      {
-        id: '2',
-        user: 'Antonio',
-        comment: 'Eliud Kipchoge (Kapsisiywa, 5 de novembro de 1984) é um fundista queniano, bicampeão olímpico e campeão mundial especializado em provas',
-        filme: 'https://th.bing.com/th/id/OIP.iAf-VzZLAZXHOb2HFuP8dgHaLH?rs=1&pid=ImgDetMain',
-        Nomefilme: 'Vingadores',
-        data: '20/08/1970',
-      },
-  ];
+import { local } from '../funçoes/IpOuLocalhost.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+
   //
 const EstruturaDaPaginaDosAmigos = StyleSheet.create(({
     ViewQueCentralizaCadaPostagem:{
@@ -124,37 +86,70 @@ const EstruturaDaPaginaDosAmigos = StyleSheet.create(({
         padding: 3,
         
     },
+    headerImage: {
+        width: 30,
+        height: 30,
+        borderRadius: 60, // deixa a imagem redonda
+        marginRight: 2, 
+      },
 }));
     
  const Amigos = () =>{
-
+    const [data, setData] = useState([]);
+    const buscarPostagens = async()=>{
+        const token = await AsyncStorage.getItem("@token");
+    const config = {
+      headers: {
+        Authorization: `${token}`,
+      },};
+       
+        
+                try {
+                   const resposta = await axios.get(`http://${local}:3000/Amigos/BuscarPostsDosMeusAmigos`,config);
+                   setData(resposta.data.publicacoes);
+                } catch (err) {
+                    console.log(`Segue o erro: ${err}`);
+                }
+                console.log("dados buscados");
+            
+    }
+    useEffect(()=>{
+         buscarPostagens();
+    },[data])
     const Corpo = ({item})=>(
                 <View style={EstruturaDaPaginaDosAmigos.ViewQueCentralizaCadaPostagem}>
                     <View style={EstruturaDaPaginaDosAmigos.AreaSuperior}>
+                    
                     <View style={EstruturaDaPaginaDosAmigos.SecaoEsquerda}>
+                    <Image
+            source={
+            {uri: `http://${local}:3000/${item.foto}`}
+            }
+            style={EstruturaDaPaginaDosAmigos.headerImage}
+          />
                     <Text style={[EstruturaDaPaginaDosAmigos.Nome,{textAlign: 'center', marginRight: 10}]}>{item.Nomefilme}</Text>
                         <MenorCapaDoFilme 
                         tamonhoMenorOuMaiorrStingVazia={"Menor"}
-                        propriedadeParaReceberAcapaDoFilme={item.filme}/>
+                        propriedadeParaReceberAcapaDoFilme={item.capaDoFilme}/>
         
                     </View>
 
                     <View style={EstruturaDaPaginaDosAmigos.SecaoDireita}>
-
+                    
                         <View style={EstruturaDaPaginaDosAmigos.UsuarioEsuasInformacoes}>
                             
                             {/* Informações do usuário */} 
-                            <Text style={EstruturaDaPaginaDosAmigos.Nome}>{item.user}</Text>
-                            <Text style={[EstruturaDaPaginaDosAmigos.Nome,{fontSize: 10}]}>{item.data}</Text>
+                            <Text style={EstruturaDaPaginaDosAmigos.Nome}>{item.autor}</Text>
+                            <Text style={[EstruturaDaPaginaDosAmigos.Nome,{fontSize: 10}]}>{item.data_postagem}</Text>
                         </View>
                         <View style={EstruturaDaPaginaDosAmigos.ComentarioDoUsuarioView}>
                             {/* Comentário do usuário */}
-                            <Text style={EstruturaDaPaginaDosAmigos.comentarioEstilizacao}>{item.comment}</Text> 
+                            <Text style={EstruturaDaPaginaDosAmigos.comentarioEstilizacao}>{item.texto}</Text> 
                         </View>
 
                     </View>
                     </View>
-                    {/* <View style={EstruturaDaPaginaDosAmigos.AreaInferior}>
+                     <View style={EstruturaDaPaginaDosAmigos.AreaInferior}>
                         <View style={EstruturaDaPaginaDosAmigos.ViewIconeDeFeedBack}>
                             <TouchableOpacity style={EstruturaDaPaginaDosAmigos.ViewIconeDeFeedBack}>
                             <AntDesign name="like2" size={24} color="white" />
@@ -165,7 +160,7 @@ const EstruturaDaPaginaDosAmigos = StyleSheet.create(({
                             <AntDesign name="dislike2" size={24} color="white" />
                             </TouchableOpacity>
                         </View>
-                    </View> */}
+                    </View> 
                 </View>
               
     
@@ -180,7 +175,7 @@ const EstruturaDaPaginaDosAmigos = StyleSheet.create(({
         <FlatList
         data={data}
         renderItem={Corpo}
-        keyExtractor={item => item.id}/>
+        keyExtractor={item => item.id.toString()}/>
         </View>
         </View>
     )

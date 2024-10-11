@@ -25,7 +25,9 @@
     const [isAmigo, setIsAmigo] = useState(false);
     const [loading, setLoading] = useState(true);
     const [foto, setFoto] = useState('');
-    const [amigosBruto, setAmigosBruto] = useState(true);
+    const [seguidores, setSeguidores] = useState([]);
+    const [amigos, setAmigos] = useState([]);
+    
     const isFocused = useIsFocused();
     const route = useRoute();
     var id = route.params.id;
@@ -43,8 +45,12 @@
         },};
 
           try{
+            
+            const respostaMeusSeguidores = await axios.get(`http://${local}:3000/Perfil/BuscarOsQueMeSeguem/${id}`, config );
             const resposta = await axios.get(`http://${local}:3000/Pesquisa/BuscarFilmesFavoritosDosAmigos/${id}`,config);
             setandoMeusFavoritos(resposta.data.resposta);
+           
+            setSeguidores(respostaMeusSeguidores.data.seguidores);
           }catch(err){
             console.error(`Erro ao buscar treinos: segue o tal ${err}`);
           }
@@ -61,14 +67,14 @@
           Authorization: `${token}`,
         },};
       try {
-          const response = await axios.get(`http://${local}:3000/Amigos/VerificarAmigos`, config );
-          
           const foto = await axios.get(`http://${local}:3000/Perfil/BuscarFotoDePerfilDosAmigos/${id}`, config );
           const resposta = foto.data.foto;
           setFoto(resposta);
-          const amigos = response.data.amigos;
+          const amigos = await axios.get(`http://${local}:3000/Amigos/VerificarAmigos/${id}`, config );
+          const seEleEmeuAmigo= await axios.get(`http://${local}:3000/Amigos/VerificarMeusAmigos`, config );
 
-          if (amigos.includes(id)) {
+          setAmigos(amigos.data.amigos);
+          if (seEleEmeuAmigo.includes(id)) {
               setIsAmigo(true);
           } else {
               setIsAmigo(false);
@@ -186,29 +192,22 @@ if (loading) {
 
           {/* View Informações */}
           <View style={styles.atividadeRecente}>
-            <TouchableOpacity>
-              <Text style={styles.textoinfos}>Filmes</Text>
-            </TouchableOpacity>
 
             <TouchableOpacity>
               <Text style={styles.textoinfos}>Reviews</Text>
             </TouchableOpacity>
 
             <TouchableOpacity>
-              <Text style={styles.textoinfos}>Watchlist</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity>
               <Text style={styles.textoinfos}>Filmes curtidos</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity>
-              <Text style={styles.textoinfos}>Seguindo</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity>
-              <Text style={styles.textoinfos}>Seguidores</Text>
-            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>navigation.navigate('MeusAmigos',{amigos: amigos})}>
+            <Text style={styles.textoinfos}>Seguindo</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity onPress={()=>navigation.navigate('MeusSeguidores',{seguidores: seguidores})}>
+            <Text style={styles.textoinfos}>Seguidores</Text>
+          </TouchableOpacity>
           </View>
         </ScrollView>
       </View>

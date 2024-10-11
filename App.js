@@ -37,6 +37,8 @@ import MinhasPostagens from './source/paginas/MinhasPostagens.pagina.js';
 import InformaçoesFilme from './source/paginas/subPaginas/InformaçoesFilme.pagina.js';
 import PerfilDosAmigos from './source/paginas/PerfilDosAmigos.pagina.js';
 import MeusAmigos from './source/paginas/subPaginas/MeusAmigos.pagina.js';
+import MeusSeguidores from './source/paginas/subPaginas/MeusSeguidores.pagina.js';
+import CriarLista from './source/paginas/CriarLista.pagina.js';
 
 
   export default function App(){
@@ -167,7 +169,15 @@ import MeusAmigos from './source/paginas/subPaginas/MeusAmigos.pagina.js';
                   options={{
                     drawerItemStyle: { display: 'none' }, // Ocultar essa opção
                   }}/>
+                  <Drawer.Screen name="CriarLista" component={CriarLista}
+                  options={{
+                    drawerItemStyle: { display: 'none' }, // Ocultar essa opção
+                  }}/>
                   <Drawer.Screen name="Amigos" component={Amigos}
+                  options={{
+                    drawerItemStyle: { display: 'none' }, // Ocultar essa opção
+                  }}/>
+                  <Drawer.Screen name="MeusSeguidores" component={MeusSeguidores}
                   options={{
                     drawerItemStyle: { display: 'none' }, // Ocultar essa opção
                   }}/>

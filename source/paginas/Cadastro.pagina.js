@@ -17,7 +17,13 @@ export default function Cadastro() {
   
   const selecionarImagem = () => {
     launchImageLibrary(
-      { mediaType: 'photo', includeBase64: true }, // Adiciona `includeBase64`
+      { 
+        mediaType: 'photo', 
+        includeBase64: true, 
+        quality: 1,  // 1 é a qualidade máxima
+        maxWidth: 8000, // Define o limite de largura (exemplo 8K)
+        maxHeight: 8000 // Define o limite de altura (exemplo 8K)
+      },  // Adiciona `includeBase64`
       (response) => {
         if (response.didCancel) {
           console.log('Usuário cancelou a seleção da imagem');

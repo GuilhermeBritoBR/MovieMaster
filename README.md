@@ -51,6 +51,8 @@ Guilherme Brito 🙋‍♂️<br>
 Encarregado pelo back-end do projeto <br>
 Guilherme, mais conhecido como Brito, é muito focado, disciplinado, estudioso e corredor de rua do alto nível.
 
+**Api do projeto: https://github.com/GuilhermeBritoBR/API_Rede_Social
+
 Nicolas Cardozo 🙋‍♂️<br>
 Atribuído a função de desenvolvedor front-end <br>
 Nicolas é um leitor nato, é crítico, amante da filosofia e grande apreciador da arte. 

@@ -41,6 +41,8 @@ Eles decidiram colocar todos os seus conhecimentos em pratica se desafiando a fa
 Essa ideia vem de uma grande verdade, todos gostam de filmes! Então se tivesse um app que otimizasse opniões, mostrasse os mais diversos filmes e criasse listas, seria perfeito!    
 Por isso, decidimos criar esse aplicativo.🤩
 
+Api do projeto: https://github.com/GuilhermeBritoBR/API_Rede_Social
+
 **São esses os integrantes do projeto** 🧑‍💻
 
 Pedro Henrique 🙋‍♂️<br>
@@ -50,8 +52,6 @@ Pedro é um entusiasta do esporte, resolvedor de conflitos, um líder por onde v
 Guilherme Brito 🙋‍♂️<br>
 Encarregado pelo back-end do projeto <br>
 Guilherme, mais conhecido como Brito, é muito focado, disciplinado, estudioso e corredor de rua do alto nível.
-
-**Api do projeto: https://github.com/GuilhermeBritoBR/API_Rede_Social
 
 Nicolas Cardozo 🙋‍♂️<br>
 Atribuído a função de desenvolvedor front-end <br>

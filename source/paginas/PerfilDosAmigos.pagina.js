@@ -57,9 +57,7 @@
         
     }
     
-    useEffect(()=>{
-      BuscarDadosDoAmigo();
-    },[id, ]);
+    
     const BuscarAmigos = async () => {
       const token = await AsyncStorage.getItem("@token");
       const config = {
@@ -193,7 +191,7 @@ if (loading) {
           {/* View Informações */}
           <View style={styles.atividadeRecente}>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>navigation.navigate('PostagensDosAmigos',{id: id})}>
               <Text style={styles.textoinfos}>Reviews</Text>
             </TouchableOpacity>
 

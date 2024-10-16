@@ -26,16 +26,7 @@ export default function Configuracoes(){
                         <Text style={EstilosDasConfiguracoes.fonteDoBotao}>Alterar senha</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={EstilosDasConfiguracoes.opcaoDePagina}>
-                    <TouchableOpacity style={EstilosDasConfiguracoes.opcaoDePagina}>
-                        <Text style={EstilosDasConfiguracoes.fonteDoBotao}>Alterar tema</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={EstilosDasConfiguracoes.opcaoDePagina}>
-                    <TouchableOpacity style={EstilosDasConfiguracoes.opcaoDePagina}>
-                        <Text style={EstilosDasConfiguracoes.fonteDoBotao}>Alterar tema</Text>
-                    </TouchableOpacity>
-                </View>
+                
                 <View style={{flex:7}}></View>
 
             </View>

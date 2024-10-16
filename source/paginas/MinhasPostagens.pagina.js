@@ -7,10 +7,11 @@ import { useNavigation } from "@react-navigation/native";
 import MenorCapaDoFilme from "../componentes/estruturais/MenorCapaFilme.componente";
 import { ViewCentralCorpoDoAPP, ViewPrincipal } from "../estilos/EstilosEstruturais.estilos";
 import HeaderRetorno from "../componentes/estruturais/HeaderRetorno.componente";
-
+import { useRoute } from "@react-navigation/native";
   export default function MinhasPostagens(){
+    
     const navigation = useNavigation();
-    const [posts, setandoMeusPosts] = useState({});
+    const [posts, setandoMeusPosts] = useState([]);
     const ReceberMinhasPostagens = async()=>{
         const token = await AsyncStorage.getItem("@token");
     const config = {
@@ -19,7 +20,7 @@ import HeaderRetorno from "../componentes/estruturais/HeaderRetorno.componente";
       },};
         try{
           const resposta = await axios.get(`http://${local}:3000/Amigos/ReceberPublicacao`, config);
-          setandoMeusPosts(resposta.data);
+          setandoMeusPosts(resposta.data.publicacoes);
         }catch(err){
           console.error(`Erro ao buscar treinos: segue o tal ${err}`);
         }
@@ -74,12 +75,14 @@ import HeaderRetorno from "../componentes/estruturais/HeaderRetorno.componente";
 
       </View>
       </View>
+      <View style={{flexDirection:'row', padding: 10}}>
           <TouchableOpacity onPress={()=> navigation.navigate('AlterarPostagem', {id_do_post: id_do_post,filme_id: filme_id, capa: capaDoFilme, TituloDoFilme: TituloDoFilme, texto: texto})}>
            <Text style={EstruturaDaPaginaDosAmigos.comentarioEstilizacao}>Alterar Informações</Text>
           </TouchableOpacity>
          <TouchableOpacity onPress={()=> DeletarPost(id_do_post)}>
             <Text style={EstruturaDaPaginaDosAmigos.comentarioEstilizacao}>Deletar post</Text>
           </TouchableOpacity> 
+          </View>
       </View>)
 
 

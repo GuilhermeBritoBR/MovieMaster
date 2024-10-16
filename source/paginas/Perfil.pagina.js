@@ -107,9 +107,9 @@ export default function Perfil() {
         <View style={styles.atividadeRecente}>
     
 
-          <TouchableOpacity>
-            <Text style={styles.textoinfos}>Reviews</Text>
-          </TouchableOpacity>
+        <TouchableOpacity onPress={()=>navigation.navigate('MinhasPostagens',{id: 0})}>
+              <Text style={styles.textoinfos}>Reviews</Text>
+            </TouchableOpacity>
           <TouchableOpacity>
             <Text style={styles.textoinfos}>Filmes curtidos</Text>
           </TouchableOpacity>

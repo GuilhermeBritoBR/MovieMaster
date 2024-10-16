@@ -39,6 +39,8 @@ import PerfilDosAmigos from './source/paginas/PerfilDosAmigos.pagina.js';
 import MeusAmigos from './source/paginas/subPaginas/MeusAmigos.pagina.js';
 import MeusSeguidores from './source/paginas/subPaginas/MeusSeguidores.pagina.js';
 import CriarLista from './source/paginas/CriarLista.pagina.js';
+import PostagensDosAmigos from './source/paginas/subPaginas/PostagensDosAmigos.pagina.js';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5.js';
 
 
   export default function App(){
@@ -107,7 +109,7 @@ import CriarLista from './source/paginas/CriarLista.pagina.js';
                  <Drawer.Screen
                   options={{
                     drawerIcon: () => (
-                      <Entypo name="home" size={36} color="white" />
+                      <FontAwesome5 name="user-alt" size={25} color={'white'}/>
                     ),
                   }}
                   name="Perfil"
@@ -133,6 +135,14 @@ import CriarLista from './source/paginas/CriarLista.pagina.js';
                   
                   name="MinhasPostagens"
                   component={MinhasPostagens}
+                  options={{ 
+                    drawerIcon: () => (
+                    <MaterialIcons
+                    name="format-align-justify"
+                    size={30}
+                    color={"white"}/>
+                  )
+                  }}
                   
                 />
                 <Drawer.Screen
@@ -166,6 +176,11 @@ import CriarLista from './source/paginas/CriarLista.pagina.js';
                   }}/>
                   
                   <Drawer.Screen name="Login" component={Login}
+                  options={{
+                    drawerItemStyle: { display: 'none' }, // Ocultar essa opção
+                  }}/>
+                  
+                  <Drawer.Screen name="PostagensDosAmigos" component={PostagensDosAmigos}
                   options={{
                     drawerItemStyle: { display: 'none' }, // Ocultar essa opção
                   }}/>

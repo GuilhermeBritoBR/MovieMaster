@@ -56,7 +56,7 @@ export default function Header({ativarMenuTrueFalse}) {
         <View style={[EstiloDoHeader.ViewParaPosicionarOsElementosDoHeader,{ alignItems: 'flex-end', marginRight: 20,}]}>
             {/* O FEATHER é o icone dos elementos sendo que o TOUCHABLE encobre os tais com uma função que abre um modal ou ativa uma rota */}
             <TouchableOpacity
-            onPress={()=> navigation.navigate("Pesquisar")}
+            onPress={()=> navigation.navigate("PequisaDeTexto")}
             >
             <Feather name="search" size={36} color="white" />
             </TouchableOpacity>

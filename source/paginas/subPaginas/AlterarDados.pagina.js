@@ -1,4 +1,4 @@
-import {StatusBar,  StyleSheet,  Text,  View, TextInput, TouchableOpacity } from 'react-native';
+import {StatusBar,  StyleSheet,  Text,  View, TextInput, TouchableOpacity , Image } from 'react-native';
 //componentes importados para a estruturação do aplicativo
 import Header from '../../componentes/estruturais/Header.componente.js';
 //estilizações importadas
@@ -21,7 +21,7 @@ import { SalvarNome } from '../../funçoes/SalvarNomeDoUsuario.funcao.js';
 import H2 from '../../componentes/textos/h2.componente.js';
 import { useNavigation } from '@react-navigation/native';
 import HeaderRetorno from '../../componentes/estruturais/HeaderRetorno.componente.js';
-
+import { launchImageLibrary } from 'react-native-image-picker';
 //
 export default function Usuario() {
   //constantes que vão receber os dados
@@ -29,6 +29,9 @@ export default function Usuario() {
   const [nome, setandoNome]= useState("");
   const [email, setandoEmail]= useState("");
   const [senha, setandoSenha] = useState("");
+  const [foto, setFoto] = useState(null);
+  
+  
   //função
   async function ColetandoDadosDoUsuario(){
     //COLETANDO O TOKEN PARA ENVIAR JUNTAMENTE
@@ -102,10 +105,15 @@ export default function Usuario() {
        <StatusBar backgroundColor={'#000000'}/>
        <HeaderRetorno voltarApaginaAnterior={() => navigation.goBack()}/>
       <View style={ViewCentralCorpoDoAPP.estilo}>
-     
+
           {/* Primeira View com os lançamentos */}
           <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
             <H2 texto={"Altere suas informações pessoais"}/>
+            <View style={{ alignItems: 'center', marginVertical: 20 }}>
+        
+
+       
+    </View>
           <TextInput
           style={EstilosDoInicio.InputDeTexto}
             placeholder={"Altere seu nome.."}

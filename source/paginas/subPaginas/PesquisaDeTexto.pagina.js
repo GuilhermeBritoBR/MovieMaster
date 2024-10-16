@@ -5,7 +5,8 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  FlatList
+  FlatList,
+   Image
 } from "react-native";
 //css
 import { ViewPrincipal } from "../../estilos/EstilosEstruturais.estilos";
@@ -91,7 +92,12 @@ export default function PesquisaDeTexto() {
         renderItem={({ item }) => (
           <View style={EstilosDoPesquisar.OpcaoDePesquisa}>
              <TouchableOpacity onPress={()=>navigation.navigate('PerfilDosAmigos', {id: item.id, nome: item.nome})} style={EstilosDoPesquisar.OpcaoDePesquisa}>
-            
+             <Image
+            source={
+            {uri: `http://${local}:3000/${item.foto}`}
+            }
+            style={EstilosDoPesquisar.headerImage}
+          />
             <Text style={EstilosDoPesquisar.fonteDETexto}>{item.nome}</Text>
             </TouchableOpacity>
           </View>
@@ -118,6 +124,12 @@ const EstilosDoPesquisar = StyleSheet.create({
   ScrolViewParaOsGeneros: {
     flex: 1,
   },
+  headerImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 80, // deixa a imagem redonda
+    marginRight: 10, 
+  },
   DivHorizontalCabeDoisBlocos: {
     flex: 1,
     flexDirection: "row",
@@ -134,6 +146,7 @@ const EstilosDoPesquisar = StyleSheet.create({
   },
   BlocoGenero: {},
   OpcaoDePesquisa: {
+    flexDirection: 'row',
     width: "100%",
     backgroundColor: "#1A1A1A",
     justifyContent: "center",

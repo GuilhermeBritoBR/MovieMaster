@@ -8,14 +8,11 @@ import { local } from "../funçoes/IpOuLocalhost";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function CriarLista(){
     const [lista, setLista] = useState("");
+    const [descricao, setDescricao] = useState('');
     const criarLista = async()=>{
-        const filmesArray = [{
-            idFilme: 0 ,
-            capaURL: "",
-            nome: "",
-        }]
+        const filmesArray = []
         const config = {
-            lista, filmesArray
+            lista, filmesArray, descricao
         }
         const token = await AsyncStorage.getItem('@token');
         const tokens = {

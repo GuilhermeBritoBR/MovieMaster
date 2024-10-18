@@ -6,7 +6,7 @@ import { ViewCentralCorpoDoAPP } from '../estilos/EstilosEstruturais.estilos';
 //componentes
 import Header from '../componentes/estruturais/Header.componente.js';
 //navegação
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 //hooks
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'react-native';
@@ -44,6 +44,7 @@ export default function Pesquisar() {
         </TouchableOpacity>
 );
     const navigation = useNavigation();
+    const route = useRoute();
     return(
         <View style={ViewPrincipal.estilo}>     
       <StatusBar backgroundColor={'#000000'}/>

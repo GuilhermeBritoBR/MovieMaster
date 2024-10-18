@@ -17,13 +17,19 @@ export default function Configuracoes(){
                     <TouchableOpacity 
                     onPress={()=> navigation.navigate("Alterar Dados")}
                     style={EstilosDasConfiguracoes.opcaoDePagina}>
-                        <Text style={EstilosDasConfiguracoes.fonteDoBotao}>Alterar informações pessoais</Text>
+                        <Text style={EstilosDasConfiguracoes.fonteDoBotao}>Alterar nome e email</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={EstilosDasConfiguracoes.opcaoDePagina}>
                     <TouchableOpacity style={EstilosDasConfiguracoes.opcaoDePagina}
                     onPress={()=> navigation.navigate("AlterarSenha")}>
                         <Text style={EstilosDasConfiguracoes.fonteDoBotao}>Alterar senha</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={EstilosDasConfiguracoes.opcaoDePagina}>
+                    <TouchableOpacity style={EstilosDasConfiguracoes.opcaoDePagina}
+                    onPress={()=> navigation.navigate("AlterarFoto")}>
+                        <Text style={EstilosDasConfiguracoes.fonteDoBotao}>Alterar foto</Text>
                     </TouchableOpacity>
                 </View>
                 

@@ -67,6 +67,11 @@ const AvaliaçaoModal = ({ visible, onClose, id, dados }) => {
             FAZER RESENHA
             </Text>
             </TouchableOpacity>
+            <TouchableOpacity onPress={()=> {navigation.navigate('AdicionarLista',{id: id, dados: dados});{onClose}}}>
+            <Text>
+            ADICIONAR A LISTA
+            </Text>
+            </TouchableOpacity>
         <View style={styles.modalContent4}>
           <Button title="Fechar" onPress={onClose} />
         </View>

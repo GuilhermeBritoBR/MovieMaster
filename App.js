@@ -41,6 +41,8 @@ import MeusSeguidores from './source/paginas/subPaginas/MeusSeguidores.pagina.js
 import CriarLista from './source/paginas/CriarLista.pagina.js';
 import PostagensDosAmigos from './source/paginas/subPaginas/PostagensDosAmigos.pagina.js';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5.js';
+import AlterarFoto from './source/paginas/subPaginas/AlterarFoto.pagina.js';
+import AdicionarLista from './source/paginas/subPaginas/AdicionarLista.pagina.js';
 
 
   export default function App(){
@@ -145,6 +147,7 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5.js';
                   }}
                   
                 />
+               
                 <Drawer.Screen
                  
                   name="PublicarPostagem"
@@ -153,6 +156,22 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5.js';
                     drawerItemStyle: { display: 'none' }, // Ocultar essa opção
                   }}
                 />
+                <Drawer.Screen
+                 
+                 name="AdicionarLista"
+                 component={AdicionarLista}
+                 options={{
+                   drawerItemStyle: { display: 'none' }, // Ocultar essa opção
+                 }}
+               />
+                <Drawer.Screen
+                 
+                 name="AlterarFoto"
+                 component={AlterarFoto}
+                 options={{
+                   drawerItemStyle: { display: 'none' }, // Ocultar essa opção
+                 }}
+               />
                 
                 <Drawer.Screen
                   options={{

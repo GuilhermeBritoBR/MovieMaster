@@ -91,9 +91,9 @@ export default function Perfil() {
             data={meusFavoritos}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              <View style={{flex: 1}}>
+              <TouchableOpacity onPress={()=>navigation.navigate("InformaçoesFilme",{id: item.filme_id})}>
               <CapaDoFilme propriedadeParaReceberAcapaDoFilme={item.capaDoFilme}/>
-              </View>
+              </TouchableOpacity>
             )}
           />
         </View>

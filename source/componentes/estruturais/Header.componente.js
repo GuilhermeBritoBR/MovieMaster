@@ -70,7 +70,7 @@ export default function Header({ativarMenuTrueFalse}) {
                 <View style={EstiloDoHeader.BarraDeNavegaçãoDoMenuInferior}>
 
                     <TouchableOpacity 
-                    onPress={()=> navigation.navigate("Inicio")}
+                    onPress={()=> navigation.navigate("Inicio", { paginaAnterior: 'Inicio' })}
                     
                     style={[EstiloDoHeader.BotoesDeNavegacaoInferiores  ]}>
 
@@ -81,7 +81,7 @@ export default function Header({ativarMenuTrueFalse}) {
 
                 <View style={EstiloDoHeader.BarraDeNavegaçãoDoMenuInferior}>
                         <TouchableOpacity 
-                        onPress={()=> navigation.navigate("Amigos")
+                        onPress={()=> navigation.navigate("Amigos", { paginaAnterior: 'Inicio' })
                         }
                     style={[EstiloDoHeader.BotoesDeNavegacaoInferiores]}>
 
@@ -92,7 +92,7 @@ export default function Header({ativarMenuTrueFalse}) {
 
                 <View style={EstiloDoHeader.BarraDeNavegaçãoDoMenuInferior}>
                     <TouchableOpacity 
-                    onPress={()=>navigation.navigate("CriarLista")}
+                    onPress={()=>navigation.navigate("CriarLista", { paginaAnterior: 'Inicio' })}
                     
                     style={[EstiloDoHeader.BotoesDeNavegacaoInferiores]}>
 

@@ -70,9 +70,9 @@
           setFoto(resposta);
           const amigos = await axios.get(`http://${local}:3000/Amigos/VerificarAmigos/${id}`, config );
           const seEleEmeuAmigo= await axios.get(`http://${local}:3000/Amigos/VerificarMeusAmigos`, config );
-
+          const verificarAmizade = seEleEmeuAmigo.data.amigos;
           setAmigos(amigos.data.amigos);
-          if (seEleEmeuAmigo.includes(id)) {
+          if (verificarAmizade.some(amigo => amigo.id === id)) {
               setIsAmigo(true);
           } else {
               setIsAmigo(false);
@@ -123,18 +123,18 @@
     }
 };
   useEffect(() => {
-    BuscarAmigos();
-}, [foto]);
-if (isFocused) {
-  BuscarAmigos();
-}
+   BuscarAmigos();
+   BuscarDadosDoAmigo();
+}, [foto, id, isAmigo]);
+
+
 if (loading) {
     return <Text>Carregando...</Text>;
 }
     return (
       <View style={[ViewPrincipal.estilo,{width: '100%'}]}>
         <StatusBar backgroundColor={'#1A1A1A'} />
-        <HeaderRetorno voltarApaginaAnterior={() => navigation.goBack()} />
+        <HeaderRetorno voltarApaginaAnterior={() => {navigation.goBack(); setFoto(null)}} />
 
         <ScrollView style={[ViewCentralCorpoDoAPP.estilo,{width: '100%'}]}>
 
@@ -161,7 +161,7 @@ if (loading) {
         style={{ marginRight: 10 }} 
     />
     <Text style={{ color: 'white', fontSize: 16 }}>
-        {isAmigo ? 'Remover Amigo' : 'Adicionar Amigo'}
+        {isAmigo ? 'Deixar de seguir' : 'Seguir'}
     </Text>
 </TouchableOpacity>
           {/* View Filmes Favoritos */}

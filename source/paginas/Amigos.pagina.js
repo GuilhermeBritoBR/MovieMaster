@@ -113,7 +113,7 @@ const Corpo = ({
     calcularCurtidas(item.id);
     verificarCurtida(item.id).then(setPostCurtiu);
   }, [item.id]);
-
+  const navigation = useNavigation();
   return (
     <View style={EstruturaDaPaginaDosAmigos.ViewQueCentralizaCadaPostagem}>
       <View style={EstruturaDaPaginaDosAmigos.AreaSuperior}>
@@ -127,19 +127,23 @@ const Corpo = ({
           >
             {item.Nomefilme}
           </Text>
-          <MenorCapaDoFilme
+          <TouchableOpacity onPress={()=>navigation.navigate("InformaçoesFilme",{id: item.filme_id})}>
+          <MenorCapaDoFilme 
             tamonhoMenorOuMaiorrStingVazia={"Menor"}
             propriedadeParaReceberAcapaDoFilme={item.capaDoFilme}
           />
+          </TouchableOpacity>
         </View>
 
         <View style={EstruturaDaPaginaDosAmigos.SecaoDireita}>
         
           <View style={EstruturaDaPaginaDosAmigos.UsuarioEsuasInformacoes}>
+            <TouchableOpacity  style={EstruturaDaPaginaDosAmigos.headerImage} onPress={()=>navigation.navigate("PerfilDosAmigos", {id:item.credenciais_id, nome: item.nomeDoUsuario})} >
           <Image
             source={{ uri: `http://${local}:3000/${item.foto}` }}
             style={EstruturaDaPaginaDosAmigos.headerImage}
           />
+          </TouchableOpacity>
             <Text style={EstruturaDaPaginaDosAmigos.Nome}>{item.autor}</Text>
             <Text style={[EstruturaDaPaginaDosAmigos.Nome, { fontSize: 10 }]}>
               {item.data_postagem}

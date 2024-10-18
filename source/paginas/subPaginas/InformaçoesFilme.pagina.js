@@ -7,6 +7,7 @@ import {
   Dimensions,
   TouchableOpacity,
   ImageBackground,
+  FlatList
 } from "react-native";
 import { useState, useEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -16,6 +17,10 @@ import { ChaveAPI } from "../../funçoes/ChaveAPI.funcao";
 import RetornoTransparente from "../../componentes/estruturais/RetornoTransparente.componente";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AvaliaçaoModal from "../../componentes/estruturais/AvaliacaoModal.componente";
+import { local } from "../../funçoes/IpOuLocalhost";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import MenorCapaDoFilme from "../../componentes/estruturais/MenorCapaFilme.componente";
+import AntDesign from '@expo/vector-icons/AntDesign';
 const InformaçoesFilme = () => {
   const route = useRoute();
   var id = route.params.id;
@@ -40,11 +45,208 @@ const InformaçoesFilme = () => {
   const nota_arredondada = parseFloat(nota).toFixed(1);
   const ano = infoDoFilme.release_date?.split("-")[0] || "Desconhecido";
   const [modalVisible, setModalVisible] = useState(false); 
+  const [postagens, setPostagens] = useState([]);
   const toggleModal = () => {
     setModalVisible(!modalVisible); // Alterna a visibilidade do modal
   };
+  
+  const BuscarReviews = async()=>{
+    const token = await AsyncStorage.getItem("@token");
+    const config = {
+      headers: {
+        Authorization: `${token}`,
+      },
+    };
+    try{
+      const resposta = await axios.get(`http://${local}:3000/Filme/BuscarReviewsDosFilmes/${id}`, config);
+      setPostagens(resposta.data.postagens);
+    }catch(err){
+      console.log(`Segue o erro: ${err}`)
+    }
+  }
+const [likes, setLikes] = useState({});
+  
+  const [curtiu, setCurtiu] = useState(false);
+ 
+
+  const verificarCurtida = async (id) => {
+    const token = await AsyncStorage.getItem("@token");
+    const config = {
+      headers: {
+        Authorization: `${token}`,
+      },
+    };
+    try {
+      const resposta = await axios.get(
+        `http://${local}:3000/Amigos/VerificarCurtirDoPost/${id}`,
+        config
+      );
+      return resposta.data.curtiu;
+    } catch (err) {
+      console.log(`Erro ao verificar curtida: ${err}`);
+    }
+  };
+
+  const calcularCurtidas = async (id) => {
+    const token = await AsyncStorage.getItem("@token");
+    const config = {
+      headers: {
+        Authorization: `${token}`,
+      },
+    };
+    try {
+      const resposta = await axios.get(
+        `http://${local}:3000/Amigos/QuantidadeDeCurtidasPorPost/${id}`,
+        config
+      );
+      setLikes((prev) => ({ ...prev, [id]: resposta.data.totalCurtidas }));
+    } catch (err) {
+      console.log(`Erro ao contar curtidas: ${err}`);
+    }
+  };
+
+  const DarLike = async (id) => {
+    const token = await AsyncStorage.getItem("@token");
+    const config = {
+      headers: {
+        Authorization: `${token}`,
+      },
+    };
+    const aEnviar = { idDoPost: id };
+    try {
+      await axios.post(
+        `http://${local}:3000/Amigos/CurtirReviewDosAmigos`,
+        aEnviar,
+        config
+      );
+      calcularCurtidas(id);
+    } catch (err) {
+      console.log(`Erro ao curtir post: ${err}`);
+    }
+  };
+  //remover
+  const RemoverLike = async (id) => {
+    const token = await AsyncStorage.getItem("@token");
+    const idDoPost = id;
+    const config = {
+      headers: {
+        Authorization: `${token}`,
+      },
+    };
+    const aEnviar = { idDoPost};
+
+    try {
+      await axios.post(
+        `http://${local}:3000/Amigos/DescurtirReviewDosAmigos`,
+        aEnviar,
+        config
+      );
+      calcularCurtidas(id); // Atualiza o número de curtidas
+      setCurtiu(false); // Atualiza o estado para "não curtido"
+    } catch (err) {
+      console.log(`Erro ao remover curtida: ${err}`);
+    }
+  };
+  const buscarPostagens = async () => {
+    const token = await AsyncStorage.getItem("@token");
+    const config = {
+      headers: { Authorization: `${token}` },
+    };
+    try {
+      const resposta = await axios.get(
+        `http://${local}:3000/Amigos/BuscarPostsDosMeusAmigos`,
+        config
+      );
+      setData(resposta.data.publicacoes);
+    } catch (err) {
+      console.log(`Erro ao buscar postagens: ${err}`);
+    }
+  };
+  const Corpo = ({
+    item,
+    likes,
+    DarLike,
+    calcularCurtidas,
+    verificarCurtida,
+    curtiu,
+    RemoverLike
+  }) => {
+    const [postCurtiu, setPostCurtiu] = useState(curtiu);
+    useEffect(() => {
+      calcularCurtidas(item.id);
+      verificarCurtida(item.id).then(setPostCurtiu);
+    }, [item.id]);
+    const navigation = useNavigation();
+    return (
+      <View style={EstruturaDaPaginaDosAmigos.ViewQueCentralizaCadaPostagem}>
+        <View style={EstruturaDaPaginaDosAmigos.AreaSuperior}>
+          <View style={EstruturaDaPaginaDosAmigos.SecaoEsquerda}>
+           
+            <Text
+              style={[
+                EstruturaDaPaginaDosAmigos.Nome,
+                { textAlign: "center", marginRight: 10 },
+              ]}
+            >
+              {item.Nomefilme}
+            </Text>
+            <TouchableOpacity onPress={()=>navigation.navigate("InformaçoesFilme",{id: item.filme_id})}>
+            <MenorCapaDoFilme 
+              tamonhoMenorOuMaiorrStingVazia={"Menor"}
+              propriedadeParaReceberAcapaDoFilme={item.capaDoFilme}
+            />
+            </TouchableOpacity>
+          </View>
+  
+          <View style={EstruturaDaPaginaDosAmigos.SecaoDireita}>
+          
+            <View style={EstruturaDaPaginaDosAmigos.UsuarioEsuasInformacoes}>
+              <TouchableOpacity  style={EstruturaDaPaginaDosAmigos.headerImage} onPress={()=>navigation.navigate("PerfilDosAmigos", {id:item.credenciais_id, nome: item.nomeDoUsuario})} >
+            <Image
+              source={{ uri: `http://${local}:3000/${item.foto}` }}
+              style={EstruturaDaPaginaDosAmigos.headerImage}
+            />
+            </TouchableOpacity>
+              <Text style={EstruturaDaPaginaDosAmigos.Nome}>{item.autor}</Text>
+              <Text style={[EstruturaDaPaginaDosAmigos.Nome, { fontSize: 10 }]}>
+                {item.data_postagem}
+              </Text>
+            </View>
+            <View style={EstruturaDaPaginaDosAmigos.ComentarioDoUsuarioView}>
+              <Text style={EstruturaDaPaginaDosAmigos.comentarioEstilizacao}>
+                {item.texto}
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View style={EstruturaDaPaginaDosAmigos.AreaInferior}>
+          <View style={EstruturaDaPaginaDosAmigos.ViewIconeDeFeedBack}>
+            <Text style={{ color: "white" }}>{likes[item.id] || 0} curtidas</Text>
+            {postCurtiu === true ? (
+              <TouchableOpacity
+                style={EstruturaDaPaginaDosAmigos.ViewIconeDeFeedBack}
+                onPress={() => {RemoverLike(item.id); setPostCurtiu(false)}} // Remover o like
+              >
+                <AntDesign name="like1" size={24} color="white" />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={EstruturaDaPaginaDosAmigos.ViewIconeDeFeedBack}
+                onPress={() => {DarLike(item.id); setPostCurtiu(true)}} // Adicionar o like
+              >
+                <AntDesign name="like2" size={24} color="gray" />
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
+      </View>
+    );
+  };
+  
   useEffect(() => {
     BuscarDadosDoFilme(id);
+    BuscarReviews();
+    buscarPostagens();
     
   }, [id, modalVisible]);
   return (
@@ -91,6 +293,21 @@ const InformaçoesFilme = () => {
       {/* Reviews */}
       <View style={{ flex: 1 }}>
         <Text style={{ color: "white" }}>Reviews</Text>
+        <FlatList
+          data={postagens}
+          renderItem={({ item }) => (
+            <Corpo
+              item={item}
+              likes={likes}
+              DarLike={DarLike}
+              calcularCurtidas={calcularCurtidas}
+              verificarCurtida={verificarCurtida}
+              curtiu={curtiu}
+              RemoverLike={RemoverLike}
+            />
+          )}
+          keyExtractor={(item) => item.id.toString()}
+        />
       </View>
       <TouchableOpacity style={styles.button} onPress={toggleModal}>
       <Ionicons name="add-sharp" size={30} color="white" />
@@ -177,4 +394,67 @@ const styles = StyleSheet.create({
 
 });
 
+
+const EstruturaDaPaginaDosAmigos = StyleSheet.create({
+  ViewQueCentralizaCadaPostagem: {
+    flex: 1,
+    width: "100%",
+    flexDirection: "column",
+    borderBottomWidth: 1,
+    borderBottomColor: "#ffffff",
+  },
+  SecaoEsquerda: {
+    flex: 1,
+  },
+  SecaoDireita: {
+    flex: 2,
+    flexDirection: "column",
+  },
+  comentarioEstilizacao: {
+    fontSize: 13,
+    color: "#ffffff",
+    textAlign: "left",
+    marginLeft: 40,
+  },
+  ComentarioDoUsuarioView: {
+    flex: 3,
+  },
+  UsuarioEsuasInformacoes: {
+    flex: 1,
+    textAlign: "left",
+    marginLeft: 40,
+  },
+  Nome: {
+    color: "#ffffff",
+    fontSize: 16,
+  },
+  AreaSuperior: {
+    flex: 10,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+  },
+  AreaInferior: {
+    borderTopWidth: 1,
+    borderTopColor: "#ffffff",
+    flex: 1,
+    flexDirection: "row",
+    width: "100%",
+    padding: 3,
+  },
+  ViewIconeDeFeedBack: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 3,
+  },
+  headerImage: {
+    width: 30,
+    height: 30,
+    borderRadius: 60,
+    marginRight: 2,
+  },
+});
 export default InformaçoesFilme;

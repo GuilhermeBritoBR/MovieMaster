@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import axios from 'axios';
 import { SalvarNome } from '../funçoes/SalvarNomeDoUsuario.funcao.js';
 import { SalvarToken } from '../funçoes/SalvarToken.funcao.js';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { local } from '../funçoes/IpOuLocalhost.js';
 import { launchImageLibrary } from 'react-native-image-picker';
 
@@ -72,7 +72,7 @@ export default function Cadastro() {
         console.log(`Segue o erro ao se cadastrar: ${err}`);
     }
 };
-  
+const route = useRoute();
   return (
     <KeyboardAvoidingView 
       style={styles.container}

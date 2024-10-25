@@ -24,6 +24,7 @@ import { ChaveAPI } from "../../funçoes/ChaveAPI.funcao.js";
 import { local } from "../../funçoes/IpOuLocalhost.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+
 export default function PesquisaDeTexto() {
   //variaveis
   const [PalavraSalvaNoHeader, setandoPalavraSalvaNoHeader] = useState("");
@@ -75,7 +76,8 @@ export default function PesquisaDeTexto() {
     setUsuarios([PalavraSalvaNoHeader, filmes]);
   }},[PalavraSalvaNoHeader, filmes])
   return (
-    <View style={ViewPrincipal.estilo}>
+    <View style={[ViewPrincipal.estilo,{flex: 1}]}>
+     
       <HeaderRetornoEPesquisar
         voltarApaginaAnterior={() => {navigation.goBack("Pesquisar"); setandoPalavraSalvaNoHeader("")} } 
         VariavelDaPesquisa={PalavraSalvaNoHeader}
@@ -83,6 +85,7 @@ export default function PesquisaDeTexto() {
           setandoPalavraSalvaNoHeader(texto)
         }
       />
+      
       <View style={[ViewCentralCorpoDoAPP.estilo, { width: "100%" }]}>
         <ScrollView style={[{ width: "100%" }]}>
         <Text style={EstilosDoPesquisar.header}>Usuários</Text>
@@ -110,6 +113,12 @@ export default function PesquisaDeTexto() {
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={()=>navigation.navigate('InformaçoesFilme', {id: item.id})} style={EstilosDoPesquisar.OpcaoDePesquisa}>
+            <Image
+          source={{
+            uri: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+          }}
+          style={EstilosDoPesquisar.infoImage}
+        />
             <Text style={EstilosDoPesquisar.fonteDETexto}>{item.title+ ' '+ parseFloat(item.release_date).toFixed(0)}</Text>
           </TouchableOpacity>
         )}
@@ -149,13 +158,14 @@ const EstilosDoPesquisar = StyleSheet.create({
     flexDirection: 'row',
     width: "100%",
     backgroundColor: "#1A1A1A",
-    justifyContent: "center",
+    justifyContent: "left",
     alignItems: "center",
     borderBottom: "solid",
     borderBottomColor: "#ffffff",
     borderBottomWidth: 1,
-    height: 60,
+    height: 80,
     padding: 2,
+    
   },
   inputDePesquisa: {
     width: 200,
@@ -174,5 +184,11 @@ const EstilosDoPesquisar = StyleSheet.create({
   fonteDETexto:{
     color:'#ffffff',
     fontSize: 16,
-  }
+  },
+  infoImage: {
+    width: 48,
+    height: 66,
+    margin:5,
+    
+  },
 });

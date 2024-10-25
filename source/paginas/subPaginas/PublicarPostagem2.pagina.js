@@ -87,7 +87,7 @@ const clicarNaEstrela = (index) =>{
     setNota(index + 1); 
     
 }
-    //base front end
+    useEffect(()=>{},[id,Dados ])
     return (
         <View style={styles.container}>
             {/* Título e imagem */}

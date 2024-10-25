@@ -77,8 +77,7 @@ const EstruturaDaPaginaDosAmigos = StyleSheet.create({
     padding: 10,
   },
   AreaInferior: {
-    borderTopWidth: 1,
-    borderTopColor: "#ffffff",
+    
     flex: 1,
     flexDirection: "row",
     width: "100%",
@@ -86,9 +85,10 @@ const EstruturaDaPaginaDosAmigos = StyleSheet.create({
   },
   ViewIconeDeFeedBack: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "left",
     alignItems: "center",
     padding: 3,
+    flexDirection: 'row',
   },
   headerImage: {
     width: 30,
@@ -158,22 +158,26 @@ const Corpo = ({
       </View>
       <View style={EstruturaDaPaginaDosAmigos.AreaInferior}>
         <View style={EstruturaDaPaginaDosAmigos.ViewIconeDeFeedBack}>
-          <Text style={{ color: "white" }}>{likes[item.id] || 0} curtidas</Text>
+          
           {postCurtiu === true ? (
             <TouchableOpacity
-              style={EstruturaDaPaginaDosAmigos.ViewIconeDeFeedBack}
+              style={[EstruturaDaPaginaDosAmigos.ViewIconeDeFeedBack,{flex:0}]}
               onPress={() => {RemoverLike(item.id); setPostCurtiu(false)}} // Remover o like
             >
               <AntDesign name="like1" size={24} color="white" />
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
-              style={EstruturaDaPaginaDosAmigos.ViewIconeDeFeedBack}
+            style={[EstruturaDaPaginaDosAmigos.ViewIconeDeFeedBack,{flex:0}]}
               onPress={() => {DarLike(item.id); setPostCurtiu(true)}} // Adicionar o like
             >
               <AntDesign name="like2" size={24} color="gray" />
+              
             </TouchableOpacity>
-          )}
+            
+          )
+          }
+          <Text style={{ color: "white",marginLeft: 30 }}>{likes[item.id] || 0} </Text>
         </View>
       </View>
     </View>

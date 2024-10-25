@@ -17,6 +17,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TextInput } from 'react-native-gesture-handler';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 
 export default function HeaderPesquisar({ativarMenuTrueFalse, ativarPesquisa}) {
     //CONSTANTWE PARA A NAVEGACAO
@@ -38,6 +39,11 @@ export default function HeaderPesquisar({ativarMenuTrueFalse, ativarPesquisa}) {
 
 
   return (
+    <KeyboardAvoidingView 
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+    style={{ flex: 1 }}
+  >
+  
       <LinearGradient 
       colors={['#9754CB', '#6237A0' ]} 
       start={{ x: 0, y: 0 }}
@@ -115,6 +121,7 @@ export default function HeaderPesquisar({ativarMenuTrueFalse, ativarPesquisa}) {
         </View>
 
       </LinearGradient>
+      </KeyboardAvoidingView>
   );
 }
 //Essa constante carrega a estilização do HEADER, a escolha foi a escrita em linha pela praticidade
@@ -124,9 +131,8 @@ const EstiloDoHeader = StyleSheet.create({
         alignItems: 'center',
         flex: 2,
         backgroundColor: '#7100CA',   
-        flexDirection: 'column',     
-        
-    
+        flexDirection: 'column',  
+        position: 'absolute',   
     },
     ViewParaPosicionarOsElementosDoHeader:{
         flex:1,

@@ -43,6 +43,7 @@ import PostagensDosAmigos from './source/paginas/subPaginas/PostagensDosAmigos.p
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5.js';
 import AlterarFoto from './source/paginas/subPaginas/AlterarFoto.pagina.js';
 import AdicionarLista from './source/paginas/subPaginas/AdicionarLista.pagina.js';
+import Lista from './source/paginas/Lista.pagina.js';
 
 
   export default function App(){
@@ -123,6 +124,13 @@ import AdicionarLista from './source/paginas/subPaginas/AdicionarLista.pagina.js
                   }}
                   name="Alterar Dados"
                   component={AlterarDados}
+                />
+                 <Drawer.Screen
+                  options={{
+                    drawerItemStyle: { display: 'none' }, // Ocultar essa opção
+                  }}
+                  name="Lista"
+                  component={Lista}
                 />
                 
                 <Drawer.Screen

@@ -121,10 +121,16 @@ const route = useRoute();
         />
         <View style={{ alignItems: 'center', marginVertical: 20 }}>
         {/* Botão para selecionar imagem */}
-        <TouchableOpacity onPress={selecionarImagem} style={{ padding: 10, backgroundColor: '#007BFF', borderRadius: 5 }}>
+        <LinearGradient
+            colors={["#9754CB", "#6237A0"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0.68, y: 0.68 }}
+            style={{ padding: 10, backgroundColor: '#9754CB', borderRadius: 5 }}>
+        <TouchableOpacity onPress={selecionarImagem} >
             <Text style={{ color: '#fff', fontSize: 16 }}>Selecionar Imagem</Text>
             {/* Aqui você pode adicionar um ícone personalizado */}
         </TouchableOpacity>
+        </LinearGradient>
 
         {/* Exibe a imagem selecionada, se houver */}
         {foto && (

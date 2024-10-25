@@ -92,7 +92,7 @@ export default function Header({ativarMenuTrueFalse}) {
 
                 <View style={EstiloDoHeader.BarraDeNavegaçãoDoMenuInferior}>
                     <TouchableOpacity 
-                    onPress={()=>navigation.navigate("CriarLista", { paginaAnterior: 'Inicio' })}
+                    onPress={()=>navigation.navigate("Lista", { paginaAnterior: 'Inicio' })}
                     
                     style={[EstiloDoHeader.BotoesDeNavegacaoInferiores]}>
 

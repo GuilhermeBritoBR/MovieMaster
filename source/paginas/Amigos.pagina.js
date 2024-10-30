@@ -33,28 +33,51 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { local } from "../funçoes/IpOuLocalhost.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 // Estilos
 const EstruturaDaPaginaDosAmigos = StyleSheet.create({
   ViewQueCentralizaCadaPostagem: {
     flex: 1,
     width: "100%",
-    flexDirection: "column",
     borderBottomWidth: 1,
     borderBottomColor: "#ffffff",
+    paddingVertical: 10,
+  },
+  AreaSuperior: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
   },
   SecaoEsquerda: {
     flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
   },
   SecaoDireita: {
     flex: 2,
     flexDirection: "column",
+    marginLeft: 10, // Espaço entre a capa do filme e as informações do usuário
+  },
+  Nome: {
+    color: "#ffffff",
+    fontSize: 16,
+    marginLeft: 5,
+  },
+  NomeFoto: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  headerImage: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    marginRight: 5,
   },
   comentarioEstilizacao: {
     fontSize: 13,
     color: "#ffffff",
-    textAlign: "left",
-    marginLeft: 40,
+    marginTop: 5,
   },
   ComentarioDoUsuarioView: {
     flex: 3,
@@ -67,6 +90,13 @@ const EstruturaDaPaginaDosAmigos = StyleSheet.create({
   Nome: {
     color: "#ffffff",
     fontSize: 16,
+    marginLeft: 5,
+    alignItems: "center",
+  },
+  NomeFoto: {
+flexDirection: "row",
+justifyContent: 'left',
+
   },
   AreaSuperior: {
     flex: 10,
@@ -99,64 +129,40 @@ const EstruturaDaPaginaDosAmigos = StyleSheet.create({
 });
 
 // Componente funcional Corpo
-const Corpo = ({
-  item,
-  likes,
-  DarLike,
-  calcularCurtidas,
-  verificarCurtida,
-  curtiu,
-  RemoverLike
-}) => {
+const Corpo = ({ item, likes, DarLike, calcularCurtidas, verificarCurtida, curtiu, RemoverLike }) => {
   const [postCurtiu, setPostCurtiu] = useState(curtiu);
   useEffect(() => {
     calcularCurtidas(item.id);
     verificarCurtida(item.id).then(setPostCurtiu);
   }, [item.id]);
   const navigation = useNavigation();
+
   return (
     <View style={EstruturaDaPaginaDosAmigos.ViewQueCentralizaCadaPostagem}>
       <View style={EstruturaDaPaginaDosAmigos.AreaSuperior}>
-        <View style={EstruturaDaPaginaDosAmigos.SecaoEsquerda}>
-         
-          <Text
-            style={[
-              EstruturaDaPaginaDosAmigos.Nome,
-              { textAlign: "center", marginRight: 10 },
-            ]}
-          >
-            {item.Nomefilme}
-          </Text>
-          <TouchableOpacity onPress={()=>navigation.navigate("InformaçoesFilme",{id: item.filme_id})}>
+        <TouchableOpacity onPress={() => navigation.navigate("InformaçoesFilme", { id: item.filme_id })}>
           <MenorCapaDoFilme 
             tamonhoMenorOuMaiorrStingVazia={"Menor"}
             propriedadeParaReceberAcapaDoFilme={item.capaDoFilme}
           />
-          </TouchableOpacity>
-        </View>
-
-        <View style={EstruturaDaPaginaDosAmigos.SecaoDireita}>
+        </TouchableOpacity>
         
-          <View style={EstruturaDaPaginaDosAmigos.UsuarioEsuasInformacoes}>
-            <TouchableOpacity  style={EstruturaDaPaginaDosAmigos.headerImage} onPress={()=>navigation.navigate("PerfilDosAmigos", {id:item.credenciais_id, nome: item.nomeDoUsuario})} >
-          <Image
-            source={{ uri: `http://${local}:3000/${item.foto}` }}
-            style={EstruturaDaPaginaDosAmigos.headerImage}
-          />
-          </TouchableOpacity>
+        <View style={EstruturaDaPaginaDosAmigos.SecaoDireita}>
+          <View style={EstruturaDaPaginaDosAmigos.NomeFoto}>
+            <TouchableOpacity onPress={() => navigation.navigate("PerfilDosAmigos", { id: item.credenciais_id, nome: item.nomeDoUsuario })}>
+              <Image
+                source={{ uri: `http://${local}:3000/${item.foto}` }}
+                style={EstruturaDaPaginaDosAmigos.headerImage}
+              />
+            </TouchableOpacity>
             <Text style={EstruturaDaPaginaDosAmigos.Nome}>{item.autor}</Text>
-            <Text style={[EstruturaDaPaginaDosAmigos.Nome, { fontSize: 10 }]}>
-              {item.data_postagem}
-            </Text>
           </View>
-          <View style={EstruturaDaPaginaDosAmigos.ComentarioDoUsuarioView}>
-            <Text style={EstruturaDaPaginaDosAmigos.comentarioEstilizacao}>
-              {item.texto}
-            </Text>
-          </View>
+          <Text style={[EstruturaDaPaginaDosAmigos.Nome, { fontSize: 10 }]}>{item.data_postagem}</Text>
+          <Text style={EstruturaDaPaginaDosAmigos.comentarioEstilizacao}>{item.texto}</Text>
         </View>
       </View>
       <View style={EstruturaDaPaginaDosAmigos.AreaInferior}>
+      
         <View style={EstruturaDaPaginaDosAmigos.ViewIconeDeFeedBack}>
           
           {postCurtiu === true ? (
@@ -164,14 +170,14 @@ const Corpo = ({
               style={[EstruturaDaPaginaDosAmigos.ViewIconeDeFeedBack,{flex:0}]}
               onPress={() => {RemoverLike(item.id); setPostCurtiu(false)}} // Remover o like
             >
-              <AntDesign name="like1" size={24} color="white" />
+             <Ionicons name="heart-sharp" size={24} color="#ab49cc" />
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
             style={[EstruturaDaPaginaDosAmigos.ViewIconeDeFeedBack,{flex:0}]}
               onPress={() => {DarLike(item.id); setPostCurtiu(true)}} // Adicionar o like
             >
-              <AntDesign name="like2" size={24} color="gray" />
+              <Ionicons name="heart-outline" size={24} color="#bbccdd" />
               
             </TouchableOpacity>
             

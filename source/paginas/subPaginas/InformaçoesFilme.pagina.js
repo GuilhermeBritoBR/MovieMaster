@@ -25,18 +25,18 @@ const InformaçoesFilme = () => {
   const route = useRoute();
   const id = route.params.id;
   const navigation = useNavigation();
-  const [infoDoFilme, setandoInfoDoFilme] = useState([]);
-  const [postagens, setPostagens] = useState({});
+  
+  const [infoDoFilme, setandoInfoDoFilme] = useState({});
+  const [postagens, setPostagens] = useState([]);
   const [likes, setLikes] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
   const [dadosCarregados, setDadosCarregados] = useState(false);
+
   const nota = parseFloat(infoDoFilme.vote_average).toFixed(1);
   const ano = infoDoFilme.release_date?.split("-")[0] || "Desconhecido";
 
   // Função para definir a cor da nota
-  const getNotaColor = (nota) => {
-    return nota <= 5 ? "red" : "#FFD700"; // Vermelho para nota <= 5, Dourado para nota > 5
-  };
+  const getNotaColor = (nota) => (nota <= 5 ? "red" : "#FFD700");
 
   const BuscarDadosDoFilme = async (id) => {
     try {
@@ -71,7 +71,7 @@ const InformaçoesFilme = () => {
       }
     };
     fetchData();
-  }, [id]);
+  }, [id, dadosCarregados]);
 
   const Corpo = ({ item }) => {
     const [curtiu, setCurtiu] = useState(false);
@@ -107,10 +107,10 @@ const InformaçoesFilme = () => {
     };
 
     return (
-      <View style={EstruturaDaPaginaDosAmigos.ViewQueCentralizaCadaPostagem}>
-        <View style={EstruturaDaPaginaDosAmigos.AreaSuperior}>
+      <View style={styles.postContainer}>
+        <View style={styles.header}>
           <TouchableOpacity
-            style={EstruturaDaPaginaDosAmigos.headerImage}
+            style={styles.headerImage}
             onPress={() =>
               navigation.navigate("PerfilDosAmigos", {
                 id: item.credenciais_id,
@@ -120,26 +120,27 @@ const InformaçoesFilme = () => {
           >
             <Image
               source={{ uri: `http://${local}:3000/${item.foto}` }}
-              style={EstruturaDaPaginaDosAmigos.headerImage}
+              style={styles.headerImage}
             />
           </TouchableOpacity>
-          <Text style={EstruturaDaPaginaDosAmigos.Nome}>{item.autor}</Text>
-          <Text style={EstruturaDaPaginaDosAmigos.Nome}>{item.data_postagem}</Text>
+          <View style={styles.NomeData}>
+          <Text style={styles.Nome}>{item.autor}</Text>
+          <Text style={styles.Data}>{item.data_postagem}</Text>
+          </View>
         </View>
-        <View style={EstruturaDaPaginaDosAmigos.ComentarioDoUsuarioView}>
-          <Text style={EstruturaDaPaginaDosAmigos.comentarioEstilizacao}>
-            {item.texto}
-          </Text>
+        <View style={styles.ComentarioDoUsuarioView}>
+          <Text style={styles.comentarioEstilizacao}>{item.texto}</Text>
         </View>
-        <View style={EstruturaDaPaginaDosAmigos.AreaInferior}>
+        <View style={styles.AreaInferior}>
           <TouchableOpacity onPress={() => (curtiu ? RemoverLike(item.id) : DarLike(item.id))}>
-            <AntDesign
-              name={curtiu ? "like1" : "like2"}
+          <Ionicons 
+            
+              name={curtiu ? "heart-sharp"  : "heart-outline"}
               size={24}
-              color={curtiu ? "white" : "gray"}
+              color={curtiu ? "#ab49cc" : "gray"}
             />
           </TouchableOpacity>
-          <Text style={{ color: "white", marginLeft: 5 }}>{likes[item.id] || 0}</Text>
+          <Text style={styles.likesText}>{likes[item.id] || 0}</Text>
         </View>
       </View>
     );
@@ -152,10 +153,14 @@ const InformaçoesFilme = () => {
         resizeMode="cover"
         source={{ uri: `https://image.tmdb.org/t/p/w500${infoDoFilme.backdrop_path}` }}
       >
-        <TouchableOpacity style={styles.backButton} onPress={() =>{{setDadosCarregados(false)}; {navigation.goBack()}}}>
+        <TouchableOpacity 
+          style={styles.backButton} 
+          onPress={() => { setDadosCarregados(false); navigation.goBack(); }}
+        >
           <Ionicons name="arrow-back" size={36} color="white" />
         </TouchableOpacity>
       </ImageBackground>
+
       <View style={[styles.infoContainer, { height: height * 0.2 }]}>
         <View style={styles.textContainer}>
           <Text style={styles.titulo}>{infoDoFilme.title}</Text>
@@ -177,9 +182,11 @@ const InformaçoesFilme = () => {
           style={styles.infoImage}
         />
       </View>
+
       <View style={styles.sinopseContainer}>
         <Text style={styles.sinopse}>{infoDoFilme.overview}</Text>
       </View>
+
       <View style={styles.reviewContainer}>
         <Text style={styles.reviewTitle}>Reviews</Text>
         <FlatList
@@ -189,9 +196,14 @@ const InformaçoesFilme = () => {
           extraData={likes}
         />
       </View>
-      <TouchableOpacity style={styles.button} onPress={() => {{setDadosCarregados(false)};{setModalVisible(!modalVisible)}}}>
+
+      <TouchableOpacity 
+        style={styles.button} 
+        onPress={() => { setDadosCarregados(false); setModalVisible(!modalVisible); }}
+      >
         <Ionicons name="add-sharp" size={30} color="white" />
       </TouchableOpacity>
+
       <AvaliaçaoModal visible={modalVisible} onClose={() => setModalVisible(!modalVisible)} id={id} dados={infoDoFilme} />
     </ScrollView>
   );
@@ -255,9 +267,7 @@ const styles = StyleSheet.create({
   },
   sinopse: {
     fontSize: 16,
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingRight: 10,
+    paddingVertical: 10,
     paddingLeft: 3,
     color: "#99aabb",
     textAlign: "justify",
@@ -278,7 +288,6 @@ const styles = StyleSheet.create({
     right: 20,
     width: 60,
     height: 60,
-    backgroundColor: "#6237A0",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 30,
@@ -290,77 +299,51 @@ const styles = StyleSheet.create({
     color: "white",
     marginLeft: 5,
   },
-});
-
-
-
-
-const EstruturaDaPaginaDosAmigos = StyleSheet.create({
-  dadosDoUsuario:{
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'left',
-  },
-  ViewQueCentralizaCadaPostagem: {
-    
+  postContainer: {
     width: "100%",
     flexDirection: "column",
-   
   },
-  SecaoEsquerda: {
-    flex: 1,
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
   },
-  SecaoDireita: {
+  ComentarioDoUsuarioView: {
     flex: 1,
-    flexDirection: "column",
+    paddingLeft: 10,
   },
   comentarioEstilizacao: {
     fontSize: 13,
     color: "#ffffff",
     textAlign: "left",
-   
-  },
-  ComentarioDoUsuarioView: {
-    flex: 1,
-  },
-  UsuarioEsuasInformacoes: {
-    flex: 1,
-    textAlign: "left",
-    
-  },
-  Nome: {
-    color: "#ffffff",
-    fontSize: 16,
-  },
-  AreaSuperior: {
-    flex: 10,
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 10,
   },
   AreaInferior: {
-  
-    flex: 1,
     flexDirection: "row",
     width: "100%",
-    padding: 3,
-    justifyContent: 'left',
-  },
-  ViewIconeDeFeedBack: {
-    flexDirection: 'row',
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 3,
+    padding: 10,
+    justifyContent: 'flex-start',
   },
   headerImage: {
     width: 30,
     height: 30,
     borderRadius: 60,
     marginRight: 2,
+  },
+  Nome: {
+    color: "#ffffff",
+    fontSize: 16,
+    marginHorizontal: 5,
+    marginRight: 145,
+  },
+  Data: {
+    color: "#ffffff",
+    fontSize: 16,
+    marginHorizontal: 5,
+
+  },
+  NomeData:{
     flexDirection: 'row',
   },
 });
+
 export default InformaçoesFilme;

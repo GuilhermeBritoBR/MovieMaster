@@ -44,6 +44,7 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5.js';
 import AlterarFoto from './source/paginas/subPaginas/AlterarFoto.pagina.js';
 import AdicionarLista from './source/paginas/subPaginas/AdicionarLista.pagina.js';
 import Lista from './source/paginas/Lista.pagina.js';
+import ListaIndividual from './source/paginas/subPaginas/ListaIndividual.pagina.js';
 
 
   export default function App(){
@@ -137,6 +138,14 @@ import Lista from './source/paginas/Lista.pagina.js';
                   
                   name="AlterarPostagem"
                   component={AlterarPostagem}
+                  options={{
+                    drawerItemStyle: { display: 'none' }, // Ocultar essa opção
+                  }}
+                />
+                <Drawer.Screen
+                  
+                  name="ListaIndividual"
+                  component={ListaIndividual}
                   options={{
                     drawerItemStyle: { display: 'none' }, // Ocultar essa opção
                   }}

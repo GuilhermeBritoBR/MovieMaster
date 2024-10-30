@@ -59,7 +59,7 @@ export default function AdicionarLista() {
     <View style={styles.bloco}>
       <TouchableOpacity style={styles.listItem} onPress={() => AdicionarFilmeALista(idDoFilme, item.id)}>
         <Text style={{ color: 'white' }}>Teste de exibição</Text>
-        <Text style={styles.listText}>{item.nome_lista} lista</Text>
+        <Text style={styles.listText}>{item.nome_lista}</Text>
       </TouchableOpacity>
     </View>
   );

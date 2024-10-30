@@ -23,7 +23,7 @@ export default function Pesquisar() {
     const [isFocused, setIsFocused] = useState(false);
 
     const BlocoDosGeneros = ({ nomeDoGenero, iconeRespectivo }) => (
-        <TouchableOpacity style={[EstilosDoPesquisar.BlocosComGenero, { flexDirection: 'row', margin: 15 }]}>
+        <TouchableOpacity style={[EstilosDoPesquisar.BlocosComGenero, { flexDirection: 'row', margin: 10 }]}>
             <LinearGradient
                 style={[EstilosDoPesquisar.BlocosComGenero, { flexDirection: 'row' }]}
                 colors={['#9754CB', '#6237A0']} 
@@ -41,18 +41,18 @@ export default function Pesquisar() {
     );
 
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={{ flex: 1 }}
-        >
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
             <StatusBar hidden={isFocused} />
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <View style={ViewPrincipal.estilo}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 20 }}>
+                <View style={[ViewPrincipal.estilo, { flex: 1 }]}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                     <HeaderPesquisar 
                         ativarMenuTrueFalse={() => navigation.openDrawer()} 
                         ativarPesquisa={() => navigation.navigate('PequisaDeTexto')} 
                     />
-                    <View style={ViewCentralCorpoDoAPP.estilo}>
+                    </ScrollView>
+                    <View style={[ViewCentralCorpoDoAPP.estilo, { flex: 1, padding: 10 }]}>
+
                         {/* TextInput para pesquisa */}
                         <View style={EstilosDoPesquisar.OpcaoDePesquisa}>
                             <TextInput
@@ -62,6 +62,7 @@ export default function Pesquisar() {
                                 onBlur={() => setIsFocused(false)}
                             />
                         </View>
+
                         {/* Blocos de Gêneros */}
                         <View style={EstilosDoPesquisar.DivHorizontalCabeDoisBlocos}>
                             <BlocoDosGeneros nomeDoGenero={"Ação"} iconeRespectivo={<Fontisto name="helicopter" size={36} color="white" />} />
@@ -91,17 +92,14 @@ export default function Pesquisar() {
 }
 
 const EstilosDoPesquisar = StyleSheet.create({
-    ScrolViewParaOsGeneros: {
-        flex: 1,
-    },
     DivHorizontalCabeDoisBlocos: {
-        flex: 1,
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'space-around', // Ajusta a distância entre os blocos
         alignItems: 'center',
+        marginVertical: 5,
     },
     BlocosComGenero: {
-        width: 150,
+        width: '45%', // Largura ajustável para responder a diferentes tamanhos de tela
         backgroundColor: '#ffffff',
         alignItems: 'center',
         justifyContent: 'center',
@@ -118,7 +116,7 @@ const EstilosDoPesquisar = StyleSheet.create({
         height: 60,
     },
     inputDePesquisa: {
-        width: 200,
+        width: '80%', // Largura mais responsiva para o campo de pesquisa
         height: 32,
         backgroundColor: '#ffffff',
         borderRadius: 10,

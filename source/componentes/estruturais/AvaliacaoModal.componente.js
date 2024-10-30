@@ -1,51 +1,69 @@
-import React, { useState } from "react"; // Importando useState
-import { View, Text, StyleSheet, Modal, Dimensions } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, Modal, Dimensions, TouchableOpacity } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Entypo from "@expo/vector-icons/Entypo";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { TouchableOpacity } from "react-native";
+import axios from "axios";
+import { local } from "../../funçoes/IpOuLocalhost";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { useEffect } from "react";
+
+
 const AvaliacaoModal = ({ visible, onClose, id, dados }) => {
-  useEffect(()=>{},[onClose, visible])
   const navigation = useNavigation();
   const { height } = Dimensions.get("window");
+  const [estrelaPreenchida, setEstrelaPreenchida] = useState(0); // Estado das estrelas
+  const [olhoPreenchido, setOlhoPreenchido] = useState(false);
+  const [coracaoPreenchido, setCoracaoPreenchido] = useState(false);
+  const [relogioPreenchido, setRelogioPreenchido] = useState(false);
 
-  const [olhoPreenchido, setOlhoPreenchido] = useState(false); // Estado para controlar o ícone
-  const clicarNoOlho = () => {
-    setOlhoPreenchido(!olhoPreenchido); // Alterna o estado
+  // Função para alternar entre favoritar e desfavoritar estrelas
+  const clicarNaEstrela = async (index) => {
+    const token = await AsyncStorage.getItem('@token');
+    const nota = index + 1;
+    try {
+      await axios.put(`http://${local}:3000/Filme/AtualizarNota`, 
+      { idDoFilme: id, nota: nota }, 
+      { headers: { Authorization: `${token}` } });
+      setEstrelaPreenchida(nota); // Atualiza o estado local após favoritar
+      console.log("Favorito atualizado com sucesso.");
+    } catch (error) {
+      console.error("Erro ao favoritar estrela:", error);
+    }
   };
 
-  const [coracaoPreenchido, setCoracaoPreenchido] = useState(false); // Estado para controlar o ícone
-  const clicarNoCoracao = () => {
-    setCoracaoPreenchido(!coracaoPreenchido); // Alterna o estado
-  };
+  const remover = async () => {
+    const token = await AsyncStorage.getItem('@token');
+    try {
+        await axios.put(`http://${local}:3000/Filme/RemoverFavorito`, 
+        { idDoFilme: id }, 
+        { headers: { Authorization: `${token}` } });
+        setCoracaoPreenchido(false) // Atualiza o estado local para desfavoritar
+        console.log("Favorito removido com sucesso.");
+    } catch (error) {
+        console.error("Erro ao remover favorito:", error);
+    }
+};
+const favoritar = async () => {
+  const token = await AsyncStorage.getItem('@token');
+  try {
+      await axios.put(`http://${local}:3000/Filme/Favoritar`, 
+      { idDoFilme: id }, 
+      { headers: { Authorization: `${token}` } });
+      setCoracaoPreenchido(true) // Atualiza o estado local para indicar que foi favoritado
+      console.log("Filme favoritado com sucesso.");
+  } catch (error) {
+      console.error("Erro ao favoritar filme:", error);
+  }
+};
 
-  const [relogioPreenchido, setRelogioPreenchido] = useState(false); // Estado para controlar o ícone
-  const clicarNoRelogio = () => {
-    setRelogioPreenchido(!relogioPreenchido); // Alterna o estado
-  };
 
-  const [estrelaPreenchida, setEstrelaPreenchida] = useState(0); // Estado para controlar o ícone
-  const clicarNaEstrela = (index) => {
-    setEstrelaPreenchida(index + 1); // Alterna o estado
-  };
 
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={visible}
-      onRequestClose={onClose}
-    >
-      <View
-        style={[
-          styles.modalContainer,
-          { position: "absolute", bottom: 0, left: 0, height: height * 0.6 },
-        ]}
-      >
+    <Modal animationType="slide" transparent={true} visible={visible} onRequestClose={onClose}>
+      <View style={[styles.modalContainer, { position: "absolute", bottom: 0, left: 0, height: height * 0.6 }]}>
         <View style={styles.modalContent1}>
           <View style={styles.titulodata}>
             <Text style={styles.titulofilme}>Akira</Text>
@@ -57,34 +75,44 @@ const AvaliacaoModal = ({ visible, onClose, id, dados }) => {
         </View>
         <View style={styles.modalContent2}>
           <View style={styles.elementos}>
-            {/* Olho */}
-            <TouchableOpacity style={styles.iconesBotao} onPress={clicarNoOlho}>
+            {/* Ícone Olho */}
+            <TouchableOpacity style={styles.iconesBotao} onPress={() => setOlhoPreenchido(!olhoPreenchido)}>
               <Ionicons
-                name={olhoPreenchido ? "eye" : "eye-off-outline"} // Muda o ícone baseado no estado
+                name={olhoPreenchido ? "eye" : "eye-off-outline"}
                 size={45}
-                color={olhoPreenchido ? "#ab49cc" : "#bbccdd"} // Muda a cor dependendo do estado
+                color={olhoPreenchido ? "#ab49cc" : "#bbccdd"}
               />
             </TouchableOpacity>
-            {/* Coração */}
-            <TouchableOpacity
-              style={styles.iconesBotao}
-              onPress={clicarNoCoracao}
-            >
+            {/* Ícone Coração */}
+            {/*"heart-outline"* "#bbccdd"*/}
+            {coracaoPreenchido === true ? (
+              <TouchableOpacity style={styles.iconesBotao} onPress={() => remover()}>
+            
+              
               <Ionicons
-                name={coracaoPreenchido ? "heart-sharp" : "heart-outline"} // Muda o ícone baseado no estado
+                name={ "heart-sharp" }
                 size={45}
-                color={coracaoPreenchido ? "#ab49cc" : "#bbccdd"} // Muda a cor dependendo do estado
+                color={"#ab49cc"  }
               />
+
             </TouchableOpacity>
-            {/* Watchlist */}
-            <TouchableOpacity
-              style={styles.iconesBotao}
-              onPress={clicarNoRelogio}
-            >
+            ): 
+            <TouchableOpacity style={styles.iconesBotao} onPress={()=> favoritar()}>
+              
+              <Ionicons
+                name={ "heart-outline" }
+                size={45}
+                color={"#bbccdd"}
+              />
+
+            </TouchableOpacity>
+}
+            {/* Ícone Relógio */}
+            <TouchableOpacity style={styles.iconesBotao} onPress={() => setRelogioPreenchido(!relogioPreenchido)}>
               <MaterialCommunityIcons
-                name={relogioPreenchido ? "clock-plus" : "clock-plus-outline"} // Muda o ícone baseado no estado
+                name={relogioPreenchido ? "clock-plus" : "clock-plus-outline"}
                 size={45}
-                color={relogioPreenchido ? "#ab49cc" : "#bbccdd"} // Muda a cor dependendo do estado
+                color={relogioPreenchido ? "#ab49cc" : "#bbccdd"}
               />
             </TouchableOpacity>
           </View>
@@ -92,10 +120,7 @@ const AvaliacaoModal = ({ visible, onClose, id, dados }) => {
         <View style={styles.modalContent3}>
           <View style={styles.elementos}>
             {[...Array(5)].map((_, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => clicarNaEstrela(index)}
-              >
+              <TouchableOpacity key={index} onPress={() => clicarNaEstrela(index)}>
                 <Entypo
                   name={index < estrelaPreenchida ? "star" : "star-outlined"}
                   size={45}
@@ -105,22 +130,14 @@ const AvaliacaoModal = ({ visible, onClose, id, dados }) => {
             ))}
           </View>
         </View>
-
         <View style={styles.modalContent4}>
-          {/* Fazer Review */}
-          <TouchableOpacity
-           onPress={()=> {{onClose()};{navigation.navigate('PublicarPostagem',{id: id, dados: dados});}}}
-            style={styles.addreview}
-          >
+          {/* Botão de Fazer Review */}
+          <TouchableOpacity onPress={() => { onClose(); navigation.navigate('PublicarPostagem', { id: id, dados: dados }); }} style={styles.addreview}>
             <Ionicons name="add" size={24} color="#bbccdd" />
             <Text style={styles.reviewText}>Fazer Review</Text>
           </TouchableOpacity>
-
-          {/* Adicionar na Lista */}
-          <TouchableOpacity
-            onPress={()=> {{onClose()};{navigation.navigate('AdicionarLista',{id: id, dados: dados})}}}
-            style={styles.addreview}
-          >
+          {/* Botão de Adicionar na Lista */}
+          <TouchableOpacity onPress={() => { onClose(); navigation.navigate('AdicionarLista', { id: id, dados: dados }); }} style={styles.addreview}>
             <Entypo name="add-to-list" size={24} color="#bbccdd" />
             <Text style={styles.reviewText}>Adicionar Na Lista</Text>
           </TouchableOpacity>
@@ -193,12 +210,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     position: "absolute",
-    left: 30, // Ajuste a posição para a esquerda
+    left: 30,
   },
   addreview: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10, // Espaçamento entre os botões
+    marginBottom: 10,
   },
   reviewText: {
     color: "#bbccdd",

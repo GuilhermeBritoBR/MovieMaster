@@ -20,26 +20,23 @@ const EstiloDaCapaDoFilme = StyleSheet.create(({
         width: wp('60%'),
         height: wp('78%'),
         backgroundColor: 'purple',
-        borderRadius: 20,
         marginRight: wp('12%'),
     },
     ImagemDaCapa:{
         width: '100%',
         height: '100%',
-        borderRadius: 20,
+        
     },
     ImagemDaCapaMenor:{
         width: wp('28%'),
         height: wp('46%'),
         backgroundColor: 'purple',
-        borderRadius: 20,
         marginRight: 29,
     },
     ViewPrincipalDaCapaMenor:{
         width: wp('28%'),
         height: wp('46%'),
         backgroundColor: 'purple',
-        borderRadius: 20,
         marginRight: 29,
     },
 }));

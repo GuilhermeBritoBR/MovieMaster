@@ -39,10 +39,8 @@ export default function HeaderPesquisar({ativarMenuTrueFalse, ativarPesquisa}) {
 
 
   return (
-    <KeyboardAvoidingView 
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
-    style={{ flex: 1 }}
-  >
+   
+  
   
       <LinearGradient 
       colors={['#9754CB', '#6237A0' ]} 
@@ -85,43 +83,14 @@ export default function HeaderPesquisar({ativarMenuTrueFalse, ativarPesquisa}) {
                 {/* Dentro desta possui 3 view que vão segurar os 3 menus de navegação */}
                 <View style={EstiloDoHeader.BarraDeNavegaçãoDoMenuInferior}>
 
-                    <TouchableOpacity 
-                    onPress={()=> navigation.navigate("Inicio")}
                     
-                    style={[EstiloDoHeader.BotoesDeNavegacaoInferiores  ]}>
-
-                        <H3 texto={"Filmes"}/>
-                    
-                    </TouchableOpacity>
-                </View>
-
-                <View style={EstiloDoHeader.BarraDeNavegaçãoDoMenuInferior}>
-                        <TouchableOpacity 
-                        onPress={()=> navigation.navigate("Amigos")
-                        }
-                    style={[EstiloDoHeader.BotoesDeNavegacaoInferiores]}>
-
-                        <H3 texto={"Amigos"}/>
-                    
-                    </TouchableOpacity>
-                </View>
-
-                <View style={EstiloDoHeader.BarraDeNavegaçãoDoMenuInferior}>
-                    <TouchableOpacity 
-                    
-                    
-                    style={[EstiloDoHeader.BotoesDeNavegacaoInferiores]}>
-
-                        <H3 texto={"Listas"}/>   
-
-                    </TouchableOpacity>                    
                 </View>
 
 
         </View>
 
       </LinearGradient>
-      </KeyboardAvoidingView>
+      
   );
 }
 //Essa constante carrega a estilização do HEADER, a escolha foi a escrita em linha pela praticidade
@@ -132,7 +101,7 @@ const EstiloDoHeader = StyleSheet.create({
         flex: 2,
         backgroundColor: '#7100CA',   
         flexDirection: 'column',  
-        position: 'absolute',   
+      
     },
     ViewParaPosicionarOsElementosDoHeader:{
         flex:1,
@@ -164,5 +133,8 @@ const EstiloDoHeader = StyleSheet.create({
         backgroundColor:'#ffffff',
         borderRadius: 10,
         textAlign: 'center',
+      position: 'sticky',
+      top: 0,
+      left: 0,
     },
 })

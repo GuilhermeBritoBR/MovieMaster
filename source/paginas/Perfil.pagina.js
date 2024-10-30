@@ -84,7 +84,7 @@ export default function Perfil() {
         </View>
 
         {/* View Filmes Favoritos */}
-        <View style={{borderBottomColor: '6F6D6D', borderBottomWidth: 1, padding: 10, width: '100%'}}>
+        <View style={styles.favoritos}>
           <Text style={styles.textoprincipal}>Filmes Favoritos</Text>
           <FlatList
             horizontal
@@ -98,10 +98,7 @@ export default function Perfil() {
           />
         </View>
 
-        {/* View Atividade Recente */}
-        <View style={{borderBottomColor: 'white', borderBottomWidth: 1, padding:10,}}>
-          <Text style={styles.textoprincipal}>Atividade Recente</Text>
-        </View>
+    
 
         {/* View Informações */}
         <View style={styles.atividadeRecente}>
@@ -149,10 +146,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     color: "white",
   },
-  atvrecente: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginVertical: 10,
+  favoritos: {
+    borderBottomColor: 'white',
+     borderBottomWidth: 1,
+      padding: 10,
+       width: '100%',
+       justifyContent: 'flex-start',
   },
   textoinfos: {
     fontSize: 16,

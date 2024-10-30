@@ -61,6 +61,7 @@ const Lista = () => {
 
   const renderizarLista = ({ item }) => (
     <View style={styles.listaContainer}>
+      <TouchableOpacity style={[styles.listaContainer,{borderWidth:0, padding: 0}]} onPress={()=> navigation.navigate("ListaIndividual", {dados: item})}>
       <Text style={styles.listaTitulo}>{item.nome_lista}</Text>
       <View style={styles.capasContainer}>
       <FlatList
@@ -72,6 +73,7 @@ const Lista = () => {
         contentContainerStyle={styles.capasContainer}
       />
       </View>
+      </TouchableOpacity>
     </View>
   );
 
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
-    color: "#99aabb",
+    color: "#ffffff",
   },
   capasContainer: {
     flexDirection: "row",

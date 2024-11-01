@@ -26,11 +26,13 @@ export default function HeaderRetornoEPesquisar({PalavraSalvaNoHeader,setandoVar
     //respectivamente, função de setar variavel e variavel a ser setada
     //as outras duas são os outros menu a serem desativados
   return (
+
+        
       <LinearGradient 
-      colors={['#9754CB', '#6237A0' ]} 
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0.68, y: 0.68 }} 
-      style={EstiloDoHeader.ViewPrincipal}>
+       colors={['#9754CB', '#6237A0' ]} 
+       start={{ x: 0, y: 0 }}
+       end={{ x: 0.68, y: 0.68 }} 
+       style={EstiloDoHeader.ViewPrincipal}> 
         {/* Essa view carrega as duas views que possuem os icones superiores e usam de um flex direction diferente */}
         <View style={EstiloDoHeader.ViewDosElementosSuperioresPesquisaMenu}>
     
@@ -50,10 +52,6 @@ export default function HeaderRetornoEPesquisar({PalavraSalvaNoHeader,setandoVar
             value={PalavraSalvaNoHeader}
             style={EstiloDoHeader.inputDePesquisa}
             />
-        </View>
-        <View style={[EstiloDoHeader.ViewParaPosicionarOsElementosDoHeader,{ alignItems: 'flex-end', marginRight: 20,}]}>
-            {/* O FEATHER é o icone dos elementos sendo que o TOUCHABLE encobre os tais com uma função que abre um modal ou ativa uma rota */}
-          
         </View>
 
         </View>
@@ -98,7 +96,7 @@ export default function HeaderRetornoEPesquisar({PalavraSalvaNoHeader,setandoVar
 
         </View>
 
-      </LinearGradient>
+     </LinearGradient>
   );
 }
 //Essa constante carrega a estilização do HEADER, a escolha foi a escrita em linha pela praticidade
@@ -106,36 +104,30 @@ const EstiloDoHeader = StyleSheet.create({
     ViewPrincipal:{
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 2,
+        padding: 5,
         backgroundColor: '#7100CA',   
         flexDirection: 'column',     
         
     
     },
-    ViewParaPosicionarOsElementosDoHeader:{
-        flex:1,
-        justifyContent: 'center',
-    },
     ViewDosElementosSuperioresPesquisaMenu:{
-        flex: 5,
+        width: '100%',
         flexDirection: 'row',
+        justifyContent: "space-between",
+        alignItems: 'center'
     },
     ViewDosElementosInferioresFilmesAmigosListas:{
-        flex: 3,
         flexDirection: 'row', 
-        height: 60,
-    },
-    BarraDeNavegaçãoDoMenuInferior:{
-        flex: 1,
+        height: 40,
         justifyContent: 'center',
         alignItems: 'center',
     },
+    
     BotoesDeNavegacaoInferiores:{
         width: 100,
         height: 32,
         justifyContent: 'center',
-        alignItems: 'center',
-        
+        alignItems: 'center',        
     },
     inputDePesquisa:{
         width: 200,

@@ -18,7 +18,9 @@ const AvaliacaoModal = ({ visible, onClose, id, dados, titulo, data }) => {
   const [olhoPreenchido, setOlhoPreenchido] = useState(false);
   const [coracaoPreenchido, setCoracaoPreenchido] = useState(false);
   const [relogioPreenchido, setRelogioPreenchido] = useState(false);
+  const capa = `https://image.tmdb.org/t/p/w500${dados.poster_path}`;
 
+   
   // Função para alternar entre favoritar e desfavoritar estrelas
   const clicarNaEstrela = async (index) => {
     const token = await AsyncStorage.getItem('@token');
@@ -26,7 +28,7 @@ const AvaliacaoModal = ({ visible, onClose, id, dados, titulo, data }) => {
     const idDoFilme= id;
     try {
       await axios.put(`http://${local}:3000/Filme/AtualizarNota`, 
-      { idDoFilme: idDoFilme, nota: nota }, 
+      { idDoFilme: idDoFilme, nota: nota, capa: capa, titulo: titulo }, 
       { headers: { Authorization: `${token}` } });
       setEstrelaPreenchida(nota); // Atualiza o estado local após favoritar
       console.log("Favorito atualizado com sucesso.");
@@ -55,7 +57,7 @@ const favoritar = async () => {
   const token = await AsyncStorage.getItem('@token');
   try {
       await axios.put(`http://${local}:3000/Filme/Favoritar`, 
-        {filme_id: filme_id} , 
+        {filme_id: filme_id ,capa: capa, titulo: titulo} , 
       { headers: { Authorization: `${token}` } });
       setCoracaoPreenchido(true) // Atualiza o estado local para indicar que foi favoritado
       console.log("Filme favoritado com sucesso.");

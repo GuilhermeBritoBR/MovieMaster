@@ -175,7 +175,7 @@ if (loading) {
               renderItem={({ item }) => (
                 <View style={{flex:1}}>
                   <TouchableOpacity onPress={()=>navigation.navigate("InformaçoesFilme",{id: item.filme_id})}>
-                <CapaDoFilme propriedadeParaReceberAcapaDoFilme={item.capaDoFilme}/>
+                  <CapaDoFilme propriedadeParaReceberAcapaDoFilme={item.capa}/>
                 </TouchableOpacity>
                 </View>
 

@@ -92,7 +92,7 @@ export default function Perfil() {
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <TouchableOpacity onPress={()=>navigation.navigate("InformaçoesFilme",{id: item.filme_id})}>
-              <CapaDoFilme propriedadeParaReceberAcapaDoFilme={item.capaDoFilme}/>
+              <CapaDoFilme propriedadeParaReceberAcapaDoFilme={item.capa}/>
               </TouchableOpacity>
             )}
           />
@@ -104,7 +104,7 @@ export default function Perfil() {
         <View style={styles.atividadeRecente}>
     
 
-        <TouchableOpacity onPress={()=>navigation.navigate('MinhasPostagens',{id: 0})}>
+        <TouchableOpacity onPress={()=>navigation.navigate('Minhas Postagens',{id: 0})}>
               <Text style={styles.textoinfos}>Reviews</Text>
             </TouchableOpacity>
           <TouchableOpacity>

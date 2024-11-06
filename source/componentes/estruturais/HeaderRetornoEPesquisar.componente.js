@@ -108,19 +108,21 @@ const EstiloDoHeader = StyleSheet.create({
         alignItems: 'center',
         padding: 5,
         backgroundColor: '#7100CA',   
-        flexDirection: 'column',     
+        flexDirection: 'column',    
+        height:85, 
         
     
     },
     ViewDosElementosSuperioresPesquisaMenu:{
         width: '100%',
         flexDirection: 'row',
-        justifyContent: "space-between",
-        alignItems: 'center'
+        justifyContent: "center",
+        alignItems: 'center',
+        height:50,
     },
     ViewDosElementosInferioresFilmesAmigosListas:{
         flexDirection: 'row', 
-        height: 40,
+        height: 30,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -132,8 +134,8 @@ const EstiloDoHeader = StyleSheet.create({
         alignItems: 'center',        
     },
     inputDePesquisa:{
-        width: 250,
-        height: 40,
+        width: 200,
+        height: 32,
         backgroundColor:'#ffffff',
         borderRadius: 10,
         textAlign: 'center',

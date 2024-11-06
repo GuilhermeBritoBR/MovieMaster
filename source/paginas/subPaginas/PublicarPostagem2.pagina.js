@@ -104,24 +104,7 @@ const clicarNaEstrela = (index) =>{
             <Text style={styles.date}>{new Date().toLocaleDateString()}</Text>
 
             {/* Avaliação */}
-            <View style={styles.avaliacao}>
-               {/* Colocar cinco estrelas sem pleonasmo */}
-                {[...Array(5)].map((_, index) => (
-                    <TouchableOpacity key={index} onPress={() => clicarNaEstrela(index)} >
-                    <Entypo 
-                    name="star" 
-                    size={24} 
-                    color={index < nota ? 'gold' : 'gray'} // Cor das estrelas
-                />
-                </TouchableOpacity>
-                ))}
-                <TouchableOpacity 
-                onPress={()=>setandoFavorito(true)}
-                style={styles.coração}>
-                <AntDesign name="heart" size={24} 
-                color={favorito === true  ? '#7100CA' : 'gray'}/>
-                </TouchableOpacity>
-            </View>
+            
 
             {/* Caixa de texto para a review */}
             <TextInput

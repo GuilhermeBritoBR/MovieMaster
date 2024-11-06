@@ -63,19 +63,56 @@ const InformaçoesFilme = () => {
   };
 
   useEffect(() => {
-    
-      const carregar = async() =>{
-        await BuscarDadosDoFilme(id);
-        await BuscarReviews();
-        setDadosCarregados(true);
-      }
-      carregar();
-    
-  }, [id, dadosCarregados]);
+    const carregar = async () => {
+      await BuscarDadosDoFilme(id);
+      await BuscarReviews();
+      
+      setDadosCarregados(true);
+    };
+    carregar();
+  }, [id]);
+  
 
   const Corpo = ({ item }) => {
     const [curtiu, setCurtiu] = useState(false);
-
+    const [likes, setLikes] = useState({});
+    const [curtidas, setCurtidas] = useState(0);
+  
+    // Função para verificar se o usuário já curtiu o post
+    const verificarCurtida = async () => {
+      const token = await AsyncStorage.getItem("@token");
+      try{
+      const resposta = await axios.get(
+        `http://${local}:3000/Amigos/VerificarCurtirDoPost/${item.id}`,
+        { headers: { Authorization: `${token}` } }
+      );
+      setCurtiu(resposta.data.curtiu);
+      QuantidadeDeCurtidasPorPost();
+    }catch(err){
+      console.log('erro ao curtir:', err)
+    }
+    };
+    //:id'
+    const QuantidadeDeCurtidasPorPost = async () => {
+      const token = await AsyncStorage.getItem("@token");
+      const idpost = item.id;
+      try{
+      const resposta = await axios.get(
+        `http://${local}:3000/Amigos/QuantidadeDeCurtidasPorPost/${idpost}`,
+        { headers: { Authorization: `${token}` } }
+      );
+      setCurtidas(resposta.data.totalCurtidas);
+    }catch(err){
+      console.log('erro ao curtir:', err)
+    }
+    };
+    // Chama verificarCurtida quando o componente é montado
+    useEffect(() => {
+      verificarCurtida();
+      QuantidadeDeCurtidasPorPost()
+    }, [item.id]);
+  
+    // Função para dar like
     const DarLike = async (id) => {
       const token = await AsyncStorage.getItem("@token");
       try {
@@ -85,12 +122,14 @@ const InformaçoesFilme = () => {
           { headers: { Authorization: `${token}` } }
         );
         setLikes((prev) => ({ ...prev, [id]: (likes[id] || 0) + 1 }));
+        setCurtidas(prev => prev + 1);
         setCurtiu(true);
       } catch (err) {
         console.log(`Erro ao curtir post: ${err}`);
       }
     };
-
+  
+    // Função para remover like
     const RemoverLike = async (id) => {
       const token = await AsyncStorage.getItem("@token");
       try {
@@ -100,12 +139,15 @@ const InformaçoesFilme = () => {
           { headers: { Authorization: `${token}` } }
         );
         setLikes((prev) => ({ ...prev, [id]: (likes[id] || 0) - 1 }));
+        setCurtidas(prev => prev - 1);
+;
+
         setCurtiu(false);
       } catch (err) {
         console.log(`Erro ao remover curtida: ${err}`);
       }
     };
-
+  
     return (
       <View style={styles.postContainer}>
         <View style={styles.header}>
@@ -124,8 +166,8 @@ const InformaçoesFilme = () => {
             />
           </TouchableOpacity>
           <View style={styles.NomeData}>
-          <Text style={styles.Nome}>{item.autor}</Text>
-          <Text style={styles.Data}>{item.data_postagem}</Text>
+            <Text style={styles.Nome}>{item.autor}</Text>
+            <Text style={styles.Data}>{item.data_postagem}</Text>
           </View>
         </View>
         <View style={styles.ComentarioDoUsuarioView}>
@@ -133,18 +175,18 @@ const InformaçoesFilme = () => {
         </View>
         <View style={styles.AreaInferior}>
           <TouchableOpacity onPress={() => (curtiu ? RemoverLike(item.id) : DarLike(item.id))}>
-          <Ionicons 
-            
-              name={curtiu ? "heart-sharp"  : "heart-outline"}
+            <Ionicons
+              name={curtiu ? "heart-sharp" : "heart-outline"}
               size={24}
               color={curtiu ? "#ab49cc" : "gray"}
             />
           </TouchableOpacity>
-          <Text style={styles.likesText}>{likes[item.id] || 0}</Text>
+          <Text style={styles.likesText}>{curtidas}</Text>
         </View>
       </View>
     );
   };
+  
 
   return (
     <ScrollView style={styles.container}>
@@ -191,8 +233,8 @@ const InformaçoesFilme = () => {
         <Text style={styles.reviewTitle}>Reviews</Text>
         <FlatList
           data={postagens}
-          renderItem={({ item }) => <Corpo item={item} />}
           keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => <Corpo item={item} />}
           extraData={likes}
         />
       </View>

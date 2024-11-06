@@ -53,7 +53,9 @@ export default function HeaderRetornoEPesquisar({PalavraSalvaNoHeader,setandoVar
             style={EstiloDoHeader.inputDePesquisa}
             />
         </View>
-
+        <View style={[EstiloDoHeader.ViewParaPosicionarOsElementosDoHeader,{ alignItems: 'flex-end', marginRight: 20,}]}>
+            
+        </View>
         </View>
         {/* Agora esta view serve para posicionar os elementos inferiores de navegação como o menu de filmes, amigos e listas*/}
         {/* Ela possue também um flex direction diferente */}
@@ -130,8 +132,8 @@ const EstiloDoHeader = StyleSheet.create({
         alignItems: 'center',        
     },
     inputDePesquisa:{
-        width: 200,
-        height: 32,
+        width: 250,
+        height: 40,
         backgroundColor:'#ffffff',
         borderRadius: 10,
         textAlign: 'center',

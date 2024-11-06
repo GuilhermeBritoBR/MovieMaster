@@ -152,7 +152,7 @@ import ListaIndividual from './source/paginas/subPaginas/ListaIndividual.pagina.
                 />
                  <Drawer.Screen
                   
-                  name="MinhasPostagens"
+                  name="Minhas Postagens"
                   component={MinhasPostagens}
                   options={{ 
                     drawerIcon: () => (

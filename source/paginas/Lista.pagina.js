@@ -102,8 +102,6 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: "#1a1a1a",
     elevation: 5,
-    borderBottomColor: 'white',
-    borderBottomWidth: 1,
   },
   listaTitulo: {
     fontSize: 18,

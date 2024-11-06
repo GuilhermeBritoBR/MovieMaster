@@ -133,7 +133,7 @@ const EstiloDoHeader = StyleSheet.create({
         backgroundColor:'#ffffff',
         borderRadius: 10,
         textAlign: 'center',
-      position: 'sticky',
+      position: 'absolute',
       top: 0,
       left: 0,
     },

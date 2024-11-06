@@ -36,7 +36,7 @@ const InformaçoesFilme = () => {
   const ano = infoDoFilme.release_date?.split("-")[0] || "Desconhecido";
 
   // Função para definir a cor da nota
-  const getNotaColor = (nota) => (nota <= 5 ? "red" : "#FFD700");
+  const getNotaColor = (nota) => (nota <= 5 ? "red" : "#ab49cc");
 
   const BuscarDadosDoFilme = async (id) => {
     try {
@@ -63,14 +63,14 @@ const InformaçoesFilme = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (!dadosCarregados) {
+    
+      const carregar = async() =>{
         await BuscarDadosDoFilme(id);
         await BuscarReviews();
         setDadosCarregados(true);
       }
-    };
-    fetchData();
+      carregar();
+    
   }, [id, dadosCarregados]);
 
   const Corpo = ({ item }) => {
@@ -204,7 +204,7 @@ const InformaçoesFilme = () => {
         <Ionicons name="add-sharp" size={30} color="white" />
       </TouchableOpacity>
 
-      <AvaliaçaoModal visible={modalVisible} onClose={() => setModalVisible(!modalVisible)} id={id} dados={infoDoFilme} />
+      <AvaliaçaoModal visible={modalVisible} onClose={() => setModalVisible(!modalVisible)} id={id} dados={infoDoFilme} titulo={infoDoFilme.title} data={ano} />
     </ScrollView>
   );
 };

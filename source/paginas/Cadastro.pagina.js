@@ -7,6 +7,7 @@ import { SalvarToken } from '../funçoes/SalvarToken.funcao.js';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { local } from '../funçoes/IpOuLocalhost.js';
 import { launchImageLibrary } from 'react-native-image-picker';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function Cadastro() {
   const navigation = useNavigation("");
@@ -15,26 +16,28 @@ export default function Cadastro() {
   const [email, setandoEmail] = useState("");
   const [foto, setFoto] = useState(null);
   
-  const selecionarImagem = () => {
-    launchImageLibrary(
-      { 
-        mediaType: 'photo', 
-        includeBase64: true, 
-        quality: 1,  // 1 é a qualidade máxima
-        maxWidth: 8000, // Define o limite de largura (exemplo 8K)
-        maxHeight: 8000 // Define o limite de altura (exemplo 8K)
-      },  // Adiciona `includeBase64`
-      (response) => {
-        if (response.didCancel) {
-          console.log('Usuário cancelou a seleção da imagem');
-        } else if (response.error) {
-          console.log('Erro ao selecionar a imagem:', response.error);
-        } else {
-          console.log(response.assets[0]); // Exibe a imagem selecionada
-          setFoto(response.assets[0].base64); // Salva a imagem em Base64 no estado
-        }
-      }
-    );
+  const selecionarImagem = async () => {
+    // Solicita permissão para acessar a galeria de imagens
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert('Permissão para acessar a galeria foi negada!');
+      return;
+    }
+
+    // Abre a galeria para selecionar a imagem
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaType: ImagePicker.MediaTypeOptions.Images,
+      quality: 1, // Qualidade máxima
+      base64: true, // Incluir Base64
+    });
+
+    if (!result.canceled) {
+      console.log('Imagem selecionada:', result.assets[0]);
+      setFoto(result.assets[0].base64);  // Salva o Base64 no estado
+    } else {
+      console.log('Usuário cancelou a seleção');
+    }
   };
   function VerificarSeTemDados() {
     if (nome.length >= 3 && senha.length >= 8) {
@@ -133,9 +136,7 @@ const route = useRoute();
         </LinearGradient>
 
         {/* Exibe a imagem selecionada, se houver */}
-        {foto && (
-            <Image source={{ uri: foto.uri }} style={{ width: 100, height: 100, marginTop: 10 }} />
-        )}
+        
     </View>
         <TouchableOpacity
           style={styles.button}

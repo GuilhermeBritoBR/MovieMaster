@@ -16,6 +16,7 @@ import { SalvarNome } from '../../funçoes/SalvarNomeDoUsuario.funcao.js';
 import H2 from '../../componentes/textos/h2.componente.js';
 import { useNavigation } from '@react-navigation/native';
 import HeaderRetorno from '../../componentes/estruturais/HeaderRetorno.componente.js';
+import * as ImagePicker from 'expo-image-picker';
 export default function AlterarFoto(){
 
   //função
@@ -25,26 +26,28 @@ export default function AlterarFoto(){
   //verificando validade da senha em caracteres
   const [foto, setFoto] = useState(null);
   
-  const selecionarImagem = () => {
-    launchImageLibrary(
-      { 
-        mediaType: 'photo', 
-        includeBase64: true, 
-        quality: 1,  // 1 é a qualidade máxima
-        maxWidth: 8000, // Define o limite de largura (exemplo 8K)
-        maxHeight: 8000 // Define o limite de altura (exemplo 8K)
-      },  // Adiciona `includeBase64`
-      (response) => {
-        if (response.didCancel) {
-          console.log('Usuário cancelou a seleção da imagem');
-        } else if (response.error) {
-          console.log('Erro ao selecionar a imagem:', response.error);
-        } else {
-          console.log(response.assets[0]); // Exibe a imagem selecionada
-          setFoto(response.assets[0].base64); // Salva a imagem em Base64 no estado
-        }
-      }
-    );
+  const selecionarImagem = async () => {
+    // Solicita permissão para acessar a galeria de imagens
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert('Permissão para acessar a galeria foi negada!');
+      return;
+    }
+
+    // Abre a galeria para selecionar a imagem
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaType: ImagePicker.MediaTypeOptions.Images,
+      quality: 1, // Qualidade máxima
+      base64: true, // Incluir Base64
+    });
+
+    if (!result.canceled) {
+      console.log('Imagem selecionada:', result.assets[0]);
+      setFoto(result.assets[0].base64);  // Salva o Base64 no estado
+    } else {
+      console.log('Usuário cancelou a seleção');
+    }
   };
   //verificar valores
   async function FuncaoParaAlterarDados(foto){
@@ -62,7 +65,7 @@ export default function AlterarFoto(){
 
     try{
       await axios.put(`http://${local}:3000/Configuracoes/AlterarImagem`, DadosAlterados, config);
-      alert("Informações alteradas com sucesso!");
+      alert("Foto alterada com sucesso! Pode levar algum tempo para o App atualizar!");
     }catch(err){
       console.log(`Segue o erro: ${err}`);
       alert("Erro! Tente novamente!");

@@ -11,7 +11,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
 
-const AvaliacaoModal = ({ visible, onClose, id, dados }) => {
+const AvaliacaoModal = ({ visible, onClose, id, dados, titulo, data }) => {
   const navigation = useNavigation();
   const { height } = Dimensions.get("window");
   const [estrelaPreenchida, setEstrelaPreenchida] = useState(0); // Estado das estrelas
@@ -23,12 +23,14 @@ const AvaliacaoModal = ({ visible, onClose, id, dados }) => {
   const clicarNaEstrela = async (index) => {
     const token = await AsyncStorage.getItem('@token');
     const nota = index + 1;
+    const idDoFilme= id;
     try {
       await axios.put(`http://${local}:3000/Filme/AtualizarNota`, 
-      { idDoFilme: id, nota: nota }, 
+      { idDoFilme: idDoFilme, nota: nota }, 
       { headers: { Authorization: `${token}` } });
       setEstrelaPreenchida(nota); // Atualiza o estado local após favoritar
       console.log("Favorito atualizado com sucesso.");
+      verificarFilme(idDoFilme);
     } catch (error) {
       console.error("Erro ao favoritar estrela:", error);
     }
@@ -36,38 +38,86 @@ const AvaliacaoModal = ({ visible, onClose, id, dados }) => {
 
   const remover = async () => {
     const token = await AsyncStorage.getItem('@token');
+    const filme_id= id;
     try {
         await axios.put(`http://${local}:3000/Filme/RemoverFavorito`, 
-        { idDoFilme: id }, 
+        { filme_id: filme_id }, 
         { headers: { Authorization: `${token}` } });
         setCoracaoPreenchido(false) // Atualiza o estado local para desfavoritar
         console.log("Favorito removido com sucesso.");
+        verificarFilme(filme_id);
     } catch (error) {
         console.error("Erro ao remover favorito:", error);
     }
 };
 const favoritar = async () => {
+  const filme_id= id;
   const token = await AsyncStorage.getItem('@token');
   try {
       await axios.put(`http://${local}:3000/Filme/Favoritar`, 
-      { idDoFilme: id }, 
+        {filme_id: filme_id} , 
       { headers: { Authorization: `${token}` } });
       setCoracaoPreenchido(true) // Atualiza o estado local para indicar que foi favoritado
       console.log("Filme favoritado com sucesso.");
+      verificarFilme(filme_id);
   } catch (error) {
       console.error("Erro ao favoritar filme:", error);
   }
 };
 
+const verificarDados = async (filme_id) => {
+  const token = await AsyncStorage.getItem('@token');
+  try {
+      
+      // Obtém o token de autenticação armazenado no AsyncStorage
+      
+      
+      
+      // Faz a requisição à API para verificar os dados de favorito e estrelas
+      const response = await axios.get(`http://${local}:3000/Filme/VerificarDados/${filme_id}`, {
 
+          headers: {
+              Authorization: `${token}`
+          }
+      });
 
+      const { favorito, estrelas } = response.data;
+
+      if (favorito === null && estrelas === null) {
+          console.log('O usuário ainda não interagiu com esse filme.');
+      } else {
+          console.log(`Favorito: ${favorito}, Estrelas: ${estrelas}`);
+      }
+      
+      return { favorito, estrelas };
+
+  } catch (error) {
+      console.error('Erro ao verificar dados:', error);
+  }
+};
+
+// Exemplo de uso
+const verificarFilme = async () => {
+  
+  const dados = await verificarDados(id);
+  setEstrelaPreenchida(dados.estrelas);
+  if(dados.favorito === null){
+  setCoracaoPreenchido(false)} 
+  if(dados.favorito === 1){
+    setCoracaoPreenchido(true)} 
+  if (dados) {
+      console.log(dados);  // Exibe os dados do filme (favorito e estrelas)
+  }
+};
+
+useEffect(()=>{verificarFilme()},[titulo,data,dados, coracaoPreenchido])
   return (
     <Modal animationType="slide" transparent={true} visible={visible} onRequestClose={onClose}>
       <View style={[styles.modalContainer, { position: "absolute", bottom: 0, left: 0, height: height * 0.6 }]}>
         <View style={styles.modalContent1}>
           <View style={styles.titulodata}>
-            <Text style={styles.titulofilme}>Akira</Text>
-            <Text style={styles.datafilme}>1998</Text>
+            <Text style={styles.titulofilme}>{titulo}</Text>
+            <Text style={styles.datafilme}>{data}</Text>
           </View>
           <TouchableOpacity onPress={onClose} style={styles.fecharmodal}>
             <AntDesign name="arrowleft" size={24} color="#bbccdd" />

@@ -12,7 +12,7 @@ import axios from "axios";
 import { local } from "../funçoes/IpOuLocalhost";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { HeaderCheck } from "<CAMINHO_DO_COMPONENTE>";
-
+import HeaderRetorno from "../componentes/estruturais/HeaderRetorno.componente";
 export default function CriarLista({ navigation }) {
   const [lista, setLista] = useState("");
   const [descricao, setDescricao] = useState("");
@@ -37,6 +37,8 @@ export default function CriarLista({ navigation }) {
   return (
     <View style={[ViewPrincipal.estilo, { width: "100%" }]}>
       {/* <HeaderCheck voltarApaginaAnterior={() => navigation.goBack()} /> */}
+
+      <HeaderRetorno voltarApaginaAnterior={() => navigation.goBack()} />
       <View style={[ViewCentralCorpoDoAPP.estilo, { width: "100%", padding: 20 }]}>
         <TextInput
           style={styles.input1}

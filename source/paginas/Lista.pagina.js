@@ -24,55 +24,56 @@ const Lista = () => {
   const navigation = useNavigation();
   const [listas, setListas] = useState([]);
 
-
   useEffect(() => {
     const fetchListas = async () => {
-        const token = await AsyncStorage.getItem('@token');
+      const token = await AsyncStorage.getItem('@token');
       try {
         const response = await axios.get(`http://${local}:3000/Lista/BuscarMinhasListas`, {
           headers: { Authorization: `${token}` },
         });
         const listasComFilmes = response.data.map((item) => ({
-            ...item,
-            lista: JSON.parse(item.lista),
-          }));
-          setListas(listasComFilmes);
+          ...item,
+          lista: JSON.parse(item.lista),
+        }));
+        setListas(listasComFilmes);
       } catch (error) {
         console.error("Erro ao buscar listas:", error);
       }
     };
-
     fetchListas();
-  }, []);
+  }, [listas]);
 
   const pressionar = () => {
     navigation.navigate("CriarLista");
   };
+
   const renderizarCapa = ({ item }) => (
     <TouchableOpacity
-    style={styles.capa}
-    onPress={()=>navigation.navigate("InformaçoesFilme",{id: item.id})}>
-    <Image
-      source={{ uri: `https://image.tmdb.org/t/p/w500${item.capaURL}` }}
       style={styles.capa}
-    />
+      onPress={() => navigation.navigate("InformaçoesFilme", { id: item.id })}
+    >
+      <Image
+        source={{ uri: `https://image.tmdb.org/t/p/w500${item.capaURL}` }}
+        style={styles.capa}
+      />
     </TouchableOpacity>
-  )
+  );
 
   const renderizarLista = ({ item }) => (
     <View style={styles.listaContainer}>
-      <TouchableOpacity style={[styles.listaContainer,{borderWidth:0, padding: 0}]} onPress={()=> navigation.navigate("ListaIndividual", {dados: item})}>
-      <Text style={styles.listaTitulo}>{item.nome_lista}</Text>
-      <View style={styles.capasContainer}>
-      <FlatList
-        data={item.lista}
-        renderItem={renderizarCapa}
-        keyExtractor={(filme, index) => index.toString()}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.capasContainer}
-      />
-      </View>
+      <TouchableOpacity
+        style={styles.listaTouchable}
+        onPress={() => navigation.navigate("ListaIndividual", { dados: item })}
+      >
+        <Text style={styles.listaTitulo}>{item.nome_lista}</Text>
+        <FlatList
+          data={item.lista}
+          renderItem={renderizarCapa}
+          keyExtractor={(filme, index) => index.toString()}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.capasContainer}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -98,41 +99,56 @@ const Lista = () => {
 
 const styles = StyleSheet.create({
   listaContainer: {
-    marginVertical: 10,
-    padding: 15,
+    marginTop: 20,
     backgroundColor: "#1a1a1a",
+    paddingVertical: 25,
+    paddingHorizontal: 15,
+    borderRadius: 10,
+    marginVertical: 10,
+    marginHorizontal: 20,
     elevation: 5,
+    shadowColor: "#ab49cc",
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  listaTouchable: {
+    borderRadius: 10,
+    overflow: "hidden",
   },
   listaTitulo: {
     fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 10,
     color: "#ffffff",
+    marginBottom: 10,
   },
   capasContainer: {
     flexDirection: "row",
-    flexWrap: "wrap",
   },
   capa: {
     width: 80,
     height: 120,
-    marginRight: 10,
-    marginBottom: 10,
     borderRadius: 5,
+    marginRight: 10,
+    backgroundColor: "#333333",
   },
   button: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
     backgroundColor: "#7100CA",
     position: "absolute",
     right: 20,
     bottom: 40,
     justifyContent: "center",
     alignItems: "center",
+    shadowColor: "#7100CA",
+    shadowOpacity: 0.4,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 4 },
   },
   listaContainerStyle: {
-    paddingBottom: 80,
+    paddingBottom: 100,
   },
 });
 

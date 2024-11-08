@@ -7,6 +7,7 @@ import { SalvarToken } from '../funçoes/SalvarToken.funcao.js';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { local } from '../funçoes/IpOuLocalhost.js';
 import { launchImageLibrary } from 'react-native-image-picker';
+import Feather from '@expo/vector-icons/Feather';
 import * as ImagePicker from 'expo-image-picker';
 
 export default function Cadastro() {
@@ -40,11 +41,23 @@ export default function Cadastro() {
     }
   };
   function VerificarSeTemDados() {
+    // Função para validar o email
+    const validarEmail = (email) => {
+      const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      return regex.test(email);
+    };
+  
+    // Verificando os dados
     if (nome.length >= 3 && senha.length >= 8) {
-      console.log(`Segue o valor dos dados das constantes Nome: ${nome}, Senha ${senha}, Email: ${email}`);
-      RealizarCadastro();
+      if (validarEmail(email)) {
+        // Se os dados estiverem corretos e o email for válido
+        console.log(`Segue o valor dos dados das constantes Nome: ${nome}, Senha: ${senha}, Email: ${email}`);
+        RealizarCadastro();  // Função para realizar o cadastro
+      } else {
+        alert("Por gentileza, insira um email válido.");
+      }
     } else {
-      alert("Por gentileza, preencha os campos corretamente! Nome deve minimamente 3 caracteres e senha 8 caracteres");
+      alert("Por gentileza, preencha os campos corretamente! Nome deve ter minimamente 3 caracteres, senha 8 caracteres e email válido!");
     }
   }
   
@@ -77,14 +90,13 @@ export default function Cadastro() {
 };
 const route = useRoute();
   return (
-    <KeyboardAvoidingView 
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
+    
+      <View style={{flex: 1}}>
       <ImageBackground
         source={require("../arquivos/imagensDeFundo/maxxxine.jpg")}
         style={styles.image}
       >
+        
         <LinearGradient
           colors={["rgba(0,0,0,0)", "rgba(0,0,0,0.9)"]}
           start={{ x: 0, y: 0 }}
@@ -114,26 +126,30 @@ const route = useRoute();
           value={nome}
           onChangeText={(textodigitado) => setandoNome(textodigitado)}
         />
+        <View style={{flexDirection: 'row'}}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, {width: 290, marginRight:10}]}
           placeholder="Senha"
           secureTextEntry
           placeholderTextColor="white"
           value={senha}
           onChangeText={(textodigitado) => setandoSenha(textodigitado)}
         />
-        <View style={{ alignItems: 'center', marginVertical: 20 }}>
-        {/* Botão para selecionar imagem */}
         <LinearGradient
             colors={["#9754CB", "#6237A0"]}
             start={{ x: 0, y: 0 }}
             end={{ x: 0.68, y: 0.68 }}
-            style={{ padding: 10, backgroundColor: '#9754CB', borderRadius: 5 }}>
-        <TouchableOpacity onPress={selecionarImagem} >
-            <Text style={{ color: '#fff', fontSize: 16 }}>Selecionar Imagem</Text>
+            style={{ justifyContent: 'center', alignItems: 'center', backgroundColor:'#9754CB', borderRadius: 5, padding: 10, height: 50 }}>
+        <TouchableOpacity  onPress={selecionarImagem} >
+        <Feather name="camera" size={24}  color="white" />
+            {/* <Text style={{ color: '#fff', fontSize: 16 }}>Selecionar Imagem</Text> */}
             {/* Aqui você pode adicionar um ícone personalizado */}
         </TouchableOpacity>
         </LinearGradient>
+        </View>
+        <View style={{ alignItems: 'center', marginVertical: 20 }}>
+        {/* Botão para selecionar imagem */}
+        
 
         {/* Exibe a imagem selecionada, se houver */}
         
@@ -159,7 +175,8 @@ const route = useRoute();
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+   
+    </View>
   );
 }
 
@@ -184,7 +201,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     height: 100,
     justifyContent: "center",
-    marginTop: 50,
+    marginBottom: 100,
   },
   title: {
     fontSize: 28,

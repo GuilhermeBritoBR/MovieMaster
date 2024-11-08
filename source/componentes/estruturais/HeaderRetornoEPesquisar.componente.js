@@ -37,7 +37,7 @@ export default function HeaderRetornoEPesquisar({PalavraSalvaNoHeader,setandoVar
         <View style={EstiloDoHeader.ViewDosElementosSuperioresPesquisaMenu}>
     
         {/* Essas duas view's vão segurar o botão sanduiche de abrir menu e o icone de pesquisar em seus lugares */}
-        <View style={[EstiloDoHeader.ViewParaPosicionarOsElementosDoHeader,{ alignItems: 'flex-start', margin: 20, justifyContent: 'center',}]}>
+        <View style={[EstiloDoHeader.ViewParaPosicionarOsElementosDoHeader,{ width: 36, height: 36, alignItems: 'flex-start', margin: 20, justifyContent: 'center',}]}>
             {/* O FEATHER é o icone dos elementos sendo que o TOUCHABLE encobre os tais com uma função que abre um modal ou ativa uma rota */}
             <TouchableOpacity onPress={voltarApaginaAnterior}>
             <Ionicons name="arrow-back" size={36} color="white" />
@@ -64,7 +64,7 @@ export default function HeaderRetornoEPesquisar({PalavraSalvaNoHeader,setandoVar
                 <View style={EstiloDoHeader.BarraDeNavegaçãoDoMenuInferior}>
 
                     <TouchableOpacity 
-                    onPress={()=> navigation.navigate("Inicio")}
+                    onPress={()=> navigation.navigate("Inicio", { paginaAnterior: 'Inicio' })}
                     
                     style={[EstiloDoHeader.BotoesDeNavegacaoInferiores  ]}>
 
@@ -75,7 +75,7 @@ export default function HeaderRetornoEPesquisar({PalavraSalvaNoHeader,setandoVar
 
                 <View style={EstiloDoHeader.BarraDeNavegaçãoDoMenuInferior}>
                         <TouchableOpacity 
-                        onPress={()=> navigation.navigate("Amigos")
+                        onPress={()=> navigation.navigate("Amigos", { paginaAnterior: 'Inicio' })
                         }
                     style={[EstiloDoHeader.BotoesDeNavegacaoInferiores]}>
 
@@ -86,7 +86,7 @@ export default function HeaderRetornoEPesquisar({PalavraSalvaNoHeader,setandoVar
 
                 <View style={EstiloDoHeader.BarraDeNavegaçãoDoMenuInferior}>
                     <TouchableOpacity 
-                    
+                    onPress={()=>navigation.navigate("Lista", { paginaAnterior: 'Inicio' })}
                     
                     style={[EstiloDoHeader.BotoesDeNavegacaoInferiores]}>
 
@@ -109,7 +109,8 @@ const EstiloDoHeader = StyleSheet.create({
         padding: 5,
         backgroundColor: '#7100CA',   
         flexDirection: 'column',    
-        height:85, 
+        height:95, 
+        width: '100%',
         
     
     },
@@ -121,20 +122,22 @@ const EstiloDoHeader = StyleSheet.create({
         height:50,
     },
     ViewDosElementosInferioresFilmesAmigosListas:{
-        flexDirection: 'row', 
-        height: 30,
+        flexDirection: 'row',
+        height: 40,  // Ajuste para dar a mesma altura na barra inferior
         justifyContent: 'center',
         alignItems: 'center',
+        width: '100%',          
     },
     
     BotoesDeNavegacaoInferiores:{
-        width: 100,
+        width: 120,
         height: 32,
-        justifyContent: 'center',
-        alignItems: 'center',        
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+            
     },
     inputDePesquisa:{
-        width: 200,
+        width: 250,
         height: 32,
         backgroundColor:'#ffffff',
         borderRadius: 10,

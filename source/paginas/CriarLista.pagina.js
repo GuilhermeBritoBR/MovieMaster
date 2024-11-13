@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { ViewCentralCorpoDoAPP, ViewPrincipal } from "../estilos/EstilosEstruturais.estilos";
 import axios from "axios";
 import { local } from "../funçoes/IpOuLocalhost";
@@ -55,8 +56,15 @@ export default function CriarLista({ navigation }) {
           onChangeText={(text) => setDescricao(text)}
         />
         <View style={styles.adicionarFilmeContainer}>
-          <TouchableOpacity style={{width: 200, height: 45}}onPress={()=>criarLista()}>
-            <Text style={{fontSize: 16, color: '#ffffff'}}>Criar lista</Text>
+          <TouchableOpacity style={styles.button} onPress={()=>criarLista()}>
+          <LinearGradient
+            colors={["#9754CB", "#6237A0"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0.68, y: 0.68 }}
+            style={styles.btnDegradw}
+          >
+            <Text style={styles.buttonText}>Criar lista</Text>
+            </LinearGradient>
           </TouchableOpacity>
         </View>
       </View>
@@ -68,6 +76,30 @@ const styles = StyleSheet.create({
   btnredirecionamento: {
     paddingBottom: 50,
     paddingTop: 20,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+  },
+  button: {
+    width: 250,
+    borderRadius: 15,
+    backgroundColor: "#6237A0",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+  },
+  btnDegradw: {
+    width: 250,
+    backgroundColor: "#6237A0",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 50,
+    borderRadius: 15,
   },
   input1: {
     height: 40,
@@ -89,7 +121,7 @@ const styles = StyleSheet.create({
   },
   adicionarFilmeContainer: {
     borderBottomColor: 'white', 
-    borderBottomWidth: 1,
+    borderBottomWidth: 0,
     alignItems: "center",
     marginTop: 20,
   },

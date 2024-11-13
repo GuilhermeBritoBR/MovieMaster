@@ -65,7 +65,7 @@ export default function Perfil() {
       };
       BuscarFilmesFavoritos();
       BuscarNomeLocal();
-  },[ fotoPerfil]);
+  },[ fotoPerfil, ]);
 
   return (
     <View style={[ViewPrincipal.estilo,{width: '100%'}]}>
@@ -107,9 +107,7 @@ export default function Perfil() {
         <TouchableOpacity onPress={()=>navigation.navigate('Minhas Postagens',{id: 0})}>
               <Text style={styles.textoinfos}>Reviews</Text>
             </TouchableOpacity>
-          <TouchableOpacity>
-            <Text style={styles.textoinfos}>Filmes curtidos</Text>
-          </TouchableOpacity>
+          
 
           <TouchableOpacity onPress={()=>navigation.navigate('MeusAmigos',{amigos: amigos})}>
             <Text style={styles.textoinfos}>Seguindo</Text>

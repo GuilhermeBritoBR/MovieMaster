@@ -58,9 +58,10 @@ export default function MinhasPostagens() {
           <Text style={styles.filmTitle}>{TituloDoFilme}</Text>
           <Text style={styles.userName}>{nomeDoUsuario}</Text>
           <Text style={styles.postDate}>{data_postagem}</Text>
+          <Text style={styles.comment}>{texto}</Text>
         </View>
       </View>
-      <Text style={styles.comment}>{texto}</Text>
+     
       <View style={styles.actionContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('AlterarPostagem', { id_do_post, filme_id, capa: capaDoFilme, TituloDoFilme, texto })}>
           <Text style={styles.actionText}>Alterar Informações</Text>

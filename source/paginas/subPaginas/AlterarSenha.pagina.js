@@ -109,8 +109,9 @@ export default function AlterarSenha() {
 const EstilosDoInicio = StyleSheet.create(({
   ViewPrimariaQueCarregaOblocoDeLançamentos:{
     flex:1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
+    marginTop: 20,
     
   },
   BlocoPrincipalDosLançamentos:{

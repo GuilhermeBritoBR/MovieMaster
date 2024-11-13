@@ -70,28 +70,24 @@ const favoritar = async () => {
 const verificarDados = async (filme_id) => {
   const token = await AsyncStorage.getItem('@token');
   try {
-      
-      // Obtém o token de autenticação armazenado no AsyncStorage
-      
-      
-      
-      // Faz a requisição à API para verificar os dados de favorito e estrelas
+      // Faz a requisição à API para verificar os dados de favorito, estrelas e se o filme está na lista "Assistir Mais Tarde"
       const response = await axios.get(`http://${local}:3000/Filme/VerificarDados/${filme_id}`, {
-
           headers: {
-              Authorization: `${token}`
-          }
+              Authorization: `${token}`,
+          },
       });
 
-      const { favorito, estrelas } = response.data;
+      const { favorito, estrelas, filmeNaLista } = response.data;
 
+      // Se o usuário nunca interagiu com o filme
       if (favorito === null && estrelas === null) {
           console.log('O usuário ainda não interagiu com esse filme.');
       } else {
           console.log(`Favorito: ${favorito}, Estrelas: ${estrelas}`);
       }
-      
-      return { favorito, estrelas };
+
+      // Retorna os dados do filme, incluindo o status de "Assistir Mais Tarde"
+      return { favorito, estrelas, filmeNaLista };
 
   } catch (error) {
       console.error('Erro ao verificar dados:', error);
@@ -100,19 +96,86 @@ const verificarDados = async (filme_id) => {
 
 // Exemplo de uso
 const verificarFilme = async () => {
-  
   const dados = await verificarDados(id);
-  setEstrelaPreenchida(dados.estrelas);
-  if(dados.favorito === null){
-  setCoracaoPreenchido(false)} 
-  if(dados.favorito === 1){
-    setCoracaoPreenchido(true)} 
+
   if (dados) {
-      console.log(dados);  // Exibe os dados do filme (favorito e estrelas)
+      // Atualizando o estado das estrelas
+      setEstrelaPreenchida(dados.estrelas);
+
+      // Atualizando o estado do coração (favorito)
+      if (dados.favorito === null) {
+          setCoracaoPreenchido(false);
+      }
+      if (dados.favorito === 1) {
+          setCoracaoPreenchido(true);
+      }
+
+      // Atualizando o estado do olho (Assistir Mais Tarde)
+      if (dados.filmeNaLista) {
+          setOlhoPreenchido(true); // O filme está na lista "Assistir Mais Tarde"
+      } else {
+          setOlhoPreenchido(false); // O filme não está na lista "Assistir Mais Tarde"
+      }
+
+      console.log(dados);  // Exibe os dados do filme (favorito, estrelas, filme na lista)
   }
 };
 
-useEffect(()=>{verificarFilme()},[titulo,data,dados, coracaoPreenchido])
+const AdicionarFilmeAssistirMaisTarde = async () => {
+  const idDoFilme= id;
+  const token = await AsyncStorage.getItem("@token"); // Recuperando o token de autenticação do AsyncStorage
+  const aEnviar = {
+      idDoFilme: idDoFilme, // O ID do filme que você deseja adicionar
+      capaURL: capa,   // A URL da capa do filme
+      titulo: titulo    // O título do filme
+  };
+
+  const config = {
+      headers: {
+          'Authorization': token  // Adicionando o token no cabeçalho da requisição
+      }
+  };
+
+  try {
+      // Fazendo a requisição PUT para a API, passando os dados e as configurações
+      await axios.put(`http://${local}:3000/Lista/AdicionarFilmeMaisTarde`, aEnviar, config);
+      setOlhoPreenchido(!olhoPreenchido);
+      alert("Filme adicionado à lista 'Assistir Mais Tarde' com sucesso!");
+  } catch (err) {
+      console.log(`Erro: ${err}`);
+      alert("Erro ao adicionar o filme à lista 'Assistir Mais Tarde'. Tente novamente!");
+  }
+};
+const RemoverFilmeAssistirMaisTarde = async () => {
+  const token = await AsyncStorage.getItem("@token"); // Recuperando o token de autenticação do AsyncStorage
+  const idDoFilme= id;
+  const aEnviar = {
+      idDoFilme: idDoFilme // O ID do filme que você deseja remover
+  };
+
+  const config = {
+      headers: {
+          'Authorization': token  // Adicionando o token no cabeçalho da requisição
+      }
+  };
+
+  try {
+      // Fazendo a requisição PUT para a API de remoção do filme
+      await axios.put(`http://${local}:3000/Lista/RemoverFilmeMaisTarde`, aEnviar, config);
+      setOlhoPreenchido(false);
+      alert("Filme removido da lista 'Assistir Mais Tarde' com sucesso!");
+  } catch (err) {
+      console.log(`Erro: ${err}`);
+      alert("Erro ao remover o filme da lista 'Assistir Mais Tarde'. Tente novamente!");
+  }
+};
+useEffect(() => {
+  // Verifica o filme assim que o id mudar ou o componente for montado
+  if (id) {
+    verificarFilme();
+  }
+}, [id]); 
+// useEffect(()=>{verificarFilme()},[titulo,data,dados, coracaoPreenchido, olhoPreenchido])
   return (
     <Modal animationType="slide" transparent={true} visible={visible} onRequestClose={onClose}>
       <View style={[styles.modalContainer, { position: "absolute", bottom: 0, left: 0, height: height * 0.6 }]}>
@@ -128,13 +191,16 @@ useEffect(()=>{verificarFilme()},[titulo,data,dados, coracaoPreenchido])
         <View style={styles.modalContent2}>
           <View style={styles.elementos}>
             {/* Ícone Olho */}
-            <TouchableOpacity style={styles.iconesBotao} onPress={() => setOlhoPreenchido(!olhoPreenchido)}>
-              <Ionicons
-                name={olhoPreenchido ? "eye" : "eye-off-outline"}
-                size={45}
-                color={olhoPreenchido ? "#ab49cc" : "#bbccdd"}
-              />
-            </TouchableOpacity>
+            <TouchableOpacity 
+        style={styles.iconesBotao} 
+        onPress={() => olhoPreenchido ? RemoverFilmeAssistirMaisTarde() : AdicionarFilmeAssistirMaisTarde()}
+      >
+        <Ionicons
+          name={olhoPreenchido ? "eye" : "eye-off-outline"}
+          size={45}
+          color={olhoPreenchido ? "#ab49cc" : "#bbccdd"}
+        />
+      </TouchableOpacity>
             {/* Ícone Coração */}
             {/*"heart-outline"* "#bbccdd"*/}
             {coracaoPreenchido === true ? (

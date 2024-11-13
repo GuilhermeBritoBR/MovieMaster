@@ -18,8 +18,9 @@ import AvaliaçaoModal from "../../componentes/estruturais/AvaliacaoModal.compon
 import { local } from "../../funçoes/IpOuLocalhost";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AntDesign from "@expo/vector-icons/AntDesign";
-
+import { useIsFocused } from "@react-navigation/native";
 const { height } = Dimensions.get("window");
+import { useFocusEffect } from '@react-navigation/native';
 
 const InformaçoesFilme = () => {
   const route = useRoute();
@@ -48,7 +49,7 @@ const InformaçoesFilme = () => {
       console.log(`Erro ao buscar informações sobre o filme: ${err}`);
     }
   };
-
+  const isFocused = useIsFocused();
   const BuscarReviews = async () => {
     const token = await AsyncStorage.getItem("@token");
     try {
@@ -57,6 +58,7 @@ const InformaçoesFilme = () => {
         { headers: { Authorization: `${token}` } }
       );
       setPostagens(resposta.data.postagens);
+      
     } catch (err) {
       console.log(`Erro ao buscar reviews: ${err}`);
     }
@@ -147,7 +149,9 @@ const InformaçoesFilme = () => {
         console.log(`Erro ao remover curtida: ${err}`);
       }
     };
+    
   
+   
     return (
       <View style={styles.postContainer}>
         <View style={styles.header}>

@@ -195,9 +195,7 @@ if (loading) {
               <Text style={styles.textoinfos}>Reviews</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity>
-              <Text style={styles.textoinfos}>Filmes curtidos</Text>
-            </TouchableOpacity>
+           
 
             <TouchableOpacity onPress={()=>navigation.navigate('MeusAmigos',{amigos: amigos})}>
             <Text style={styles.textoinfos}>Seguindo</Text>

@@ -12,9 +12,9 @@ A principal função é otimizar a expressão de opiniões sobre filmes e melhor
 - Ira ver as avaliações referentes aquele filme
 - Personalização através listas
 - Lista de filmes favoritos
+- Sinopse e tempo de duração
 
-  (COMO USAR
-  QUAIS AS FUNCIONALIDADES) **Colocar depois**
+ 
 
 
 

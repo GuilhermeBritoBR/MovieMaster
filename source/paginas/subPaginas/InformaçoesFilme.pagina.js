@@ -29,6 +29,7 @@ const InformaçoesFilme = () => {
   
   const [infoDoFilme, setandoInfoDoFilme] = useState({});
   const [postagens, setPostagens] = useState([]);
+  
   const [likes, setLikes] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
   const [dadosCarregados, setDadosCarregados] = useState(false);

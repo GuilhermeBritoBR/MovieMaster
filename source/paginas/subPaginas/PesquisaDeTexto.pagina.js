@@ -48,6 +48,8 @@ export default function PesquisaDeTexto() {
       console.error('Erro ao buscar usuários:', erro);
     }
   };
+
+  
   const buscarFilmes = async (query) => {
     
     try {
@@ -75,6 +77,7 @@ export default function PesquisaDeTexto() {
     setResultadosFilmes(filmes);
     setUsuarios([PalavraSalvaNoHeader, filmes]);
   }},[PalavraSalvaNoHeader, filmes])
+ 
   return (
     <View style={[ViewPrincipal.estilo,{flex: 1}]}>
      
@@ -89,7 +92,7 @@ export default function PesquisaDeTexto() {
       <View style={[ViewCentralCorpoDoAPP.estilo, { width: "100%" }]}>
         <ScrollView style={[{ width: "100%" }]}>
         <Text style={EstilosDoPesquisar.header}>Usuários</Text>
-      <FlatList
+        <FlatList
         data={usuarios}
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
@@ -99,14 +102,15 @@ export default function PesquisaDeTexto() {
             source={
             {uri: `http://${local}:3000/${item.foto}`}
             }
-            style={EstilosDoPesquisar.headerImage}
+ style={EstilosDoPesquisar.headerImage}
           />
             <Text style={EstilosDoPesquisar.fonteDETexto}>{item.nome}</Text>
             </TouchableOpacity>
           </View>
         )}
       />
-      
+
+
       <Text style={EstilosDoPesquisar.header}>Filmes</Text>
       <FlatList
         data={resultadosFilmes}

@@ -195,8 +195,8 @@ useEffect(() => {
         style={styles.iconesBotao} 
         onPress={() => olhoPreenchido ? RemoverFilmeAssistirMaisTarde() : AdicionarFilmeAssistirMaisTarde()}
       >
-        <Ionicons
-          name={olhoPreenchido ? "eye" : "eye-off-outline"}
+        <MaterialCommunityIcons
+          name={olhoPreenchido ? "clock-plus" : "clock-plus-outline"}
           size={45}
           color={olhoPreenchido ? "#ab49cc" : "#bbccdd"}
         />
@@ -226,13 +226,7 @@ useEffect(() => {
             </TouchableOpacity>
 }
             {/* Ícone Relógio */}
-            <TouchableOpacity style={styles.iconesBotao} onPress={() => setRelogioPreenchido(!relogioPreenchido)}>
-              <MaterialCommunityIcons
-                name={relogioPreenchido ? "clock-plus" : "clock-plus-outline"}
-                size={45}
-                color={relogioPreenchido ? "#ab49cc" : "#bbccdd"}
-              />
-            </TouchableOpacity>
+            
           </View>
         </View>
         <View style={styles.modalContent3}>

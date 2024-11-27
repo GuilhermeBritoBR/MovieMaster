@@ -7,6 +7,8 @@ import { StatusBar } from "react-native";
 //importe dos icones//
 import Entypo from '@expo/vector-icons/Entypo';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import * as Updates from "expo-updates";
+import { Alert } from "react-native";
 
 import { useRoute } from "@react-navigation/native";
 //para buscar token
@@ -14,7 +16,7 @@ import { useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 //funções
 import { useNavigation } from "@react-navigation/native";
-import { Alert } from "react-native";
+
 import HeaderRetorno from "../../componentes/estruturais/HeaderRetorno.componente";
 export default function PublicarPostagem({ idDoFilme, imagemDoFilme, tituloDoFilme }) {
     const navigation = useNavigation();
@@ -32,7 +34,13 @@ const route = useRoute();
   const postarPublicacao = async () => { 
       //buscar dados
     const token = await AsyncStorage.getItem("@token");
-    
+    const recarregarApp = async () => {
+        try {
+          await Updates.reloadAsync(); // Recarrega o app completamente
+        } catch (e) {
+          console.error("Erro ao recarregar o app:", e);
+        }
+      };
 const config = {
   headers: {
     Authorization: `${token}`,
@@ -71,7 +79,16 @@ const config = {
         dadosAenviar,
         config
       );
-      alert("Postagem realizada!");
+      Alert.alert(
+        "Postagem realizada!", // Título
+        "Sua postagem foi publicada com sucesso.", // Mensagem
+        [
+          {
+            text: "OK", // Texto do botão
+            onPress: () => recarregarApp(), // Função a ser chamada ao clicar em "OK"
+          },
+        ]
+      );
     } catch (err) {
       alert(`Segue o erro ao se cadastrar: ${err}`);
       console.log(`Segue o erro ao se cadastrar: ${err}`);

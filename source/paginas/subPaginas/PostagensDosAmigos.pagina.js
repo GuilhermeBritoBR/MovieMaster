@@ -34,99 +34,13 @@ export default function PostagensDosAmigos() {
         }
     };
 
-    // Função para dar like
-    // const DarLike = async (id) => {
-    //     const token = await AsyncStorage.getItem("@token");
-    //     const config = {
-    //         headers: {
-    //             Authorization: `${token}`,
-    //         },
-    //     };
-    //     const aEnviar = { idDoPost: id };
-    //     try {
-    //         await axios.post(
-    //             `http://${local}:3000/Amigos/CurtirReviewDosAmigos`,
-    //             aEnviar,
-    //             config
-    //         );
-    //         // Atualiza o estado de curtida do post
-    //         setCurtiuState((prev) => ({ ...prev, [id]: true }));
-    //         calcularCurtidas(id); // Atualiza a contagem de curtidas
-    //     } catch (err) {
-    //         console.log(`Erro ao curtir post: ${err}`);
-    //     }
-    // };
-
-    // // Função para remover like
-    // const RemoverLike = async (id) => {
-    //     const token = await AsyncStorage.getItem("@token");
-    //     const idDoPost = id;
-    //     const config = {
-    //         headers: {
-    //             Authorization: `${token}`,
-    //         },
-    //     };
-    //     const aEnviar = { idDoPost };
-
-    //     try {
-    //         await axios.post(
-    //             `http://${local}:3000/Amigos/DescurtirReviewDosAmigos`,
-    //             aEnviar,
-    //             config
-    //         );
-    //         // Atualiza o estado de curtida do post
-    //         setCurtiuState((prev) => ({ ...prev, [id]: false }));
-    //         calcularCurtidas(id); // Atualiza a contagem de curtidas
-    //     } catch (err) {
-    //         console.log(`Erro ao remover curtida: ${err}`);
-    //     }
-    // };
-
-    // // Função para calcular a quantidade de curtidas para um post
-    // const calcularCurtidas = async (id) => {
-    //     const token = await AsyncStorage.getItem("@token");
-    //     const config = {
-    //         headers: {
-    //             Authorization: `${token}`,
-    //         },
-    //     };
-    //     try {
-    //         const resposta = await axios.get(
-    //             `http://${local}:3000/Amigos/QuantidadeDeCurtidasPorPost/${id}`,
-    //             config
-    //         );
-    //         setLikes((prev) => ({ ...prev, [id]: resposta.data.totalCurtidas }));
-    //         return resposta.data.totalCurtidas;
-    //     } catch (err) {
-    //         console.log(`Erro ao contar curtidas: ${err}`);
-    //     }
-    // };
-
-    // // Função para verificar se o post já foi curtido
-    // const verificarCurtida = async (id) => {
-    //     const token = await AsyncStorage.getItem("@token");
-    //     const config = {
-    //         headers: {
-    //             Authorization: `${token}`,
-    //         },
-    //     };
-    //     try {
-    //         const resposta = await axios.get(
-    //             `http://${local}:3000/Amigos/VerificarCurtirDoPost/${id}`,
-    //             config
-    //         );
-    //         return resposta.data.curtiu;
-    //     } catch (err) {
-    //         console.log(`Erro ao verificar curtida: ${err}`);
-    //     }
-    // };
 
     useEffect(() => {
         ReceberMinhasPostagens();
     }, [id]);
 
     // Função para renderizar a publicação
-    const Publicacao = ({ item, nomeDoUsuario, data_postagem, filme_id, texto, id_do_post, capaDoFilme, TituloDoFilme, foto }) => {
+    const Publicacao = ({ item, resposta,nomeDoUsuario, data_postagem, filme_id, texto, id_do_post, capaDoFilme, TituloDoFilme, foto }) => {
        
         const [curtidas, setCurtidas] = useState(0);
         const [curti, setCurti] = useState(false);
@@ -224,55 +138,53 @@ export default function PostagensDosAmigos() {
         };
         checkCurtida();
     }, [item.id]);
-        return (
-            <View style={EstruturaDaPaginaDosAmigos.ViewQueCentralizaCadaPostagem}>
-                <View style={EstruturaDaPaginaDosAmigos.AreaSuperior}>
-                   
-                    <TouchableOpacity onPress={() => navigation.navigate("InformaçoesFilme", { id: item.filme_id })}>
-          <MenorCapaDoFilme 
-            tamonhoMenorOuMaiorrStingVazia={"Menor"}
-            propriedadeParaReceberAcapaDoFilme={item.capaDoFilme}
-          />
-        </TouchableOpacity>
-                   
-                    <View style={EstruturaDaPaginaDosAmigos.SecaoDireita}>
-                    <View style={EstruturaDaPaginaDosAmigos.NomeFoto}>
-                    <TouchableOpacity onPress={() => navigation.navigate("PerfilDosAmigos", { id: item.credenciais_id, nome: item.nomeDoUsuario })}>
-              <Image
-                source={{ uri: `http://${local}:3000/${item.foto}` }}
-                style={EstruturaDaPaginaDosAmigos.headerImage}
-              />
-              <Text style={EstruturaDaPaginaDosAmigos.Nome}>{nomeDoUsuario}</Text>
-              <Text style={[EstruturaDaPaginaDosAmigos.Nome, { fontSize: 10 }]}>{data_postagem}</Text>
+    return (
+      <View style={EstruturaDaPaginaDosAmigos.ViewQueCentralizaCadaPostagem}>
+        
+          
+    
+            <View style={EstruturaDaPaginaDosAmigos.AreaSuperior}>
+              <TouchableOpacity onPress={() => navigation.navigate("InformaçoesFilme", { id: item.filme_id })}>
+                <MenorCapaDoFilme 
+                  tamonhoMenorOuMaiorrStingVazia={"Menor"}
+                  propriedadeParaReceberAcapaDoFilme={item.capaDoFilme}
+                />
               </TouchableOpacity>
-                            
-                        
-            
-            </View>
-                        
-                      
-                            <Text style={EstruturaDaPaginaDosAmigos.comentarioEstilizacao}>{texto}</Text>
-
-                    </View>
+    
+              <View style={EstruturaDaPaginaDosAmigos.SecaoDireita}>
+                <View style={EstruturaDaPaginaDosAmigos.NomeFoto}>
+                  <TouchableOpacity onPress={() => navigation.navigate("PerfilDosAmigos", { id: item.credenciais_id, nome: item.nomeDoUsuario })}>
+                    <Image
+                      source={{ uri: `http://${local}:3000/${item.foto}` }}
+                      style={EstruturaDaPaginaDosAmigos.headerImage}
+                    />
+                    <Text style={EstruturaDaPaginaDosAmigos.Nome}>{nomeDoUsuario}</Text>
+                    <Text style={[EstruturaDaPaginaDosAmigos.Nome, { fontSize: 10 }]}>{data_postagem}</Text>
+                  </TouchableOpacity>
                 </View>
-               
-                    
-                    <View style={EstruturaDaPaginaDosAmigos.AreaInferior}>
-          <TouchableOpacity onPress={() => (curti ? RemoverLike() : DarLike())}>
-            <Ionicons
-              name={curti ? "heart-sharp" : "heart-outline"}
-              size={24}
-              color={curti ? "#ab49cc" : "gray"}
-            />
-          </TouchableOpacity>
-          <Text style={EstruturaDaPaginaDosAmigos.likesText}>{curtidas}</Text>
-        </View>
-                    </View>
-                
-           
-        );
+    
+                <Text style={EstruturaDaPaginaDosAmigos.comentarioEstilizacao}>{texto}</Text>
+              </View>
+            </View>
+    
+            <View style={EstruturaDaPaginaDosAmigos.AreaInferior}>
+              <TouchableOpacity onPress={() => (curti ? RemoverLike() : DarLike())}>
+                <Ionicons
+                  name={curti ? "heart-sharp" : "heart-outline"}
+                  size={24}
+                  color={curti ? "#ab49cc" : "gray"}
+                />
+              </TouchableOpacity>
+              <Text style={EstruturaDaPaginaDosAmigos.likesText}>{curtidas}</Text>
+            </View>
+         
+        
+      </View>
+    );
     };
-
+    const verificarTextoOuNome = (nome) => {
+      return nome && nome.trim() !== "" ? nome : "nenhuma postagem com Text";
+    };
     return (
         <View style={ViewPrincipal.estilo}>
             <HeaderRetorno voltarApaginaAnterior={() => navigation.goBack("")} />
@@ -302,6 +214,7 @@ export default function PostagensDosAmigos() {
                                 TituloDoFilme={item.tituloDoFilme}
                                 foto={item.foto}
                                 item={item}
+                                resposta={posts}
                             />
                         )
                     }

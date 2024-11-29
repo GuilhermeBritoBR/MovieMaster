@@ -86,10 +86,18 @@ export default function AlterarFoto(){
 
           {/* Primeira View com os lançamentos */}
           <View style={EstilosDoInicio.ViewPrimariaQueCarregaOblocoDeLançamentos}>
+          
             <H2 texto={"Altere sua foto"}/>
-            <TouchableOpacity onPress={selecionarImagem} style={{ padding: 10, backgroundColor: '#007BFF', borderRadius: 5 }}>
+            <TouchableOpacity onPress={selecionarImagem} style={{ padding: 10,  borderRadius: 5 }}>
+            <LinearGradient 
+            colors={['#9754CB', '#6237A0']} 
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0.68, y: 0.68 }} 
+            style={{ padding: 10, backgroundColor: '#007BFF', borderRadius: 5 }}
+          >
             <Text style={{ color: '#fff', fontSize: 16 }}>Selecionar Imagem</Text>
             {/* Aqui você pode adicionar um ícone personalizado */}
+            </LinearGradient>
         </TouchableOpacity>
         {foto && (
         <Image 

@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Alert } from "react-native";
 import HeaderRetorno from "../../componentes/estruturais/HeaderRetorno.componente";
-
+import * as Updates from "expo-updates";
 export default function AlterarPostagem() {
     const route = useRoute();
     const id_do_post = route.params.id_do_post;
@@ -71,7 +71,23 @@ const EditarPostagem= async()=>{
         dadosAenviar,
         config
       );
-      alert("Postagem realizada!");
+      const recarregarApp = async () => {
+        try {
+          await Updates.reloadAsync(); // Recarrega o app completamente
+        } catch (e) {
+          console.error("Erro ao recarregar o app:", e);
+        }
+      };
+      Alert.alert(
+        "Postagem realizada!", // Título
+        "Sua postagem foi publicada com sucesso.", // Mensagem
+        [
+          {
+            text: "OK", // Texto do botão
+            onPress: () => recarregarApp(), // Função a ser chamada ao clicar em "OK"
+          },
+        ]
+      );
     } catch (err) {
       alert(`Segue o erro ao se cadastrar: ${err}`);
       console.log(`Segue o erro ao se cadastrar: ${err}`);
